@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Check, Clock, Copy, Gift, Hourglass, Wallet } from "lucide-react";
 import { JEEB_NUMBER, STUDY_PRICE_USD, studyAccess, type AccessStatus, type StudyKind } from "@/lib/pvsyst-access";
@@ -9,8 +10,8 @@ function mmss(ms: number) {
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 }
 
-const box = "rounded-xl border border-border bg-muted/35 p-5 text-center";
-const btn = "inline-flex w-full items-center justify-center gap-2 rounded-md bg-skyline px-6 py-3 text-sm font-bold text-skyline-foreground transition hover:opacity-90 disabled:opacity-50 sm:w-auto";
+const box = "rounded-lg border border-border bg-card p-5 text-center";
+const btn = "inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-bold text-primary-foreground transition hover:opacity-90 disabled:opacity-50 sm:w-auto";
 
 /** شاشة الانتظار: الدراسة قيد الإعداد وتصل كإشعار. */
 export function StudyWaiting({ readyAt, previous, onBack, kind = "pvsyst" }: { readyAt: number; previous?: boolean; onBack: () => void; kind?: StudyKind }) {
@@ -24,7 +25,7 @@ export function StudyWaiting({ readyAt, previous, onBack, kind = "pvsyst" }: { r
       <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-card px-4 py-2 text-lg font-black text-brand" dir="ltr">
         <Clock className="size-5" /> {mmss(readyAt - Date.now())}
       </p>
-      <div className="mt-5"><button type="button" onClick={onBack} className={btn}>العودة إلى الشاشة الرئيسية</button></div>
+      <div className="mt-5"><Button variant="presentation" size="presentation" type="button" onClick={onBack} className={btn}>العودة إلى الشاشة الرئيسية</Button></div>
     </div>
   );
 }
@@ -57,7 +58,7 @@ export function StudyPayment({ status, customer, city, kind = "pvsyst" }: { stat
   return (
     <form
       onSubmit={(e) => { e.preventDefault(); if (valid) studyAccess(kind).submitPayment(customer, city, clean); }}
-      className="rounded-xl border border-border bg-muted/35 p-5"
+      className="rounded-lg border border-border bg-card p-5"
     >
       <p className="flex items-center gap-2 text-base font-black"><Wallet className="size-5 text-brand" /> احصل على {NAME[kind]} لمشروعك</p>
       <p className="mt-2 text-sm text-muted-foreground">استخدمت دراستك المجانية. سعر الدراسة {STUDY_PRICE_USD} دولار فقط لكل دراسة.</p>
@@ -69,14 +70,14 @@ export function StudyPayment({ status, customer, city, kind = "pvsyst" }: { stat
         </div>
         <div className="mt-2 flex items-center justify-between gap-3">
           <span dir="ltr" className="text-xl font-black tracking-wider text-brand">{JEEB_NUMBER}</span>
-          <button type="button" onClick={() => { void navigator.clipboard?.writeText(JEEB_NUMBER); setCopied(true); }} className="inline-flex items-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs font-bold hover:border-brand">
+          <Button variant="presentation" size="presentation" type="button" onClick={() => { void navigator.clipboard?.writeText(JEEB_NUMBER); setCopied(true); }} className="inline-flex items-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs font-bold hover:border-brand">
             {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />} {copied ? "تم النسخ" : "نسخ الرقم"}
-          </button>
+          </Button>
         </div>
       </div>
       <label htmlFor="pv-ref" className="mt-4 block text-sm font-black">رقم مرجع العملية</label>
       <input id="pv-ref" value={ref} maxLength={40} onChange={(e) => setRef(e.target.value)} placeholder="ادخل رقم مرجع العملية هنا" dir="ltr" className="mt-2 w-full rounded-md border border-input bg-card px-3 py-2.5 text-sm outline-none focus:border-brand" />
-      <button type="submit" disabled={!valid} className={`${btn} mt-4`}>إرسال</button>
+      <Button variant="presentation" size="presentation" type="submit" disabled={!valid} className={`${btn} mt-4`}>إرسال</Button>
     </form>
   );
 }

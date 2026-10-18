@@ -1,5 +1,17 @@
 # Roadmap
 
+## Current request: comprehensive reference-matched TAMKEEN redesign
+- [x] Inventory content/API routes and 96 workflow state literals; map seven approved references in screen-review.md.
+- [x] Unify reference colors, typography, surfaces and shared controls without changing functional logic.
+- [x] Apply reference-based presentation to start, home, projects, catalog categories/list/detail and quote.
+- [x] Apply shared presentation to engineering, forms, orders, notifications, account, settings and administration.
+- [x] Verify sampled mobile and desktop layouts; preserve the existing offline Electron shell.
+- [x] Run all 6 existing regression tests; exercise catalog search/detail/catalog and residential quote flow.
+- [x] Record actual verified coverage and Windows status in screen-review.md.
+- [ ] Finish exact visual reconciliation and exhaustive review of all workflow states, engineering reports and downloads.
+- [ ] Verify saved orders, payment approval and administration with an authorized real account (account access required).
+- [ ] Build updated Windows archive and verify it on Windows; existing archive predates this redesign.
+
 ## Current request: replacement offline Windows app
 - [x] Remove all product videos and video players as requested.
 - [x] Remove obsolete online-only desktop distribution.

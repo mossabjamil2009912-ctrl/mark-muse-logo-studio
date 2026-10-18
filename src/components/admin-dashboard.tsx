@@ -1,3 +1,5 @@
+import { TamkeenBrand } from "@/components/tamkeen-brand";
+import { Button } from "@/components/ui/button";
 import { useMemo, useState } from "react";
 import { Check, LogOut, ShieldCheck, X } from "lucide-react";
 import {
@@ -49,21 +51,19 @@ export function AdminDashboard({ onExit }: { onExit: () => void }) {
     <div dir="rtl" className="min-h-dvh bg-background text-foreground">
       <header className="flex h-[72px] items-center justify-between border-b border-border bg-card px-4 shadow-sm sm:px-8">
         <div className="flex items-center gap-3">
-          <span className="grid size-10 place-items-center rounded-full bg-brand text-brand-foreground">
-            <ShieldCheck className="size-5" />
-          </span>
+          <TamkeenBrand compact />
           <div>
             <p className="text-sm font-black">إشعارات العملاء</p>
             <p className="text-[11px] text-muted-foreground">وضع الإدارة — TAMKEEN</p>
           </div>
         </div>
-        <button
+        <Button variant="presentation" size="presentation"
           type="button"
           onClick={onExit}
           className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-xs font-bold transition hover:bg-muted"
         >
           <LogOut className="size-4" /> خروج
-        </button>
+        </Button>
       </header>
 
       <main className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6">
@@ -71,13 +71,13 @@ export function AdminDashboard({ onExit }: { onExit: () => void }) {
           {BUCKETS.map((bucket) => {
             const selected = tab === bucket.id;
             return (
-              <button
+              <Button variant="presentation" size="presentation"
                 key={bucket.id}
                 type="button"
                 onClick={() => setTab(bucket.id)}
-                className={`overflow-hidden rounded-xl border bg-card text-right shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg ${selected ? "border-brand ring-2 ring-brand/30" : "border-border"}`}
+                className={`overflow-hidden rounded-lg border bg-card text-right shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg ${selected ? "border-brand ring-2 ring-brand/30" : "border-border"}`}
               >
-                <div className="aspect-[1.48/1] w-full overflow-hidden bg-muted p-1">
+                <div className="aspect-[2/1] w-full overflow-hidden bg-muted p-1">
                   <img src={bucket.image} alt={bucket.label} loading="lazy" width={992} height={672} className="size-full object-contain" />
                 </div>
                 <div className="flex items-center justify-between gap-2 border-t border-border px-3 py-2">
@@ -86,7 +86,7 @@ export function AdminDashboard({ onExit }: { onExit: () => void }) {
                     {grouped[bucket.id].length}
                   </span>
                 </div>
-              </button>
+              </Button>
             );
           })}
         </section>
@@ -123,20 +123,20 @@ export function AdminDashboard({ onExit }: { onExit: () => void }) {
                         </p>
                       ) : (
                         <div className="mt-3 flex flex-wrap gap-2">
-                          <button
+                          <Button variant="presentation" size="presentation"
                             type="button"
                             onClick={() => markConfirmed(notif.id)}
                             className="inline-flex items-center gap-1 rounded-full bg-energy px-4 py-2 text-[10px] font-black text-energy-foreground"
                           >
                             <Check className="size-3" /> تأكيد الفاتورة
-                          </button>
-                          <button
+                          </Button>
+                          <Button variant="presentation" size="presentation"
                             type="button"
                             onClick={() => markCancelled(notif.id)}
                             className="inline-flex items-center gap-1 rounded-full bg-destructive px-4 py-2 text-[10px] font-black text-destructive-foreground"
                           >
                             <X className="size-3" /> إلغاء الفاتورة
-                          </button>
+                          </Button>
                         </div>
                       )
                     )}

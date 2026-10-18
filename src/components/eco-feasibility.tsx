@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { ShoppingCart, X, FileText, Download } from "lucide-react";
@@ -66,7 +67,7 @@ function ReportModal({ children, onClose }: { children: React.ReactNode; onClose
     <div className="fixed inset-0 z-[100] flex flex-col bg-background">
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
         <p className="text-sm font-black">تقرير دراسة الجدوى الاقتصادية</p>
-        <button type="button" onClick={onClose} aria-label="إغلاق" className="rounded-md border border-border p-1.5"><X className="size-4" /></button>
+        <Button variant="presentation" size="presentation" type="button" onClick={onClose} aria-label="إغلاق" className="rounded-md border border-border p-1.5"><X className="size-4" /></Button>
       </div>
       <div className="flex-1 overflow-y-auto p-3 sm:p-6"><div className="mx-auto max-w-[1000px]">{children}</div></div>
     </div>,
@@ -78,19 +79,19 @@ function ReportModal({ children, onClose }: { children: React.ReactNode; onClose
 function ProjectNameForm({ value, onChange, onSubmit }: { value: string; onChange: (v: string) => void; onSubmit: (v: string) => void }) {
   const types = ["مصنع", "شركة", "مؤسسة", "مزرعة", "فندق", "مستشفى", "مجمع سكني", "منزل"];
   return (
-    <form onSubmit={(e) => { e.preventDefault(); const n = value.trim(); if (n) onSubmit(n); }} className="rounded-lg border border-border bg-muted/35 p-5">
+    <form onSubmit={(e) => { e.preventDefault(); const n = value.trim(); if (n) onSubmit(n); }} className="rounded-lg border border-border bg-card p-5">
       <p className="text-sm font-black">بيانات الجهة صاحبة المشروع</p>
       <p className="mt-1 text-xs leading-6 text-muted-foreground">يرجى كتابة الاسم الرسمي للمشروع أو الشركة أو المصنع، ليُعتمد في ترويسة تقرير دراسة الجدوى واسم الملف.</p>
       <div className="mt-3 flex flex-wrap gap-1.5">
         {types.map((t) => (
-          <button key={t} type="button" onClick={() => { const v = value.trim(); onChange(v.startsWith(t) ? v : `${t} ${v.replace(new RegExp(`^(${types.join("|")})\\s*`), "")}`.trimEnd() + " "); }} className="rounded-full border border-border bg-background px-3 py-1 text-[11px] font-bold hover:border-primary">{t}</button>
+          <Button variant="presentation" size="presentation" key={t} type="button" onClick={() => { const v = value.trim(); onChange(v.startsWith(t) ? v : `${t} ${v.replace(new RegExp(`^(${types.join("|")})\\s*`), "")}`.trimEnd() + " "); }} className="rounded-full border border-border bg-background px-3 py-1 text-[11px] font-bold hover:border-primary">{t}</Button>
         ))}
       </div>
       <label className="mt-3 grid gap-1">
         <span className="text-xs font-bold">اسم المشروع / الشركة / المصنع</span>
         <input autoFocus value={value} onChange={(e) => onChange(e.target.value)} maxLength={80} placeholder="مثال: مصنع أرض الخليج للبلاستيك" className="w-full rounded-md border border-border bg-background px-3 py-2.5 text-sm" />
       </label>
-      <button type="submit" disabled={!value.trim()} className="mt-3 w-full rounded-md bg-skyline px-6 py-3 text-sm font-bold text-skyline-foreground disabled:opacity-50 sm:w-auto">متابعة</button>
+      <Button variant="presentation" size="presentation" type="submit" disabled={!value.trim()} className="mt-3 w-full rounded-md bg-primary px-6 py-3 text-sm font-bold text-primary-foreground disabled:opacity-50 sm:w-auto">متابعة</Button>
     </form>
   );
 }
@@ -143,7 +144,7 @@ export function EcoFeasibility({ mode, onSales, onBuy, onResult, resume }: { mod
 
   if (step === "data") {
     return (
-      <form onSubmit={(e) => { e.preventDefault(); if (filled === 24) setStep("goal"); }} className="rounded-lg border border-border bg-muted/35 p-5">
+      <form onSubmit={(e) => { e.preventDefault(); if (filled === 24) setStep("goal"); }} className="rounded-lg border border-border bg-card p-5">
         <p className="text-sm font-black">{mode === "diesel" ? "بيانات الديزل" : "بيانات الاحمال"} — {project}</p>
         <p className="mt-1 text-xs text-muted-foreground">
           {mode === "diesel" ? "اكتب استهلاك المولد من الديزل في كل ساعة باللتر — اكتب 0 للساعات التي لا يعمل فيها" : "اكتب الحمل المتوقع في كل ساعة بالكيلووات (kW) — اكتب 0 للساعات بلا أحمال"}
@@ -156,7 +157,7 @@ export function EcoFeasibility({ mode, onSales, onBuy, onResult, resume }: { mod
               <input inputMode="decimal" value={daily} onChange={(e) => setDaily(e.target.value)} placeholder="0" className="w-full rounded-md border border-border bg-background px-3 py-2 pe-16 text-sm tabular-nums" />
               <span className="pointer-events-none absolute inset-y-0 end-2 flex items-center text-[10px] text-muted-foreground">{mode === "diesel" ? "لتر/يوم" : "kWh/يوم"}</span>
             </div>
-            <button type="button" onClick={distribute} disabled={!(Number(daily) > 0)} className="rounded-md bg-navy px-3 py-2 text-xs font-bold text-primary-foreground disabled:opacity-50">توزيع على الساعات</button>
+            <Button variant="presentation" size="presentation" type="button" onClick={distribute} disabled={!(Number(daily) > 0)} className="rounded-md bg-navy px-3 py-2 text-xs font-bold text-primary-foreground disabled:opacity-50">توزيع على الساعات</Button>
           </div>
         </div>
         <label className="mt-3 flex cursor-pointer items-center gap-2 text-xs font-bold">
@@ -180,9 +181,9 @@ export function EcoFeasibility({ mode, onSales, onBuy, onResult, resume }: { mod
         </label>
         <p className="mt-3 text-xs text-muted-foreground">تم إدخال {filled} من 24 خانة — تُحفظ البيانات تلقائياً وتبقى عند الدخول مجدداً</p>
         <div className="mt-3 flex flex-wrap gap-2">
-          <button type="submit" disabled={filled !== 24} className="rounded-md bg-skyline px-6 py-3 text-sm font-bold text-skyline-foreground disabled:opacity-50">متابعة</button>
-          <button type="button" onClick={resetData} className="rounded-md border border-destructive/40 px-4 py-2 text-xs font-bold text-destructive hover:bg-destructive/10">مسح وإعادة إدخال البيانات</button>
-          <button type="button" onClick={() => setStep("name")} className="rounded-md border border-border px-4 py-2 text-xs font-bold">رجوع</button>
+          <Button variant="presentation" size="presentation" type="submit" disabled={filled !== 24} className="rounded-md bg-primary px-6 py-3 text-sm font-bold text-primary-foreground disabled:opacity-50">متابعة</Button>
+          <Button variant="presentation" size="presentation" type="button" onClick={resetData} className="rounded-md border border-destructive/40 px-4 py-2 text-xs font-bold text-destructive hover:bg-destructive/10">مسح وإعادة إدخال البيانات</Button>
+          <Button variant="presentation" size="presentation" type="button" onClick={() => setStep("name")} className="rounded-md border border-border px-4 py-2 text-xs font-bold">رجوع</Button>
         </div>
       </form>
     );
@@ -190,19 +191,19 @@ export function EcoFeasibility({ mode, onSales, onBuy, onResult, resume }: { mod
 
   if (step === "goal") {
     return (
-      <div className="rounded-lg border border-border bg-muted/35 p-5">
+      <div className="rounded-lg border border-border bg-card p-5">
         <p className="text-sm font-black">ما هدفك من المنظومة؟</p>
         <p className="mt-1 text-xs text-muted-foreground">اختر الهدف لنعرض لك ثلاثة سيناريوهات مناسبة لمشروع {project}.</p>
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           {(Object.keys(GOALS) as Goal[]).map((g) => (
-            <button key={g} type="button" onClick={() => { if (onResult?.({ goal: g })) return; setGoal(g); setPick(1); setStep("result"); }} className="rounded-lg border border-border bg-background p-4 text-start transition hover:border-primary">
+            <Button variant="presentation" size="presentation" key={g} type="button" onClick={() => { if (onResult?.({ goal: g })) return; setGoal(g); setPick(1); setStep("result"); }} className="rounded-lg border border-border bg-background p-4 text-start transition hover:border-primary">
               <p className="text-sm font-black">{GOALS[g].title}</p>
               <p className="mt-1 text-[11px] text-muted-foreground">{GOALS[g].note}</p>
               <p className="mt-2 text-[11px] font-bold text-primary">{GOALS[g].levels.map((l) => `${Math.round(l.t * 100)}%`).join(" • ")}</p>
-            </button>
+            </Button>
           ))}
         </div>
-        <button type="button" onClick={() => setStep("data")} className="mt-4 rounded-md border border-border px-4 py-2 text-xs font-bold">رجوع</button>
+        <Button variant="presentation" size="presentation" type="button" onClick={() => setStep("data")} className="mt-4 rounded-md border border-border px-4 py-2 text-xs font-bold">رجوع</Button>
       </div>
     );
   }
@@ -218,7 +219,7 @@ export function EcoFeasibility({ mode, onSales, onBuy, onResult, resume }: { mod
           <p className="text-sm font-black">{GOALS[goal].title} — {project}</p>
           <p className="text-[11px] text-muted-foreground">حمل يومي {nf(s.total, 1)} kWh • اختر السيناريو المناسب</p>
         </div>
-        <button type="button" onClick={() => setStep("goal")} className="rounded-md border border-border px-3 py-1.5 text-xs font-bold">تغيير الهدف</button>
+        <Button variant="presentation" size="presentation" type="button" onClick={() => setStep("goal")} className="rounded-md border border-border px-3 py-1.5 text-xs font-bold">تغيير الهدف</Button>
       </div>
       <div className="grid gap-3 lg:grid-cols-3">
         {levels.map((l, i) => {
@@ -248,22 +249,22 @@ export function EcoFeasibility({ mode, onSales, onBuy, onResult, resume }: { mod
               </dl>
               <p className="mt-3 text-[11px] font-bold text-muted-foreground">التقرير الكامل</p>
               <div className="mt-1.5 flex gap-2">
-                <button type="button" onClick={(e) => { e.stopPropagation(); setOpen(i); }} className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-md border border-border bg-background px-2 py-1.5 text-[11px] font-bold hover:border-primary"><FileText className="size-3.5" /> فتح</button>
-                <button type="button" disabled={dl !== null} onClick={(e) => { e.stopPropagation(); setDl(i); }} className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-md bg-navy px-2 py-1.5 text-[11px] font-bold text-primary-foreground disabled:opacity-60"><Download className="size-3.5" /> {dl === i ? "جارٍ..." : "تحميل"}</button>
+                <Button variant="presentation" size="presentation" type="button" onClick={(e) => { e.stopPropagation(); setOpen(i); }} className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-md border border-border bg-background px-2 py-1.5 text-[11px] font-bold hover:border-primary"><FileText className="size-3.5" /> فتح</Button>
+                <Button variant="presentation" size="presentation" type="button" disabled={dl !== null} onClick={(e) => { e.stopPropagation(); setDl(i); }} className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-md bg-navy px-2 py-1.5 text-[11px] font-bold text-primary-foreground disabled:opacity-60"><Download className="size-3.5" /> {dl === i ? "جارٍ..." : "تحميل"}</Button>
               </div>
             </div>
           );
         })}
       </div>
       {onBuy && (
-        <button type="button" onClick={() => onBuy(`${loadsText()}\nproject: ${project}\nscenario: ${levels[pick]!.label} — ${nf(s.kwp, 2)} kWp / ${nf(s.batKwh, 1)} kWh / ${s.inv}`)} className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-border bg-card text-foreground hover:border-energy px-6 py-3 text-sm font-black transition"><ShoppingCart className="size-4 text-energy" />
+        <Button variant="presentation" size="presentation" type="button" onClick={() => onBuy(`${loadsText()}\nproject: ${project}\nscenario: ${levels[pick]!.label} — ${nf(s.kwp, 2)} kWp / ${nf(s.batKwh, 1)} kWh / ${s.inv}`)} className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-border bg-card text-foreground hover:border-energy px-6 py-3 text-sm font-black transition"><ShoppingCart className="size-4 text-energy" />
           متابعة الشراء — {levels[pick]!.label}
-        </button>
+        </Button>
       )}
       <p className="text-[11px] text-muted-foreground">الأرقام تقديرية: {PSH} ساعات ذروة شمسية، {KWH_PER_L} kWh لكل لتر ديزل، وأسعار معدات متوسطة. السعر النهائي يُحدد في عرض السعر.</p>
       <div className="flex flex-wrap gap-2">
-        <button type="button" onClick={() => setStep("data")} className="rounded-md border border-border px-4 py-2 text-xs font-bold">تعديل البيانات</button>
-        {onSales && <button type="button" onClick={onSales} className="rounded-md border border-border px-4 py-2 text-xs font-bold">تواصل مع فريق تمكين للحلول التقنية والهندسية</button>}
+        <Button variant="presentation" size="presentation" type="button" onClick={() => setStep("data")} className="rounded-md border border-border px-4 py-2 text-xs font-bold">تعديل البيانات</Button>
+        {onSales && <Button variant="presentation" size="presentation" type="button" onClick={onSales} className="rounded-md border border-border px-4 py-2 text-xs font-bold">تواصل مع فريق تمكين للحلول التقنية والهندسية</Button>}
       </div>
       {open !== null && <ReportModal onClose={() => setOpen(null)}>{reportFor(open, {})}</ReportModal>}
       {dl !== null && (
@@ -355,16 +356,16 @@ export function EcoSystemStudy({ onSales, onResult, resume }: { onSales?: () => 
       {k === "bat" && (
         <span className="grid grid-cols-2 gap-1.5">
           {([["bat", "بطاريات"], ["cab", "كبائن"]] as const).map(([t, l]) => (
-            <button key={t} type="button" onClick={() => { setBatType(t); setF({ ...f, bat: "", batKwh: "" }); }} className={`rounded-md border px-2 py-1.5 text-xs font-bold transition ${batType === t ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card"}`}>{l}</button>
+            <Button variant="presentation" size="presentation" key={t} type="button" onClick={() => { setBatType(t); setF({ ...f, bat: "", batKwh: "" }); }} className={`rounded-md border px-2 py-1.5 text-xs font-bold transition ${batType === t ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card"}`}>{l}</Button>
           ))}
         </span>
       )}
       {qs.length > 0 && (
         <span className="flex flex-wrap gap-1.5">
           {qs.map((q) => (
-            <button key={q} type="button" onClick={() => pickQuick(k, q)} className={`flex-1 rounded-md border px-2 py-1.5 text-xs font-bold transition ${!manual.has(k) && f[k] === q ? "border-brand bg-brand text-brand-foreground" : "border-border bg-card hover:border-brand/50"}`}>{q}</button>
+            <Button variant="presentation" size="presentation" key={q} type="button" onClick={() => pickQuick(k, q)} className={`flex-1 rounded-md border px-2 py-1.5 text-xs font-bold transition ${!manual.has(k) && f[k] === q ? "border-brand bg-brand text-brand-foreground" : "border-border bg-card hover:border-brand/50"}`}>{q}</Button>
           ))}
-          <button type="button" onClick={() => { setManual((m) => new Set(m).add(k)); setF({ ...f, [k]: "" }); }} className={`rounded-md border px-2 py-1.5 text-xs font-bold transition ${manual.has(k) ? "border-brand bg-brand text-brand-foreground" : "border-border bg-card"}`}>أخرى</button>
+          <Button variant="presentation" size="presentation" type="button" onClick={() => { setManual((m) => new Set(m).add(k)); setF({ ...f, [k]: "" }); }} className={`rounded-md border px-2 py-1.5 text-xs font-bold transition ${manual.has(k) ? "border-brand bg-brand text-brand-foreground" : "border-border bg-card"}`}>أخرى</Button>
         </span>
       )}
       {showInput && <input inputMode={num ? "decimal" : "text"} value={f[k]} placeholder={ph} onChange={(e) => setF({ ...f, [k]: e.target.value })} className="rounded-md border border-border bg-background px-3 py-2 text-sm" />}
@@ -385,7 +386,7 @@ export function EcoSystemStudy({ onSales, onResult, resume }: { onSales?: () => 
 
   if (!done) {
     return (
-      <form onSubmit={(e) => { e.preventDefault(); if (ok) { if (onResult?.({ f, batType, lm, pf })) return; setDone(true); } }} className="rounded-lg border border-border bg-muted/35 p-5">
+      <form onSubmit={(e) => { e.preventDefault(); if (ok) { if (onResult?.({ f, batType, lm, pf })) return; setDone(true); } }} className="rounded-lg border border-border bg-card p-5">
         <p className="text-sm font-black">بيانات المنظومة — {project}</p>
         <p className="mt-1 text-xs text-muted-foreground">اكتب مكونات منظومتك الجاهزة وتكلفتها لنحسب جدواها الاقتصادية.</p>
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
@@ -405,11 +406,11 @@ export function EcoSystemStudy({ onSales, onResult, resume }: { onSales?: () => 
         <div className="mt-5 rounded-md border border-border bg-background p-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <p className="text-xs font-black">بيانات الأحمال <span className="font-normal text-muted-foreground">(مطلوب — لحساب التغطية والتوفير الفعلي؛ تُحفظ تلقائياً وتبقى عند الدخول مجدداً)</span></p>
-            <button type="button" onClick={resetHrs} className="rounded-md border border-destructive/40 px-3 py-1.5 text-[11px] font-bold text-destructive hover:bg-destructive/10">مسح وإعادة إدخال البيانات</button>
+            <Button variant="presentation" size="presentation" type="button" onClick={resetHrs} className="rounded-md border border-destructive/40 px-3 py-1.5 text-[11px] font-bold text-destructive hover:bg-destructive/10">مسح وإعادة إدخال البيانات</Button>
           </div>
           <div className="mt-2 flex flex-wrap gap-2">
             {([["loads", "بيانات الأحمال (kW)"], ["diesel", "بيانات الديزل (لتر/ساعة)"]] as const).map(([k, l]) => (
-              <button key={k} type="button" onClick={() => setLm(k)} className={`rounded-md border px-3 py-1.5 text-xs font-bold ${lm === k ? "border-primary bg-primary text-primary-foreground" : "border-border"}`}>{l}</button>
+              <Button variant="presentation" size="presentation" key={k} type="button" onClick={() => setLm(k)} className={`rounded-md border px-3 py-1.5 text-xs font-bold ${lm === k ? "border-primary bg-primary text-primary-foreground" : "border-border"}`}>{l}</Button>
             ))}
           </div>
           <LoadPdfImport onApply={(v, c) => { setLm("loads"); setHrs(v); if (c?.trim()) { setProject(c.trim()); try { sessionStorage.setItem(PROJECT_KEY, c.trim()); } catch { /* ignore */ } } }} />
@@ -418,12 +419,12 @@ export function EcoSystemStudy({ onSales, onResult, resume }: { onSales?: () => 
               <div className="flex flex-wrap items-end gap-2">
                 <label className="grid gap-1"><span className="text-xs font-bold">الإجمالي ليوم واحد ({lm === "diesel" ? "لتر/يوم" : "kWh/يوم"})</span>
                   <input inputMode="decimal" value={total} onChange={(e) => setTotal(e.target.value)} placeholder={lm === "diesel" ? "120" : "400"} className="w-36 rounded-md border border-border bg-background px-3 py-2 text-sm" /></label>
-                <button type="button" disabled={!n(total)} onClick={() => setHrs(spread(n(total)))} className="rounded-md bg-skyline px-3 py-2 text-xs font-bold text-skyline-foreground disabled:opacity-50">توزيع على الـ 24 ساعة</button>
+                <Button variant="presentation" size="presentation" type="button" disabled={!n(total)} onClick={() => setHrs(spread(n(total)))} className="rounded-md bg-primary px-3 py-2 text-xs font-bold text-primary-foreground disabled:opacity-50">توزيع على الـ 24 ساعة</Button>
               </div>
               <div className="flex flex-wrap items-end gap-2">
                 <label className="grid gap-1"><span className="text-xs font-bold">قيمة واحدة لكل ساعة ({lm === "diesel" ? "لتر/ساعة" : "kW"})</span>
                   <input inputMode="decimal" value={one} onChange={(e) => setOne(e.target.value)} className="w-36 rounded-md border border-border bg-background px-3 py-2 text-sm" /></label>
-                <button type="button" disabled={!n(one)} onClick={() => setHrs(Array(24).fill(one))} className="rounded-md border border-border px-3 py-2 text-xs font-bold disabled:opacity-50">اعتماد نفس القيمة لكل الساعات</button>
+                <Button variant="presentation" size="presentation" type="button" disabled={!n(one)} onClick={() => setHrs(Array(24).fill(one))} className="rounded-md border border-border px-3 py-2 text-xs font-bold disabled:opacity-50">اعتماد نفس القيمة لكل الساعات</Button>
               </div>
               <div className="grid grid-cols-4 gap-1.5 sm:grid-cols-6">
                 {hrs.map((v, h) => (
@@ -451,8 +452,8 @@ export function EcoSystemStudy({ onSales, onResult, resume }: { onSales?: () => 
           </div>
         )}
         <div className="mt-4 flex flex-wrap gap-2">
-          <button type="submit" disabled={!ok} className="w-full rounded-md bg-skyline px-6 py-3 text-sm font-bold text-skyline-foreground disabled:opacity-50 sm:w-auto">احسب الجدوى الاقتصادية</button>
-          <button type="button" onClick={() => setMerge(!merge)} className={`rounded-md border px-5 py-3 text-sm font-bold transition ${merge ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card hover:border-primary/50"}`}>{merge ? "إلغاء الدمج" : "دمج مع منظومة سابقة"}</button>
+          <Button variant="presentation" size="presentation" type="submit" disabled={!ok} className="w-full rounded-md bg-primary px-6 py-3 text-sm font-bold text-primary-foreground disabled:opacity-50 sm:w-auto">احسب الجدوى الاقتصادية</Button>
+          <Button variant="presentation" size="presentation" type="button" onClick={() => setMerge(!merge)} className={`rounded-md border px-5 py-3 text-sm font-bold transition ${merge ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card hover:border-primary/50"}`}>{merge ? "إلغاء الدمج" : "دمج مع منظومة سابقة"}</Button>
         </div>
       </form>
     );
@@ -506,17 +507,17 @@ export function EcoSystemStudy({ onSales, onResult, resume }: { onSales?: () => 
       </div>
       <p className="text-[11px] text-muted-foreground">الأرقام تقديرية: {PSH} ساعات ذروة شمسية، بدون فواقد أداء، {KWH_PER_L} kWh لكل لتر ديزل، بدون خصومات صيانة أو تدهور.</p>
       <div className="flex flex-wrap gap-2">
-        <button type="button" onClick={() => setShowReport(true)} className="inline-flex items-center gap-2 rounded-md bg-navy px-5 py-2.5 text-xs font-black text-primary-foreground"><FileText className="size-4" /> فتح تقرير الدراسة الاقتصادية</button>
-        <button type="button" onClick={() => setDone(false)} className="rounded-md border border-border px-4 py-2 text-xs font-bold">تعديل البيانات</button>
-        {onSales && <button type="button" onClick={onSales} className="rounded-md border border-border px-4 py-2 text-xs font-bold">تواصل مع فريق تمكين للحلول التقنية والهندسية</button>}
+        <Button variant="presentation" size="presentation" type="button" onClick={() => setShowReport(true)} className="inline-flex items-center gap-2 rounded-md bg-navy px-5 py-2.5 text-xs font-black text-primary-foreground"><FileText className="size-4" /> فتح تقرير الدراسة الاقتصادية</Button>
+        <Button variant="presentation" size="presentation" type="button" onClick={() => setDone(false)} className="rounded-md border border-border px-4 py-2 text-xs font-bold">تعديل البيانات</Button>
+        {onSales && <Button variant="presentation" size="presentation" type="button" onClick={onSales} className="rounded-md border border-border px-4 py-2 text-xs font-bold">تواصل مع فريق تمكين للحلول التقنية والهندسية</Button>}
       </div>
       {showReport && typeof document !== "undefined" && createPortal(
         <div className="fixed inset-0 z-[100] flex flex-col bg-navy/80 p-2 backdrop-blur-sm sm:p-4" role="dialog" aria-modal="true">
-          <div className="mx-auto flex h-full w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-2xl">
+          <div className="mx-auto flex h-full w-full max-w-4xl flex-col overflow-hidden rounded-lg border border-border bg-card shadow-2xl">
             <div className="flex items-center gap-2 border-b border-border px-3 py-2">
               <FileText className="size-4 shrink-0 text-brand" />
               <span className="flex-1 truncate text-xs font-black text-navy lg:text-sm">تقرير دراسة الجدوى الاقتصادية — TAMKEEN</span>
-              <button type="button" onClick={() => setShowReport(false)} aria-label="إغلاق" className="grid size-7 place-items-center rounded-full bg-muted text-navy transition hover:bg-border"><X className="size-4" /></button>
+              <Button variant="presentation" size="presentation" type="button" onClick={() => setShowReport(false)} aria-label="إغلاق" className="grid size-7 place-items-center rounded-full bg-muted text-navy transition hover:bg-border"><X className="size-4" /></Button>
             </div>
             <div className="flex-1 overflow-auto bg-muted p-2 sm:p-4">
               <EcoReport kw={reportKw} price={dp} project={project} system={prevSys ? { ...sys, prev: prevSys } : sys} onEdit={() => { setShowReport(false); setDone(false); }} onSales={onSales} />

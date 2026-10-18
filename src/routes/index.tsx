@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { TamkeenBrand } from "@/components/tamkeen-brand";
 import { LoadPdfImport } from "@/components/load-pdf-import";
 import { useCorporateMode } from "@/lib/corporate-mode";
 import { createFileRoute } from "@tanstack/react-router";
@@ -74,6 +76,8 @@ import {
   PlugZap,
   Users,
   Factory,
+  PanelRightClose,
+  PanelRightOpen,
 } from "lucide-react";
 import residentialImage from "@/assets/arsh-residential.webp";
 import commercialImage from "@/assets/arsh-commercial.webp";
@@ -761,6 +765,7 @@ function ActesApp() {
 
 
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   // «تعرف على منتجاتنا»: شاشة معلوماتية مستقلة لا تمر بمحرك عروض الأسعار
   const [catalog, setCatalog] = useState<{ productId: string | null; fromQuote?: boolean | undefined } | null>(null);
   // فتح مباشر لمنتج عبر الرابط/رمز QR: /?product=<id>
@@ -809,7 +814,7 @@ function ActesApp() {
         <div className="space-y-4">
           <p className="text-lg font-bold text-foreground">تم الخروج من البرنامج</p>
           <p className="text-sm text-muted-foreground">يمكنك إغلاق النافذة الآن</p>
-          <button type="button" onClick={() => setGate("app")} className="rounded-md bg-brand px-4 py-2 text-sm font-bold text-brand-foreground">فتح البرنامج مرة أخرى</button>
+          <Button variant="presentation" size="presentation" type="button" onClick={() => setGate("app")} className="rounded-md bg-brand px-4 py-2 text-sm font-bold text-brand-foreground">فتح البرنامج مرة أخرى</Button>
         </div>
       </div>
     );
@@ -845,12 +850,12 @@ function ActesApp() {
       ) : (
 
       <div className="flex h-dvh w-full items-stretch justify-center overflow-hidden bg-background p-0">
-       <div className="flex h-full w-full max-w-full flex-col overflow-hidden border-border bg-card lg:grid lg:grid-rows-[minmax(0,1fr)_auto] lg:grid-cols-[minmax(0,1fr)_220px]">
+       <div className={`flex h-full w-full max-w-full flex-col overflow-hidden border-border bg-background lg:grid lg:grid-rows-[minmax(0,1fr)_auto] ${sidebarCollapsed ? "lg:grid-cols-[minmax(0,1fr)_64px]" : "lg:grid-cols-[minmax(0,1fr)_220px]"}`}>
 
-      <AppSidebar active={isHome ? "home" : "quote"} onNavigate={navFromMenu} onSettings={() => setSettingsOpen(true)} onExit={leaveApp} />
+      <AppSidebar collapsed={sidebarCollapsed} active={catalog ? "products" : isHome ? "home" : step.startsWith("sup_") ? "support" : step.startsWith("eco_") || step.startsWith("pv_") || step === "energy_menu" || step === "sld_custom" ? "energy" : "quote"} onNavigate={navFromMenu} onSettings={() => setSettingsOpen(true)} onExit={leaveApp} />
       <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden lg:col-start-1 lg:row-start-1">
-        <TopBar isAdmin={isAdmin} clientName={clientName} onExitAdmin={exitAdmin} onSettings={() => setSettingsOpen(true)} onExit={leaveApp} />
-         <main ref={mainRef} className={`mx-auto flex w-full min-h-0 flex-1 px-3 py-3 pb-24 sm:px-6 lg:px-8 lg:pb-4 xl:px-10 2xl:px-14 ${isHome && !catalog ? "overflow-hidden" : "overflow-y-auto"}`}>
+        <TopBar onToggleSidebar={() => setSidebarCollapsed((v) => !v)} sidebarCollapsed={sidebarCollapsed} isAdmin={isAdmin} clientName={clientName} onExitAdmin={exitAdmin} onSettings={() => setSettingsOpen(true)} onExit={leaveApp} />
+         <main ref={mainRef} className="app-main mx-auto flex w-full min-h-0 flex-1 overflow-y-auto px-3 py-3 pb-24 sm:px-6 lg:px-8 lg:pb-4">
           {busy && (
             // شريط تقدّم رفيع لا يحجب الشاشة ولا يقطع سلاسة الانتقال بين الخطوات
             <div role="status" aria-label="جارٍ تجهيز الخطوة التالية" className="thin-progress fixed inset-x-0 top-0 z-50 h-0.5 overflow-hidden bg-brand/15" />
@@ -893,7 +898,7 @@ function ActesApp() {
         <TeamContact />
       </div>
       <AppFooter />
-      <MobileNav active={isHome ? "home" : "quote"} onNavigate={navFromMenu} onSettings={() => setSettingsOpen(true)} />
+      <MobileNav onProducts={() => { setCatalog({ productId: null }); mainRef.current?.scrollTo({ top: 0 }); }} active={catalog ? "products" : isHome ? "home" : step.startsWith("sup_") ? "support" : step.startsWith("eco_") || step.startsWith("pv_") || step === "energy_menu" || step === "sld_custom" ? "energy" : "quote"} onNavigate={navFromMenu} onSettings={() => setSettingsOpen(true)} />
       <SettingsPanel
         open={settingsOpen}
         onClose={() => setSettingsOpen(false)}
@@ -942,20 +947,20 @@ function AccountChoice({ onClient, onAdmin }: { onClient: () => void; onAdmin: (
         <h1 className="mt-2 text-xl font-black leading-8 text-foreground sm:text-2xl">تمكين للحلول التقنية والهندسية</h1>
         <p className="mt-2 text-sm leading-6 text-muted-foreground">اختر طريقة الدخول للمتابعة</p>
 
-        <button
+        <Button variant="presentation" size="presentation"
           type="button"
           onClick={onClient}
           className="mt-6 inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-brand text-lg font-black text-brand-foreground shadow-lg transition hover:opacity-90 active:scale-[0.99]"
         >
           <UserCircle className="size-5" /> دخول العميل
-        </button>
-        <button
+        </Button>
+        <Button variant="presentation" size="presentation"
           type="button"
           onClick={onAdmin}
           className="mt-3 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-border text-sm font-bold text-foreground transition hover:bg-muted"
         >
           <ShieldCheck className="size-4" /> دخول المشرف
-        </button>
+        </Button>
         <p className="mt-5 text-[11px] font-semibold text-muted-foreground">تمكين للحلول التقنية والهندسية — جميع الحقوق محفوظة</p>
       </div>
     </main>
@@ -965,37 +970,37 @@ function AccountChoice({ onClient, onAdmin }: { onClient: () => void; onAdmin: (
 // شاشة «ابدأ» للمسجل سابقاً: زر واحد فقط
 function StartScreen({ clientName, onStart }: { clientName: string; onStart: () => void }) {
   return (
-    <main className="relative h-dvh w-full overflow-hidden bg-overlay text-white" dir="rtl">
+    <main className="start-screen relative h-dvh w-full overflow-hidden bg-overlay text-navy-foreground" dir="rtl">
       <img src={startBgMobile} alt="" width={896} height={1600} className="absolute inset-0 size-full object-cover lg:hidden" />
       <img src={startBgDesktop} alt="" width={1920} height={1088} className="absolute inset-0 hidden size-full object-cover lg:block" />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--overlay)_70%,transparent)_0%,color-mix(in_oklab,var(--overlay)_30%,transparent)_45%,color-mix(in_oklab,var(--overlay)_88%,transparent)_100%)]" />
 
-      <div className="relative z-10 grid h-full place-items-center overflow-y-auto px-6 py-10">
+      <div className="start-screen-content relative z-10 grid h-full place-items-center overflow-y-auto px-6 py-10">
         <div className="flex w-full max-w-lg flex-col items-center text-center">
-          <img src={actesSplashLogo} alt="TAMKEEN — تمكين للحلول التقنية والهندسية" className="h-36 w-auto object-contain lg:h-44" />
-          <p className="mt-5 text-[11px] font-black tracking-[0.34em] text-white lg:text-xs lg:tracking-[0.42em]" dir="ltr">TAMKEEN</p>
+          <TamkeenBrand inverse />
+          <p className="mt-5 text-[11px] font-black text-navy-foreground lg:text-xs" dir="ltr">TAMKEEN</p>
           <h1 className="mt-3 text-2xl font-black leading-tight lg:text-4xl">
-            {clientName ? `مرحباً بك، ${clientName}` : "مرحباً بك في نظام تمكين للحلول التقنية والهندسية"}
+            {clientName ? `مرحباً بك، ${clientName}` : <>مرحباً بك في نظام تمكين<br /><span>للحلول التقنية والهندسية</span></>}
           </h1>
           <p className="mt-3 max-w-md text-sm leading-7 opacity-80 lg:text-base">
             صمّم منظومتك واحصل على عرض سعر رسمي ودراسة ومخطط معتمد.
           </p>
 
-          <div className="mt-6 flex flex-wrap justify-center gap-2">
+          <div className="start-screen-sectors mt-6 flex flex-wrap justify-center gap-2">
             {START_SECTORS.map((sector) => (
-              <span key={sector} className="rounded-full border border-white/30 px-4 py-1.5 text-xs font-bold">
+              <span key={sector} className="rounded-full border border-gold px-4 py-1.5 text-xs font-bold">
                 {sector}
               </span>
             ))}
           </div>
 
-          <button
+          <Button variant="presentation" size="presentation"
             type="button"
             onClick={onStart}
-            className="mt-9 inline-flex h-16 w-full max-w-sm items-center justify-center gap-3 rounded-2xl bg-brand text-xl font-black text-brand-foreground shadow-2xl transition hover:opacity-90 active:scale-[0.99]"
+            className="start-screen-cta mt-9 inline-flex h-16 w-full max-w-sm items-center justify-center gap-3 bg-brand text-xl font-black text-brand-foreground transition hover:opacity-90 active:scale-[0.99]"
           >
             ابدأ
-          </button>
+          </Button>
 
           <p className="mt-8 text-[11px] font-semibold opacity-70">تمكين للحلول التقنية والهندسية — جميع الحقوق محفوظة</p>
         </div>
@@ -1025,26 +1030,26 @@ function SettingsPanel({ open, onClose, isAdmin, clientName = "", onRestart, onS
             <span className="font-bold">نوع الحساب</span>
             <span className="font-semibold text-muted-foreground">{isAdmin ? "إدارة TAMKEEN" : clientName ? `عميل — ${clientName}` : "عميل"}</span>
           </div>
-          <button type="button" onClick={onRestart} className="flex w-full items-center gap-3 rounded-md border border-border px-4 py-3 text-sm font-bold transition hover:bg-muted">
+          <Button variant="presentation" size="presentation" type="button" onClick={onRestart} className="flex w-full items-center gap-3 rounded-md border border-border px-4 py-3 text-sm font-bold transition hover:bg-muted">
             <RotateCcw className="size-4" /> بدء محادثة جديدة من البداية
-          </button>
-          <button type="button" onClick={onSwitchClient} className="flex w-full items-center gap-3 rounded-md border border-border px-4 py-3 text-sm font-bold transition hover:bg-muted">
+          </Button>
+          <Button variant="presentation" size="presentation" type="button" onClick={onSwitchClient} className="flex w-full items-center gap-3 rounded-md border border-border px-4 py-3 text-sm font-bold transition hover:bg-muted">
             <UserCircle className="size-4" /> تسجيل الدخول بحساب آخر
-          </button>
+          </Button>
           {isAdmin ? (
-            <button type="button" onClick={onAdminLogout} className="flex w-full items-center gap-3 rounded-md border border-border px-4 py-3 text-sm font-bold transition hover:bg-muted">
+            <Button variant="presentation" size="presentation" type="button" onClick={onAdminLogout} className="flex w-full items-center gap-3 rounded-md border border-border px-4 py-3 text-sm font-bold transition hover:bg-muted">
               <LogOut className="size-4" /> العودة إلى وضع العميل
-            </button>
+            </Button>
           ) : (
-            <button type="button" onClick={onAdminLogin} className="flex w-full items-center gap-3 rounded-md border border-border px-4 py-3 text-sm font-bold transition hover:bg-muted">
+            <Button variant="presentation" size="presentation" type="button" onClick={onAdminLogin} className="flex w-full items-center gap-3 rounded-md border border-border px-4 py-3 text-sm font-bold transition hover:bg-muted">
               <ShieldCheck className="size-4" /> التبديل إلى وضع المشرف
-            </button>
+            </Button>
           )}
           <UpdateButton />
         </div>
-        <button type="button" onClick={onClose} className="mt-5 w-full rounded-md bg-brand px-4 py-3 text-sm font-black text-brand-foreground transition hover:opacity-90">
+        <Button variant="presentation" size="presentation" type="button" onClick={onClose} className="mt-5 w-full rounded-md bg-brand px-4 py-3 text-sm font-black text-brand-foreground transition hover:opacity-90">
           إغلاق
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -1076,9 +1081,9 @@ function UpdateButton() {
   const note = state === "checking" ? "جارٍ البحث عن تحديث…" : state === "offline" ? "لا يوجد اتصال بالإنترنت — تعمل النسخة المحلية" : state === "latest" ? "أنت على أحدث نسخة" : "";
   return (
     <div>
-      <button type="button" onClick={check} disabled={state === "checking"} className="flex w-full items-center gap-3 rounded-md border border-border px-4 py-3 text-sm font-bold transition hover:bg-muted disabled:opacity-60">
+      <Button variant="presentation" size="presentation" type="button" onClick={check} disabled={state === "checking"} className="flex w-full items-center gap-3 rounded-md border border-border px-4 py-3 text-sm font-bold transition hover:bg-muted disabled:opacity-60">
         <RotateCcw className="size-4" /> تحديث التطبيق (عند توفر الإنترنت)
-      </button>
+      </Button>
       {note ? <p className="mt-1 px-1 text-xs font-semibold text-muted-foreground">{note}</p> : null}
     </div>
   );
@@ -1124,15 +1129,15 @@ function ClientLogin({ onSuccess, onCancel }: { onSuccess: (name: string, code: 
           className="mt-2 h-12 w-full rounded-lg border border-border bg-background px-4 text-base outline-none transition focus:border-brand"
         />
         {error && <p className="mt-2 text-xs font-bold text-destructive">{error}</p>}
-        <button
+        <Button variant="presentation" size="presentation"
           type="submit"
           className="mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-brand text-base font-black text-brand-foreground transition hover:opacity-90"
         >
           دخول
-        </button>
-        <button type="button" onClick={onCancel} className="mt-3 w-full text-center text-xs font-bold text-muted-foreground transition hover:text-foreground">
+        </Button>
+        <Button variant="presentation" size="presentation" type="button" onClick={onCancel} className="mt-3 w-full text-center text-xs font-bold text-muted-foreground transition hover:text-foreground">
           رجوع
-        </button>
+        </Button>
       </form>
     </main>
   );
@@ -1177,15 +1182,15 @@ function ClientLoginDialog({ onSuccess, onCancel }: { onSuccess: (name: string, 
           className="mt-1.5 h-11 w-full rounded-lg border border-border bg-background px-3 text-sm outline-none transition focus:border-brand"
         />
         {error && <p className="mt-2 text-[11px] font-bold text-destructive">{error}</p>}
-        <button
+        <Button variant="presentation" size="presentation"
           type="submit"
           className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-lg bg-brand text-sm font-black text-brand-foreground transition hover:opacity-90"
         >
           دخول ومتابعة
-        </button>
-        <button type="button" onClick={onCancel} className="mt-2 w-full text-center text-[11px] font-bold text-muted-foreground transition hover:text-foreground">
+        </Button>
+        <Button variant="presentation" size="presentation" type="button" onClick={onCancel} className="mt-2 w-full text-center text-[11px] font-bold text-muted-foreground transition hover:text-foreground">
           إلغاء
-        </button>
+        </Button>
       </form>
     </div>
   );
@@ -1232,16 +1237,16 @@ function AdminLogin({ onSuccess, onCancel }: { onSuccess: (password: string) => 
           className="mt-6 h-12 w-full rounded-lg border border-border bg-background px-4 text-base outline-none transition focus:border-brand"
         />
         {error && <p className="mt-2 text-xs font-bold text-destructive">كلمة المرور غير صحيحة</p>}
-        <button
+        <Button variant="presentation" size="presentation"
           type="submit"
           disabled={loading}
           className="mt-5 inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-brand text-base font-black text-brand-foreground transition hover:opacity-90 disabled:opacity-60"
         >
           {loading ? <Loader2 className="size-5 animate-spin" /> : null} دخول
-        </button>
-        <button type="button" onClick={onCancel} className="mt-3 w-full text-center text-xs font-bold text-muted-foreground transition hover:text-foreground">
+        </Button>
+        <Button variant="presentation" size="presentation" type="button" onClick={onCancel} className="mt-3 w-full text-center text-xs font-bold text-muted-foreground transition hover:text-foreground">
           رجوع
-        </button>
+        </Button>
 
       </form>
     </main>
@@ -1251,10 +1256,10 @@ function AdminLogin({ onSuccess, onCancel }: { onSuccess: (password: string) => 
 function CorporateToggle() {
   const [on, toggle] = useCorporateMode();
   return (
-    <button type="button" onClick={toggle} aria-pressed={on} title={on ? "الوضع المصوّر" : "الوضع الرئيسي"} className="inline-flex items-center gap-2 rounded-full bg-skyline px-4 py-2 text-[13px] font-bold text-skyline-foreground shadow-sm transition hover:opacity-90">
+    <Button variant="presentation" size="presentation" type="button" onClick={toggle} aria-pressed={on} title={on ? "الوضع المصوّر" : "الوضع الرئيسي"} className="inline-flex items-center gap-2 rounded-full bg-skyline px-4 py-2 text-[13px] font-bold text-skyline-foreground shadow-sm transition hover:opacity-90">
       <span className="hidden sm:inline">{on ? "الوضع المصوّر" : "الوضع الرئيسي"}</span>
       {on ? <ImageIcon className="size-5" /> : <LayoutGrid className="size-5" />}
-    </button>
+    </Button>
   );
 }
 
@@ -1292,21 +1297,15 @@ function CorporateWelcome({ onClient, onAdmin }: { onClient: () => void; onAdmin
       <div className="w-full max-w-md rounded-xl border border-sidebar-foreground/15 bg-card p-8 text-center text-foreground shadow-2xl">
         <div className="flex justify-center"><BrandMark /></div>
         <p className="mt-3 text-xs text-muted-foreground">نظام تمكين للحلول التقنية والهندسية لأنظمة الطاقة</p>
-        <button type="button" onClick={onClient} className="mt-6 h-12 w-full rounded-lg bg-brand text-base font-black text-brand-foreground transition hover:opacity-90">الدخول كعميل</button>
-        <button type="button" onClick={onAdmin} className="mt-3 h-12 w-full rounded-lg border border-border text-base font-bold transition hover:bg-muted">دخول الإدارة</button>
+        <Button variant="presentation" size="presentation" type="button" onClick={onClient} className="mt-6 h-12 w-full rounded-lg bg-brand text-base font-black text-brand-foreground transition hover:opacity-90">الدخول كعميل</Button>
+        <Button variant="presentation" size="presentation" type="button" onClick={onAdmin} className="mt-3 h-12 w-full rounded-lg border border-border text-base font-bold transition hover:bg-muted">دخول الإدارة</Button>
       </div>
     </main>
   );
 }
 
 function BrandLockup() {
-  return (
-    <div className="flex flex-col items-center gap-1 text-center" aria-label="TAMKEEN — تمكين للحلول التقنية والهندسية">
-      <img src={actesMark} alt="" className="h-11 w-auto" />
-      <p className="text-[17px] font-black leading-none tracking-wide text-skyline-foreground" dir="ltr">TAMKEEN</p>
-      <p className="text-[10px] font-bold leading-3 text-skyline-foreground/90">تمكين للحلول التقنية والهندسية</p>
-    </div>
-  );
+  return <TamkeenBrand inverse className="flex-col" />;
 }
 
 function BrandMark({ compact = false, className, white = false }: { inverse?: boolean; compact?: boolean; className?: string; white?: boolean }) {
@@ -1318,17 +1317,16 @@ function BrandMark({ compact = false, className, white = false }: { inverse?: bo
 }
 
 
-function TopBar({ isAdmin, clientName = "", onExitAdmin, onSettings, onExit }: { isAdmin: boolean; clientName?: string; onExitAdmin: () => void; onSettings: () => void; onExit: () => void }) {
+function TopBar({ isAdmin, clientName = "", onExitAdmin, onSettings, onExit, onToggleSidebar, sidebarCollapsed }: { isAdmin: boolean; clientName?: string; onExitAdmin: () => void; onSettings: () => void; onExit: () => void; onToggleSidebar: () => void; sidebarCollapsed: boolean }) {
   return (
-    <header className="relative grid h-[52px] shrink-0 grid-cols-[minmax(0,1fr)_auto] items-center border-b border-border bg-background px-2 text-navy shadow-[var(--shadow-soft)] sm:h-[62px] sm:px-4 [&_button]:!text-navy [&_svg]:!text-navy">
+    <header className="app-topbar relative grid h-[52px] shrink-0 grid-cols-[minmax(0,1fr)_auto] items-center border-b border-border bg-background px-2 text-navy shadow-[var(--shadow-soft)] sm:h-[62px] sm:px-4 [&_button]:!text-navy [&_svg]:!text-navy">
       <span aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-l from-navy via-primary to-navy" />
       <div className="flex min-w-0 items-center gap-2">
-        <LangImg ar={logoMark} en={logoMarkEn} zh={logoMarkZh} alt="TAMKEEN" className="h-[34px] w-auto shrink-0 object-contain drop-shadow-md sm:h-[42px]" />
-        <div className="min-w-0 leading-tight">
-          <p className="whitespace-nowrap text-[15px] font-black text-navy sm:text-[17px]">تمكين</p>
-          <p className="whitespace-nowrap text-[10px] font-black text-primary sm:text-[11px]">للحلول التقنية والهندسية</p>
-          <p className="truncate text-[10px] font-semibold text-muted-foreground">مرحباً، <span className="font-black text-navy">{isAdmin ? "الإدارة" : clientName || "عميل"}</span></p>
-        </div>
+        <Button variant="presentation" size="presentation" onClick={onToggleSidebar} aria-label={sidebarCollapsed ? "إظهار القائمة" : "تصغير القائمة"} title={sidebarCollapsed ? "إظهار القائمة" : "تصغير القائمة"} className="hidden size-8 place-items-center rounded-md text-navy lg:grid">
+          {sidebarCollapsed ? <PanelRightOpen className="size-5" /> : <PanelRightClose className="size-5" />}
+        </Button>
+        <TamkeenBrand compact />
+        <p className="hidden border-s border-border ps-3 text-xs text-muted-foreground xl:block">مرحباً، {isAdmin ? "الإدارة" : clientName || "عميل"}</p>
         {isAdmin && (
           <span className="ms-2 hidden shrink-0 items-center gap-1 rounded-full bg-brand px-3 py-1 text-[11px] font-black text-brand-foreground sm:inline-flex" dir="ltr">
             <ShieldCheck className="size-3.5" /> Admin Mode
@@ -1336,17 +1334,17 @@ function TopBar({ isAdmin, clientName = "", onExitAdmin, onSettings, onExit }: {
         )}
       </div>
       <div className="flex shrink-0 items-center gap-0.5 sm:gap-3 [&_button]:!bg-transparent">
-        <button type="button" onClick={onSettings} aria-label="الإعدادات" title="الإعدادات" className="grid size-8 place-items-center rounded-full transition hover:bg-muted lg:hidden"><Settings className="size-5" /></button>
+        <Button variant="presentation" size="presentation" type="button" onClick={onSettings} aria-label="الإعدادات" title="الإعدادات" className="grid size-8 place-items-center rounded-full transition hover:bg-muted lg:hidden"><Settings className="size-5" /></Button>
         {isAdmin && (
-          <button type="button" onClick={onExitAdmin} className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-xs font-bold text-foreground transition hover:bg-muted" dir="ltr">
+          <Button variant="presentation" size="presentation" type="button" onClick={onExitAdmin} className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-xs font-bold text-foreground transition hover:bg-muted" dir="ltr">
             <LogOut className="size-4" /> Logout Admin
-          </button>
+          </Button>
         )}
         <ReplayVoiceButton />
         <span className="hidden lg:inline-flex"><CorporateToggle /></span>
         <span className="[&_svg]:size-5"><OrderCenterButton isAdmin={isAdmin} /></span>
         <span className="[&_svg]:size-5"><NotificationsBell isAdmin={isAdmin} /></span>
-        <button type="button" onClick={onExit} aria-label="خروج" title="خروج" className="grid size-8 place-items-center rounded-md transition hover:bg-muted lg:hidden"><LogOut className="size-5" /></button>
+        <Button variant="presentation" size="presentation" type="button" onClick={onExit} aria-label="خروج" title="خروج" className="grid size-8 place-items-center rounded-md transition hover:bg-muted lg:hidden"><LogOut className="size-5" /></Button>
         <LangSwitch />
 
       </div>
@@ -1365,7 +1363,7 @@ function ScreenSizeButton() {
   }, []);
   const Icon = full ? Minimize2 : Maximize2;
   return (
-    <button
+    <Button variant="presentation" size="presentation"
       type="button"
       aria-label={full ? "تصغير الشاشة" : "ملء الشاشة"}
       title={full ? "تصغير الشاشة" : "ملء الشاشة"}
@@ -1373,7 +1371,7 @@ function ScreenSizeButton() {
       className="fixed left-2 top-2 z-[60] hidden size-7 place-items-center rounded-full border border-border bg-card/85 text-navy shadow-sm backdrop-blur transition hover:border-brand hover:text-brand lg:grid"
     >
       <Icon className="size-3.5" />
-    </button>
+    </Button>
   );
 }
 
@@ -1381,7 +1379,7 @@ function ScreenSizeButton() {
 function ReplayVoiceButton() {
   const [playing, setPlaying] = useState(false);
   return (
-    <button
+    <Button variant="presentation" size="presentation"
       type="button"
       aria-label="إعادة سماع النطق"
       title="إعادة سماع النطق"
@@ -1393,16 +1391,16 @@ function ReplayVoiceButton() {
       className={`grid size-8 shrink-0 place-items-center rounded-full border border-border bg-card text-navy transition hover:border-brand hover:text-brand ${playing ? "border-brand text-brand" : ""}`}
     >
       <Volume2 className="size-4" />
-    </button>
+    </Button>
   );
 }
 
 
 
-function AppSidebar({ active, onNavigate, onSettings, onExit }: { active: string; onNavigate: (action: (typeof NAV_ITEMS)[number]["action"]) => void; onSettings: () => void; onExit: () => void }) {
+function AppSidebar({ active, onNavigate, onSettings, onExit, collapsed }: { collapsed: boolean; active: string; onNavigate: (action: (typeof NAV_ITEMS)[number]["action"]) => void; onSettings: () => void; onExit: () => void }) {
   const row = "flex w-full items-center gap-3 border-b border-skyline-foreground/15 px-3 py-3.5 text-right text-[14px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10";
   return (
-    <aside className="relative order-2 hidden h-full flex-col overflow-hidden bg-navy text-skyline-foreground lg:flex lg:col-start-2 lg:row-start-1">
+    <aside data-collapsed={collapsed} className="app-sidebar relative order-2 hidden h-full flex-col overflow-hidden bg-navy text-skyline-foreground lg:flex lg:col-start-2 lg:row-start-1">
       <div className="pointer-events-none relative z-10 px-4 pb-4 pt-4">
         <BrandLockup />
       </div>
@@ -1413,17 +1411,17 @@ function AppSidebar({ active, onNavigate, onSettings, onExit }: { active: string
           const Icon = item.icon;
           const selected = active === item.action;
           return selected ? (
-            <button key={item.action} type="button" onClick={() => onNavigate(item.action)} className="mb-2 flex w-full items-center justify-center gap-2 rounded-lg bg-brand px-3 py-3 text-[15px] font-bold text-brand-foreground shadow-md">
+            <Button variant="presentation" size="presentation" key={item.action} type="button" onClick={() => onNavigate(item.action)} className="mb-2 flex w-full items-center justify-center gap-2 rounded-lg bg-brand px-3 py-3 text-[15px] font-bold text-brand-foreground shadow-md">
               <Icon className="size-5 shrink-0" /> <span className="whitespace-nowrap">{item.label}</span>
-            </button>
+            </Button>
           ) : (
-            <button key={item.action} type="button" onClick={() => onNavigate(item.action)} className={row}>
+            <Button variant="presentation" size="presentation" key={item.action} type="button" onClick={() => onNavigate(item.action)} className={row}>
               <Icon className="size-5 shrink-0" /> <span className="flex-1 whitespace-nowrap">{item.label}</span><ArrowLeft className="size-3.5 shrink-0 opacity-80" />
-            </button>
+            </Button>
           );
         })}
-        <button type="button" onClick={onSettings} className={row}><Settings className="size-5" /> <span className="flex-1">الإعدادات</span><ArrowLeft className="size-3.5 opacity-80" /></button>
-        <button type="button" onClick={onExit} className="flex w-full items-center gap-3 px-3 py-3.5 text-[14px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10"><LogOut className="size-5" /> خروج</button>
+        <Button variant="presentation" size="presentation" type="button" onClick={onSettings} className={row}><Settings className="size-5" /> <span className="flex-1">الإعدادات</span><ArrowLeft className="size-3.5 opacity-80" /></Button>
+        <Button variant="presentation" size="presentation" type="button" onClick={onExit} className="flex w-full items-center gap-3 px-3 py-3.5 text-[14px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10"><LogOut className="size-5" /> خروج</Button>
       </nav>
       <svg aria-hidden viewBox="0 0 200 160" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 bottom-10 z-0 h-40 w-full text-skyline">
         <path d="M0 110 C60 60 120 20 200 10 L200 160 L0 160 Z" fill="currentColor" opacity="0.55" />
@@ -1437,14 +1435,14 @@ function AppSidebar({ active, onNavigate, onSettings, onExit }: { active: string
   );
 }
 
-function MobileNav({ active, onNavigate, onSettings }: { active: string; onNavigate: (action: (typeof NAV_ITEMS)[number]["action"]) => void; onSettings: () => void }) {
+function MobileNav({ active, onNavigate, onSettings, onProducts }: { onProducts: () => void; active: string; onNavigate: (action: (typeof NAV_ITEMS)[number]["action"]) => void; onSettings: () => void }) {
   return (
-    <nav aria-label="القائمة السفلية" className="fixed inset-x-0 bottom-0 z-40 flex items-stretch justify-between border-t border-primary/40 bg-background/85 backdrop-blur-xl px-1 pb-[env(safe-area-inset-bottom)] text-foreground shadow-[0_-8px_24px_-12px_oklch(0.76_0.13_82/0.35)] lg:hidden">
+    <nav aria-label="القائمة السفلية" className="app-bottom-nav fixed inset-x-0 bottom-0 z-40 flex items-stretch justify-between border-t border-primary/40 bg-background/85 backdrop-blur-xl px-1 pb-[env(safe-area-inset-bottom)] text-foreground shadow-[0_-8px_24px_-12px_oklch(0.76_0.13_82/0.35)] lg:hidden">
       {NAV_ITEMS.map((item) => {
         const Icon = item.icon;
         const selected = active === item.action;
         return (
-          <button
+          <Button variant="presentation" size="presentation"
             key={item.action}
             type="button"
             onClick={() => onNavigate(item.action)}
@@ -1453,13 +1451,13 @@ function MobileNav({ active, onNavigate, onSettings }: { active: string; onNavig
           >
             <Icon className="size-5" />
             <span className="truncate">{item.label}</span>
-          </button>
+          </Button>
         );
       })}
-      <button type="button" onClick={onSettings} className="flex flex-1 flex-col items-center gap-0.5 px-1 py-2 text-[10px] font-bold leading-3 text-skyline-foreground/85">
-        <Settings className="size-5" />
-        <span>الإعدادات</span>
-      </button>
+      <Button variant="presentation" size="presentation" type="button" onClick={onProducts} aria-current={active === "products" ? "page" : undefined} className="flex flex-1 flex-col items-center gap-0.5 px-1 py-2 text-[10px] font-bold leading-3 text-muted-foreground">
+        <Package className="size-5" />
+        <span>المنتجات</span>
+      </Button>
     </nav>
   );
 }
@@ -1484,11 +1482,10 @@ function HomeDashboard({ onService, onProducts }: { onService: (kind: "quote" | 
     setScreenSpeech("الشاشة الرئيسية لتمكين للحلول التقنية والهندسية. يمكنك طلب عرض سعر، أو استكشاف حلول أنظمة الطاقة، أو التواصل مع الدعم الفني، أو التعرف على منتجاتنا.");
   }, []);
   return (
-    <div className="screen-enter flex min-h-0 w-full flex-col gap-2 lg:h-full">
+    <div className="app-home screen-enter flex min-h-0 w-full flex-col gap-2">
       <CorporateHero />
-      <section data-photo-section className="relative shrink-0 overflow-hidden rounded-2xl border border-border bg-navy shadow-sm lg:flex-1 lg:max-h-[30dvh]">
-        <LangImg ar={homeHeroAr} en={homeHeroEn} zh={homeHeroZh} alt="" aria-hidden="true" className="absolute inset-0 size-full scale-110 object-cover opacity-70 blur-2xl" />
-        <LangImg ar={homeHeroAr} en={homeHeroEn} zh={homeHeroZh} alt="تمكين للحلول التقنية والهندسية" loading="eager" decoding="sync" fetchPriority="high" className="relative block aspect-[1584/672] w-full object-contain lg:h-full lg:w-full lg:aspect-auto" />
+      <section data-photo-section className="home-cover relative shrink-0 overflow-hidden border border-border bg-navy">
+        <LangImg ar={homeHeroAr} en={homeHeroEn} zh={homeHeroZh} alt="تمكين للحلول التقنية والهندسية" loading="eager" fetchPriority="high" />
       </section>
 
 
@@ -1496,7 +1493,7 @@ function HomeDashboard({ onService, onProducts }: { onService: (kind: "quote" | 
       <PartnersStrip />
 
 
-      <section className="stagger-in grid shrink-0 grid-cols-2 gap-2 sm:grid-cols-4 lg:gap-3">
+      <section className="home-services stagger-in grid shrink-0 grid-cols-2 gap-2 lg:grid-cols-4">
         <ServiceCard image={refCardQuote} icon={<FileText />} title="صمّم منظومتك" description="احصل على أفضل العروض والأسعار المناسبة لمشروعك." action="انطلق للتكوين" tone="brand" onClick={() => onService("quote")} />
         <ServiceCard image={refCardEnergy} icon={<Sun />} title="الدراسات الهندسية" description="اكتشف حلولنا المتكاملة لأنظمة الشمسية للمنازل والمنشآت." action="حلول الطاقة" tone="energy" onClick={() => onService("energy")} />
         <ServiceCard image={refCardSupport} icon={<Headphones />} title="خدماتنا واستشاراتنا" description="فريقنا المتخصص جاهز لمساعدتك في أي استفسار أو مشكلة فنية." action="تواصل معنا" tone="skyline" onClick={() => onService("support")} />
@@ -1521,7 +1518,7 @@ function PartnersStrip() {
   return (
     <section
       aria-label="وكلاء وشركاء TAMKEEN"
-      className="shrink-0 overflow-hidden rounded-2xl border border-border bg-card shadow-sm"
+      className="home-partners shrink-0 overflow-hidden rounded-2xl border border-border bg-card shadow-sm"
     >
       <div className="grid grid-cols-3 divide-x divide-border" dir="ltr">
         {PARTNER_LINKS.map((p) => (
@@ -1557,18 +1554,18 @@ function ServiceCard({ image, icon, title, description, action, tone, onClick }:
   const btn = "bg-brand text-brand-foreground";
 
   return (
-    <button type="button" onClick={onClick} aria-label={title} className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card text-right shadow-sm transition hover:shadow-md">
-      <span data-photo-frame className="block aspect-[16/9] w-full overflow-hidden bg-muted"><img data-photo src={image} alt={title} loading="eager" decoding="async" width={1280} height={720} className="size-full object-cover transition duration-500 group-hover:scale-[1.03]" /></span>
-      <span className="relative flex flex-1 flex-col px-2 pb-2 pt-4 text-center lg:px-3 lg:pb-2.5 lg:pt-5">
+    <Button variant="presentation" size="presentation" type="button" onClick={onClick} aria-label={title} className="home-service group flex flex-col overflow-hidden rounded-xl border border-border bg-card text-right shadow-sm transition hover:shadow-md">
+      <span data-photo-frame className="home-service-photo block aspect-[16/9] w-full overflow-hidden bg-muted"><img data-photo src={image} alt={title} loading="eager" decoding="async" width={1280} height={720} className="size-full object-cover transition duration-500 group-hover:scale-[1.03]" /></span>
+      <span className="home-service-body relative flex flex-1 flex-col px-2 pb-2 pt-4 text-center lg:px-3 lg:pb-2.5 lg:pt-5">
         <span className={`absolute -top-3 right-1/2 grid size-6 translate-x-1/2 place-items-center rounded-full border-2 border-card shadow-md lg:size-8 ${circle} [&_svg]:size-3 lg:[&_svg]:size-4`}>{icon}</span>
-        <span className="text-[11px] font-black leading-tight text-navy lg:text-[15px]">{title}</span>
-        <span className="mx-auto mb-1 mt-0.5 line-clamp-2 max-w-xs text-[9px] leading-3 text-muted-foreground lg:mb-2 lg:mt-1 lg:line-clamp-2 lg:max-w-sm lg:text-[12px] lg:leading-4">{description}</span>
-        <span className={`mx-auto mb-0 mt-auto inline-flex w-full max-w-32 items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold shadow-sm transition group-hover:opacity-90 lg:max-w-44 lg:gap-1.5 lg:px-3 lg:py-1.5 lg:text-[13px] ${btn}`}>
+        <span className="home-service-title font-black text-navy">{title}</span>
+        <span className="home-service-description mx-auto line-clamp-2 max-w-xs text-muted-foreground">{description}</span>
+        <span className={`home-service-cta mx-auto mb-0 mt-auto inline-flex w-full max-w-32 items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold shadow-sm transition group-hover:opacity-90 lg:max-w-44 lg:gap-1.5 lg:px-3 lg:py-1.5 lg:text-[13px] ${btn}`}>
           <ArrowRight className="size-3 lg:size-4" />{action}
         </span>
 
       </span>
-    </button>
+    </Button>
 
   );
 
@@ -1756,9 +1753,9 @@ function QuoteWorkspace({ view, session, step, draft, setDraft, onPick, onBack, 
   };
 
   return (
-    <div className="screen-enter w-full space-y-6 pb-8">
+    <div data-screen={isProjectSelection ? "projects" : isEnergyMenu ? "studies" : isSupportPath ? "support" : view.quote ? "quote" : step} className="screen-enter w-full space-y-6 pb-8">
       <section className="min-w-0">
-        <div className="mb-5 flex items-end justify-between gap-4 border-b border-border pb-3">
+        <div className="workspace-heading mb-5 flex items-end justify-between gap-4 border-b border-border pb-3">
           <div className="min-w-0">
             {!isEnergyMenu && !isSupportPath && <StepProgress step={step} hasQuote={Boolean(view.quote)} />}
             {isSupportPath && <SupportProgress step={step} />}
@@ -1766,22 +1763,22 @@ function QuoteWorkspace({ view, session, step, draft, setDraft, onPick, onBack, 
             <span className="mt-2 block h-1 w-10 rounded-full bg-brand" />
           </div>
           <div className="flex shrink-0 items-center gap-2">
-            <button type="button" onClick={() => { silenceNextScreen(); if (studyDone) { onHome(); return; } onBack(); }} title="رجوع خطوة" aria-label="رجوع خطوة" className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-2 text-xs font-bold text-navy shadow-sm transition hover:bg-muted hover:border-brand hover:text-brand lg:text-sm">
+            <Button variant="presentation" size="presentation" type="button" onClick={() => { silenceNextScreen(); if (studyDone) { onHome(); return; } onBack(); }} title="رجوع خطوة" aria-label="رجوع خطوة" className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-2 text-xs font-bold text-navy shadow-sm transition hover:bg-muted hover:border-brand hover:text-brand lg:text-sm">
               <ArrowRight className="size-4" /> رجوع
-            </button>
+            </Button>
             {(step === "done" || studyDone) && (
-              <button type="button" onClick={onHome} title="العودة إلى الشاشة الرئيسية" aria-label="العودة إلى الشاشة الرئيسية" className="inline-flex items-center gap-1.5 rounded-full bg-skyline px-3 py-2 text-xs font-bold text-skyline-foreground shadow-sm transition hover:opacity-90 lg:text-sm">
+              <Button variant="presentation" size="presentation" type="button" onClick={onHome} title="العودة إلى الشاشة الرئيسية" aria-label="العودة إلى الشاشة الرئيسية" className="inline-flex items-center gap-1.5 rounded-full bg-skyline px-3 py-2 text-xs font-bold text-skyline-foreground shadow-sm transition hover:opacity-90 lg:text-sm">
                 <Home className="size-4" /> الشاشة الرئيسية
-              </button>
+              </Button>
             )}
 
-            <button type="button" onClick={onRestart} title="العودة للبداية" aria-label="العودة للبداية" className={`size-10 place-items-center rounded-full border border-border bg-card text-skyline transition hover:border-brand hover:text-brand ${view.specs.length > 0 ? "hidden" : "grid"}`}>
+            <Button variant="presentation" size="presentation" type="button" onClick={onRestart} title="العودة للبداية" aria-label="العودة للبداية" className={`size-10 place-items-center rounded-full border border-border bg-card text-skyline transition hover:border-brand hover:text-brand ${view.specs.length > 0 ? "hidden" : "grid"}`}>
               <RotateCcw className="size-5" />
-            </button>
+            </Button>
           </div>
         </div>
 
-        <div className="rounded-lg border border-border bg-card p-4 shadow-sm sm:p-6">
+        <div className="workspace-body min-w-0">
 
             {studyLocked ? (
               access.kind === "pay" || access.kind === "review"
@@ -1881,9 +1878,9 @@ function QuoteWorkspace({ view, session, step, draft, setDraft, onPick, onBack, 
 
             {step === "done" && (
               <div className="mt-6 border-t border-border pt-5">
-                <button type="button" onClick={onHome} className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-skyline px-6 py-3 text-sm font-bold text-skyline-foreground transition hover:opacity-90 sm:w-auto">
+                <Button variant="presentation" size="presentation" type="button" onClick={onHome} className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-skyline px-6 py-3 text-sm font-bold text-skyline-foreground transition hover:opacity-90 sm:w-auto">
                   <Home className="size-4" /> العودة إلى الشاشة الرئيسية
-                </button>
+                </Button>
               </div>
             )}
 
@@ -1914,7 +1911,7 @@ function QuoteActions({ onPick, hideEngineering = false, onEco }: { onPick: (val
   return (
     <div className={`grid gap-3 sm:grid-cols-2 ${hideEngineering ? "" : "xl:grid-cols-3"}`}>
       {actions.map((action) => (
-        <button
+        <Button variant="presentation" size="presentation"
           key={action.id}
           type="button"
           onClick={() => { if (action.id === "aq_eco" && onEco) { onEco(); return; } onPick(action.id); }}
@@ -1926,7 +1923,7 @@ function QuoteActions({ onPick, hideEngineering = false, onEco }: { onPick: (val
             <span className="block text-[11px] font-semibold leading-4 opacity-85">{action.note}</span>
           </span>
           <ArrowLeft className="size-4 shrink-0 opacity-80" />
-        </button>
+        </Button>
       ))}
     </div>
   );
@@ -1975,7 +1972,7 @@ function OptionGrid({ options, selected, projectCards = false, energyCards = fal
           const visual = energyVisual(option.title);
           const Icon = visual.icon;
           return (
-            <button
+            <Button variant="presentation" size="presentation"
               key={`${option.id}-${index}`}
               type="button"
               onClick={() => onSelect(option.id)}
@@ -1989,7 +1986,7 @@ function OptionGrid({ options, selected, projectCards = false, energyCards = fal
                   {visual.action} <ArrowLeft className="size-3.5 transition group-hover:-translate-x-0.5" />
                 </span>
               </span>
-            </button>
+            </Button>
           );
         })}
       </div>
@@ -2003,7 +2000,7 @@ function OptionGrid({ options, selected, projectCards = false, energyCards = fal
           const active = selected === option.id;
           const primary = index === 0;
           return (
-            <button
+            <Button variant="presentation" size="presentation"
               key={`${option.id}-${index}`}
               type="button"
               onClick={() => onSelect(option.id)}
@@ -2015,7 +2012,7 @@ function OptionGrid({ options, selected, projectCards = false, energyCards = fal
             >
               {option.title}
               <ArrowLeft className="size-4" />
-            </button>
+            </Button>
           );
         })}
       </div>
@@ -2032,7 +2029,7 @@ function OptionGrid({ options, selected, projectCards = false, energyCards = fal
           const spec = itemSpec(`${option.title} ${option.description || ""}`);
           const priceMatch = option.description?.match(/^([\d.,]+\s*\S+\s*\/\s*\S+)/);
           return (
-            <button
+            <Button variant="presentation" size="presentation"
               key={`${option.id}-${index}`}
               type="button"
               onClick={() => onSelect(option.id)}
@@ -2054,7 +2051,7 @@ function OptionGrid({ options, selected, projectCards = false, energyCards = fal
                   </span>
                 )}
               </span>
-            </button>
+            </Button>
           );
         })}
       </div>
@@ -2071,23 +2068,23 @@ function OptionGrid({ options, selected, projectCards = false, energyCards = fal
       return { image: industrialImage, icon: Zap, subtitle: "للمشاريع الصناعية والمنشآت الكبرى" };
     };
     return (
-      <div className="stagger-in grid grid-cols-2 gap-2.5 lg:grid-cols-5">
+      <div className="project-options stagger-in grid grid-cols-2 gap-2.5">
         {options.map((option, index) => {
           const visual = projectVisual(option.title);
           const Icon = visual.icon;
           const inactive = /قريباً/.test(option.title);
           return (
-            <button key={`${option.id}-${index}`} type="button" onClick={() => onSelect(option.id)} className={`group overflow-hidden rounded-lg border bg-card text-right shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${index === 1 ? "border-brand ring-1 ring-brand" : "border-border"}`}>
-              <span data-photo-frame className="relative block aspect-[2/1] w-full overflow-hidden border-b border-border bg-muted">
+            <Button variant="presentation" size="presentation" key={`${option.id}-${index}`} type="button" onClick={() => onSelect(option.id)} className="project-option group overflow-hidden rounded-lg border border-border bg-card text-right shadow-sm transition hover:shadow-md">
+              <span data-photo-frame className="project-option-photo relative block aspect-[2/1] w-full overflow-hidden border-b border-border bg-muted">
                 <img data-photo src={visual.image} alt="" loading="eager" decoding="async" fetchPriority="high" className={`size-full object-cover transition duration-500 group-hover:scale-[1.03] ${inactive ? "opacity-65" : ""}`} />
                 {inactive && <span className="absolute right-2 top-2 rounded-full bg-overlay/55 px-2 py-0.5 text-[10px] font-bold text-brand-foreground">قريباً</span>}
-                <span className={`absolute -bottom-3.5 right-2.5 grid size-8 place-items-center rounded-full border-2 border-card ${index === 1 ? "bg-brand text-brand-foreground" : "bg-secondary text-skyline"}`}><Icon className="size-3.5" /></span>
+                <span className={`project-option-icon absolute -bottom-3.5 right-2.5 grid size-8 place-items-center rounded-full border-2 border-card ${index === 1 ? "bg-brand text-brand-foreground" : "bg-secondary text-skyline"}`}><Icon className="size-3.5" /></span>
               </span>
-              <span className="flex flex-col px-2.5 pb-2 pt-5">
+              <span className="project-option-content flex flex-col px-2.5 pb-2 pt-5">
                 <strong className="text-[13px] font-black">{option.title}</strong>
                 <small className="mt-0.5 text-[10.5px] font-semibold text-muted-foreground">{visual.subtitle}</small>
               </span>
-            </button>
+            </Button>
           );
         })}
       </div>
@@ -2125,7 +2122,7 @@ function OptionGrid({ options, selected, projectCards = false, energyCards = fal
         const details = option.description ? option.description.replace(/—?\s*السعر:.*$/, "").trim() : "";
         const spec = itemSpec(`${option.title} ${option.description || ""}`);
         return (
-          <button
+          <Button variant="presentation" size="presentation"
             key={`${option.id}-${index}`}
             type="button"
             onClick={() => onSelect(option.id)}
@@ -2153,7 +2150,7 @@ function OptionGrid({ options, selected, projectCards = false, energyCards = fal
                 {active ? "تم الاختيار" : "اختر"} <ArrowLeft className="size-3.5 transition group-hover:-translate-x-0.5" />
               </span>
             </span>
-          </button>
+          </Button>
         );
       })}
     </div>
@@ -2322,14 +2319,14 @@ function DataEntry({ value, onChange, onSubmit, prompt, presets, onQuick }: { va
       {presets && presets.length > 0 && (
         <div className="stagger-in mt-3 flex flex-wrap gap-2">
           {presets.map((preset) => (
-            <button
+            <Button variant="presentation" size="presentation"
               key={preset.value}
               type="button"
               onClick={() => { if (onQuick) onQuick(preset.value); else { onChange(preset.value); onSubmit(); } }}
               className="rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-black text-navy shadow-sm transition hover:-translate-y-0.5 hover:border-brand hover:text-brand hover:shadow-md"
             >
               {preset.label}
-            </button>
+            </Button>
           ))}
           <span className="self-center text-[10px] font-semibold text-muted-foreground">أو اكتب القيمة بنفسك</span>
         </div>
@@ -2344,7 +2341,7 @@ function DataEntry({ value, onChange, onSubmit, prompt, presets, onQuick }: { va
           inputMode={prompt.numeric ? "numeric" : "text"}
           className="min-w-0 rounded-md border border-input bg-card px-4 py-3 text-sm outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/10"
         />
-        <button type="submit" className="rounded-md bg-skyline px-6 py-3 text-sm font-bold text-skyline-foreground">{prompt.cta}</button>
+        <Button variant="presentation" size="presentation" type="submit" className="rounded-md bg-skyline px-6 py-3 text-sm font-bold text-skyline-foreground">{prompt.cta}</Button>
       </div>
     </form>
   );
@@ -2403,13 +2400,13 @@ function ShiftEntry({ count, offset, onSubmit }: { count: number; offset: number
           </div>
         ))}
       </div>
-      <button
+      <Button variant="presentation" size="presentation"
         type="submit"
         disabled={filled !== count}
         className="mt-4 w-full rounded-md bg-skyline px-6 py-3 text-sm font-bold text-skyline-foreground disabled:opacity-50 sm:w-auto"
       >
         متابعة
-      </button>
+      </Button>
     </form>
   );
 }
@@ -2477,28 +2474,28 @@ function HourlyLoadEntry({ onSubmit }: { onSubmit: (value: string) => void }) {
         <p className="mt-3 text-xs font-bold">زاوية الميلان: <span className="text-brand">{tilt === null ? "تلقائي" : `${tilt}°`}</span></p>
         <div className="mt-2 flex flex-wrap gap-2">
           {[null, 10, 15, 20, 25, 30].map((v) => (
-            <button key={String(v)} type="button" onClick={() => setTilt(v)} className={`rounded-full border px-3 py-1.5 text-xs font-black ${tilt === v ? "border-brand bg-brand text-brand-foreground" : "border-border bg-card"}`}>
+            <Button variant="presentation" size="presentation" key={String(v)} type="button" onClick={() => setTilt(v)} className={`rounded-full border px-3 py-1.5 text-xs font-black ${tilt === v ? "border-brand bg-brand text-brand-foreground" : "border-border bg-card"}`}>
               {v === null ? "تلقائي" : `${v}°`}
-            </button>
+            </Button>
           ))}
         </div>
         <input type="range" min={0} max={60} value={tilt ?? 15} onChange={(e) => setTilt(Number(e.target.value))} aria-label="زاوية الميلان" className="mt-3 w-full accent-primary" />
         <p className="mt-3 text-xs font-bold">اتجاه الألواح</p>
         <div className="mt-2 flex flex-wrap gap-2">
           {AZIMUTH_OPTIONS.map((o) => (
-            <button key={o.value} type="button" onClick={() => setAzimuth(o.value)} className={`rounded-full border px-3 py-1.5 text-xs font-black ${azimuth === o.value ? "border-brand bg-brand text-brand-foreground" : "border-border bg-card"}`}>
+            <Button variant="presentation" size="presentation" key={o.value} type="button" onClick={() => setAzimuth(o.value)} className={`rounded-full border px-3 py-1.5 text-xs font-black ${azimuth === o.value ? "border-brand bg-brand text-brand-foreground" : "border-border bg-card"}`}>
               {o.label}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
-      <button
+      <Button variant="presentation" size="presentation"
         type="submit"
         disabled={filled !== 24}
         className="mt-4 w-full rounded-md bg-skyline px-6 py-3 text-sm font-bold text-skyline-foreground disabled:opacity-50 sm:w-auto"
       >
         متابعة ({filled}/24)
-      </button>
+      </Button>
     </form>
   );
 }
@@ -2592,9 +2589,9 @@ function SystemSpecs({ specs, hint = "", onOpenProduct }: { specs: View["specs"]
                 ))}
               </ul>
               {presentation.productId && onOpenProduct ? (
-                <button type="button" onClick={() => onOpenProduct(presentation.productId!)} className="mx-2 mb-2 mt-auto flex items-center gap-1.5 rounded-md bg-brand/10 px-2 py-1.5 text-[11px] font-bold text-foreground transition hover:bg-brand/20">
+                <Button variant="presentation" size="presentation" type="button" onClick={() => onOpenProduct(presentation.productId!)} className="mx-2 mb-2 mt-auto flex items-center gap-1.5 rounded-md bg-brand/10 px-2 py-1.5 text-[11px] font-bold text-foreground transition hover:bg-brand/20">
                   <BadgeCheck className="size-4 shrink-0 text-brand" /> عرض تفاصيل المنتج
-                </button>
+                </Button>
               ) : (
               <div className="mx-2 mb-2 mt-auto flex items-center gap-1.5 rounded-md bg-brand/10 px-2 py-1.5 text-[11px] font-bold text-foreground">
                 <BadgeCheck className="size-4 shrink-0 text-brand" /> مكوّن موثوق
@@ -2644,8 +2641,8 @@ function QuoteItemSpecs({ text }: { text: string }) {
     <div className="mt-1.5">
       {(ar || en) && (
         <div className="mt-1.5 flex flex-wrap gap-1.5">
-          {ar && <a href={ar} target="_blank" rel="noopener" className="rounded border border-black px-2 py-0.5 text-[10px] font-bold hover:bg-black/5">كتالوج عربي</a>}
-          {en && <a href={en} target="_blank" rel="noopener" className="rounded border border-black px-2 py-0.5 text-[10px] font-bold hover:bg-black/5">English Catalog</a>}
+          {ar && <a href={ar} target="_blank" rel="noopener" className="quote-catalog-link rounded px-2 py-1 text-[10px] font-bold hover:bg-muted">كتالوج عربي</a>}
+          {en && <a href={en} target="_blank" rel="noopener" className="quote-catalog-link rounded px-2 py-1 text-[10px] font-bold hover:bg-muted">English Catalog</a>}
         </div>
       )}
     </div>
@@ -2655,39 +2652,47 @@ function QuoteItemSpecs({ text }: { text: string }) {
 function QuoteCard({ quote }: { quote: NonNullable<View["quote"]> }) {
   return (
     <section className="mt-1">
-      <div className="overflow-hidden rounded-md border-2 border-black bg-white font-[Arial,Helvetica,sans-serif] text-black">
-        <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b-2 border-black bg-white px-4 py-3">
-          <div className="min-w-0"><p className="text-sm font-black">تمكين للحلول التقنية والهندسية</p><p className="text-[11px] font-bold">عرض سعر</p></div>
+      <div className="quote-paper">
+        <div className="quote-letterhead grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
+          <div className="min-w-0"><TamkeenBrand compact /><p className="mt-2 text-[11px] font-bold">عرض سعر رسمي</p></div>
           <div className="text-left text-[11px] font-bold leading-5"><p>رقم العرض: {quote.number || "—"}</p><p>العميل: {quote.customer || "—"}</p></div>
         </div>
         <div data-quote-scroll className="overflow-x-auto">
           <table className="w-full min-w-[700px] border-collapse text-right text-xs">
             <thead>
-              <tr className="bg-[#C0392B] text-white">
-                <th className="border border-black p-2 text-center text-[13px] font-bold">م</th>
-                <th className="border border-black p-2 text-center text-[13px] font-bold">البند والمواصفات</th>
-                <th className="border border-black p-2 text-center text-[13px] font-bold">الوحدة</th>
-                <th className="border border-black p-2 text-center text-[13px] font-bold">الكمية</th>
-                <th className="border border-black p-2 text-center text-[13px] font-bold">سعر الوحدة</th>
-                <th className="border border-black p-2 text-center text-[13px] font-bold">الإجمالي</th>
+              <tr className="bg-primary text-primary-foreground">
+                <th className="border border-border p-2 text-center text-[13px] font-bold">م</th>
+                <th className="border border-border p-2 text-center text-[13px] font-bold">البند والمواصفات</th>
+                <th className="border border-border p-2 text-center text-[13px] font-bold">الوحدة</th>
+                <th className="border border-border p-2 text-center text-[13px] font-bold">الكمية</th>
+                <th className="border border-border p-2 text-center text-[13px] font-bold">سعر الوحدة</th>
+                <th className="border border-border p-2 text-center text-[13px] font-bold">الإجمالي</th>
               </tr>
             </thead>
             <tbody>
               {quote.items.map((item, index) => (
                 <tr key={index} className="align-top">
-                  <td className="border border-black p-1.5 text-center font-bold">{index + 1}</td>
-                  <td className="border border-black p-1.5 text-right"><p className="text-[12px] font-bold leading-5">{item.name}</p>{item.details.map((detail, detailIndex) => <p key={detailIndex} className="text-[10px] leading-4">{detail}</p>)}<QuoteItemSpecs text={[item.name, ...item.details].join(" ")} /></td>
-                  <td className="border border-black p-1.5 text-center font-bold">{item.unit}</td>
-                  <td className="border border-black p-1.5 text-center font-bold">{item.qty}</td>
-                  <td className="border border-black p-1.5 text-center font-bold">{money(Number(item.price) || 0)}</td>
-                  <td className="border border-black p-1.5 text-center font-bold">{money(Number(item.total) || 0)}</td>
+                  <td className="border border-border p-1.5 text-center font-bold">{index + 1}</td>
+                  <td className="border border-border p-1.5 text-right">
+                    <div className="quote-item-content">
+                      <div className="min-w-0"><p className="text-[12px] font-bold leading-5">{item.name}</p>{item.details.map((detail, detailIndex) => <p key={detailIndex} className="text-[10px] leading-4">{detail}</p>)}<QuoteItemSpecs text={[item.name, ...item.details].join(" ")} /></div>
+                      {(() => {
+                        const product = productForQuoteItem([item.name, ...item.details].join(" "));
+                        return product ? <img className="quote-item-photo" src={product.image} alt={product.name} loading="lazy" /> : null;
+                      })()}
+                    </div>
+                  </td>
+                  <td className="border border-border p-1.5 text-center font-bold">{item.unit}</td>
+                  <td className="border border-border p-1.5 text-center font-bold">{item.qty}</td>
+                  <td className="border border-border p-1.5 text-center font-bold">{money(Number(item.price) || 0)}</td>
+                  <td className="border border-border p-1.5 text-center font-bold">{money(Number(item.total) || 0)}</td>
                 </tr>
               ))}
             </tbody>
             <tfoot>
-              <tr className="bg-[#bfbfbf]">
-                <td colSpan={5} className="border border-black p-2 text-center text-[13px] font-black">الإجمالي الكلي</td>
-                <td className="border border-black p-2 text-center text-[13px] font-black text-[#c00000]">{money(quote.total)}</td>
+              <tr className="bg-secondary">
+                <td colSpan={5} className="border border-border p-2 text-center text-[13px] font-black">الإجمالي الكلي</td>
+                <td className="border border-border p-2 text-center text-[13px] font-black text-primary">{money(quote.total)}</td>
               </tr>
             </tfoot>
           </table>
@@ -2705,13 +2710,13 @@ function QuoteCard({ quote }: { quote: NonNullable<View["quote"]> }) {
         </div>
       </div>
 
-      <button
+      <Button variant="presentation" size="presentation"
         type="button"
         onClick={() => downloadQuotePdf(quote)}
-        className="mt-3 inline-flex items-center gap-2 rounded-md bg-[#C0392B] px-5 py-2.5 text-xs font-bold text-black transition hover:brightness-95"
+        className="mt-3 inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-xs font-bold text-primary-foreground transition hover:brightness-95"
       >
         <Download className="size-4" /> تحميل ملف عرض السعر
-      </button>
+      </Button>
     </section>
   );
 }

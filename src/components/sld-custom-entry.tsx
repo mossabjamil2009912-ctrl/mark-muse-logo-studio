@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Network } from "lucide-react";
 import SldDiagram from "@/components/sld-diagram";
@@ -70,9 +71,9 @@ export function SldCustomEntry({ customer, city, onDone }: { customer: string; c
       <section className="space-y-2"><p className="text-sm font-black">البطاريات <span className="text-muted-foreground">(اختياري)</span></p>
         <div className="grid grid-cols-2 gap-2">{field("nBat", "عدد البطاريات", "0")}{field("batKwh", "سعة البطارية (kWh)", "5")}</div></section>
       <section className="grid grid-cols-2 gap-2">{field("project", "اسم المشروع")}{field("city", "المدينة")}</section>
-      <button type="button" disabled={!valid || access.kind === "waiting"} onClick={generate} className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-skyline px-6 py-3 text-sm font-bold text-skyline-foreground transition hover:opacity-90 disabled:opacity-50">
+      <Button variant="presentation" size="presentation" type="button" disabled={!valid || access.kind === "waiting"} onClick={generate} className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-bold text-primary-foreground transition hover:opacity-90 disabled:opacity-50">
         <Network className="size-4" /> إنشاء المخطط
-      </button>
+      </Button>
     </div>
   );
 }

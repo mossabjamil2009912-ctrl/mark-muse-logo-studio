@@ -1,3 +1,6 @@
+import { Button } from "@/components/ui/button";
+import { TamkeenBrand } from "@/components/tamkeen-brand";
+import homeHero from "@/assets/actes-home-hero.webp";
 import { lazy, Suspense, useEffect, useMemo, useState, type ReactNode } from "react";
 const PdfPages = lazy(() => import("@/components/pdf-pages"));
 import { ArrowRight, Search, BatteryCharging, Check, ChevronDown, Container, Copy, Download, Eye, FileText, Gauge, Info, Layers, Link2, ListChecks, MessageCircle, Share2, Sparkles, Sun, Users, Wrench, X, Zap } from "lucide-react";
@@ -15,7 +18,7 @@ const CAT_TONE: Record<ProductCategory, string> = {
   panels: "bg-brand text-brand-foreground",
   inverters: "bg-skyline text-skyline-foreground",
   batteries: "bg-energy text-energy-foreground",
-  storage: "bg-navy text-white",
+  storage: "bg-navy text-navy-foreground",
 };
 const CAT_BIG_ICON: Record<ProductCategory, ReactNode> = {
   panels: <Sun className="size-10 lg:size-12" />,
@@ -64,9 +67,9 @@ export default function ProductsCatalog({ productId, onOpen, onBack, returnTo }:
 function BackButton({ onClick, label }: { onClick: () => void; label: string }) {
   // الرجوع لا يعيد نطق الشاشة السابقة؛ يبقى الصوت صامتاً حتى يضغط المستخدم زر إعادة السماع.
   return (
-    <button type="button" onClick={() => { silenceNextScreen(); onClick(); }} className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-bold text-navy shadow-sm transition hover:bg-muted lg:text-sm">
+    <Button variant="presentation" size="presentation" type="button" onClick={() => { silenceNextScreen(); onClick(); }} className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-bold text-navy shadow-sm transition hover:bg-muted lg:text-sm">
       <ArrowRight className="size-4" /> {label}
-    </button>
+    </Button>
   );
 }
 
@@ -80,7 +83,7 @@ function CategoriesScreen({ onPick, onBack }: { onPick: (c: ProductCategory | "a
     "قسم منتجات تمكين للحلول التقنية والهندسية. اختر الفئة التي تريد استعراضها: الألواح الشمسية، أو الإنفرترات، أو بطاريات الليثيوم، أو أنظمة التخزين.",
   );
   return (
-    <div className="screen-enter w-full space-y-5 pb-4">
+    <div className="catalog-screen screen-enter w-full space-y-5 pb-4">
       <header className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="text-[10px] font-black tracking-[0.3em] text-brand" dir="ltr">TAMKEEN PRODUCTS</p>
@@ -90,7 +93,7 @@ function CategoriesScreen({ onPick, onBack }: { onPick: (c: ProductCategory | "a
         <BackButton onClick={onBack} label="الرئيسية" />
       </header>
 
-      <div className="stagger-in grid grid-cols-2 gap-2.5 md:grid-cols-4">
+      <div className="catalog-categories stagger-in grid grid-cols-2 gap-2.5 lg:grid-cols-4">
         {CATEGORIES.map((cat) => {
           const items = productsByCategory(cat.id);
           const previewIds = PREVIEW_IDS[cat.id];
@@ -98,13 +101,13 @@ function CategoriesScreen({ onPick, onBack }: { onPick: (c: ProductCategory | "a
             ? previewIds.map((id) => items.find((p) => p.id === id)).filter((p): p is Product => Boolean(p))
             : items.slice(0, 3);
           return (
-            <button
+            <Button variant="presentation" size="presentation"
               key={cat.id}
               type="button"
               onClick={() => onPick(cat.id)}
-              className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card text-right shadow-sm transition hover:border-navy/40 hover:shadow-md"
+              className="catalog-category group flex flex-col overflow-hidden rounded-lg border border-border bg-card text-right shadow-sm transition hover:border-navy/40 hover:shadow-md"
             >
-              <span className="flex items-center gap-2.5 border-b border-border/70 px-3 py-2.5">
+              <span className="catalog-category-heading flex items-center gap-2.5 border-b border-border/70 px-3 py-2.5">
                 <span className={`grid size-8 shrink-0 place-items-center rounded-md [&_svg]:size-4 ${CAT_TONE[cat.id]}`}>{CAT_BIG_ICON[cat.id]}</span>
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-[13px] font-black leading-tight text-navy lg:text-sm">{cat.title}</span>
@@ -122,10 +125,10 @@ function CategoriesScreen({ onPick, onBack }: { onPick: (c: ProductCategory | "a
                 استعراض القسم
                 <ArrowRight className="size-3.5 rotate-180 text-muted-foreground transition group-hover:text-navy" />
               </span>
-            </button>
+            </Button>
           );
         })}
-        <button
+        <Button variant="presentation" size="presentation"
           type="button"
           onClick={() => onPick("all")}
           className="group order-first col-span-2 flex items-center gap-3 rounded-lg border border-border bg-card px-3.5 py-3 text-right shadow-sm transition hover:border-navy/40 hover:shadow-md md:col-span-4"
@@ -136,7 +139,7 @@ function CategoriesScreen({ onPick, onBack }: { onPick: (c: ProductCategory | "a
             <span className="block text-[11px] font-semibold text-muted-foreground">ابحث في جميع الموديلات وصفّها حسب الشركة المصنّعة</span>
           </span>
           <ArrowRight className="size-4 rotate-180 text-muted-foreground transition group-hover:text-navy" />
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -149,7 +152,8 @@ export function brandOf(p: Product) {
 
 /** المستوى الثاني: أقسام الشركات المصنّعة، ثم موديلات الشركة المختارة. */
 function CategoryView({ category, onOpen, onBack }: { category: ProductCategory; onOpen: (id: string) => void; onBack: () => void }) {
-  const cat = CATEGORIES.find((c) => c.id === category)!;
+  const cat = CATEGORIES.find((c) => c.id === category) ?? CATEGORIES[0];
+  if (!cat) return null;
   const items = useMemo(() => productsByCategory(category), [category]);
   const brands = useMemo(() => Array.from(new Set(items.map(brandOf))), [items]);
   const [brand, setBrand] = useState<string | null>(brands.length === 1 ? brands[0] ?? null : null);
@@ -160,10 +164,10 @@ function CategoryView({ category, onOpen, onBack }: { category: ProductCategory;
   );
   const goBack = brand && brands.length > 1 ? () => setBrand(null) : onBack;
   return (
-    <div className="screen-enter w-full space-y-4 pb-4">
+    <div className="catalog-screen screen-enter w-full space-y-4 pb-4">
       <BackButton onClick={goBack} label={brand && brands.length > 1 ? cat.title : "الفئات"} />
-      <header className={`flex items-center gap-3 rounded-2xl px-4 py-4 shadow-sm ${CAT_TONE[category]}`}>
-        <span className="shrink-0 opacity-90">{CAT_BIG_ICON[category]}</span>
+      <header className="catalog-banner">
+        <img src={homeHero} alt="" />
         <div>
           <h1 className="text-xl font-black lg:text-2xl">{cat.title}{brand ? <span dir="ltr"> — {brand}</span> : null}</h1>
           <p className="text-[12px] font-bold opacity-85">{brand ? `${shown.length} موديل` : `${brands.length} شركات مصنّعة — ${items.length} موديل`}</p>
@@ -178,7 +182,7 @@ function CategoryView({ category, onOpen, onBack }: { category: ProductCategory;
           {brands.map((b) => {
             const list = items.filter((p) => brandOf(p) === b);
             return (
-              <button key={b} type="button" onClick={() => setBrand(b)} className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card text-right shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
+              <Button variant="presentation" size="presentation" key={b} type="button" onClick={() => setBrand(b)} className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card text-right shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
                 <span className="grid grid-cols-3 gap-1.5 bg-background p-2">
                   {list.slice(0, 3).map((p) => (
                     <img key={p.id} src={p.image} alt={p.name} loading="lazy" className="aspect-square w-full object-contain" />
@@ -190,7 +194,7 @@ function CategoryView({ category, onOpen, onBack }: { category: ProductCategory;
                     {`${list.length} موديل`} <ArrowRight className="size-3.5 rotate-180" />
                   </span>
                 </span>
-              </button>
+              </Button>
             );
           })}
         </div>
@@ -213,27 +217,28 @@ function AllProductsView({ onOpen, onBack }: { onOpen: (id: string) => void; onB
     return terms.every((t) => hay.includes(t));
   });
   const chip = (active: boolean) =>
-    `rounded-full border px-3 py-1 text-[11px] font-bold transition lg:text-xs ${active ? "border-navy bg-navy text-white" : "border-border bg-card text-navy hover:bg-muted"}`;
+    `rounded-full border px-3 py-1 text-[11px] font-bold transition lg:text-xs ${active ? "border-navy bg-navy text-navy-foreground" : "border-border bg-card text-navy hover:bg-muted"}`;
   return (
-    <div className="screen-enter w-full space-y-4 pb-4">
+    <div className="catalog-screen screen-enter w-full space-y-4 pb-4">
       <BackButton onClick={onBack} label="الفئات" />
-      <header className="rounded-2xl bg-navy px-4 py-4 text-white shadow-sm">
-        <h1 className="text-xl font-black lg:text-2xl">كل المنتجات</h1>
-        <p className="text-[12px] font-bold opacity-85">{`${shown.length} من ${all.length} موديل`}</p>
+      <header className="catalog-banner">
+        <img src={homeHero} alt="" />
+        <div><h1 className="text-xl font-black lg:text-2xl">كل المنتجات</h1>
+        <p className="text-[12px] font-bold opacity-85">{`${shown.length} من ${all.length} موديل`}</p></div>
       </header>
       <div className="relative">
         <Search className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="ابحث بالاسم أو الموديل أو القدرة…"
+          aria-label="البحث عن منتج" placeholder="ابحث بالاسم أو الموديل أو القدرة…"
           className="w-full rounded-full border border-border bg-card py-2.5 pl-4 pr-9 text-sm text-foreground shadow-sm outline-none focus:border-navy"
         />
       </div>
       <div className="flex flex-wrap gap-1.5" dir="ltr">
-        <button type="button" onClick={() => setBrand(null)} className={chip(brand === null)}>All</button>
+        <Button variant="presentation" size="presentation" type="button" onClick={() => setBrand(null)} className={chip(brand === null)}>All</Button>
         {brands.map((b) => (
-          <button key={b} type="button" onClick={() => setBrand(b)} className={chip(brand === b)}>{b}</button>
+          <Button variant="presentation" size="presentation" key={b} type="button" onClick={() => setBrand(b)} className={chip(brand === b)}>{b}</Button>
         ))}
       </div>
       {shown.length ? (
@@ -255,6 +260,8 @@ function brandLabel(b: string) {
 // شعارات المصنّعين مستخرجة من الكتالوجات الرسمية في public/catalogs.
 const MAKER_LOGOS: Record<string, string> = {
   Deye: "/brand/makers/deye.png",
+  JinkoSolar: "/brand/makers/jinko.png",
+  "Felicity Solar": "/brand/makers/felicity.png",
 };
 
 function makerLogo(b: string) {
@@ -270,7 +277,7 @@ function BrandBadge({ brand, large = false }: { brand: string; large?: boolean }
       <span className={`flex items-center font-black tracking-wide text-navy ${large ? "text-base" : "text-[10px]"}`}>
         {logo ? <img src={logo} alt={brandLabel(brand)} className={large ? "h-7 w-auto max-w-36" : "h-3.5 w-auto max-w-16"} /> : brandLabel(brand)}
       </span>
-      <img src={logoMarkEn} alt="TAMKEEN" className={large ? "h-10 w-auto" : "h-4 w-auto"} />
+      <TamkeenBrand compact className={large ? "catalog-brand-large" : "catalog-brand-small"} />
     </span>
   );
 }
@@ -282,36 +289,36 @@ function ProductCard({ product, onOpen }: { product: Product; onOpen: () => void
   };
   const arCatalog = officialCatalogUrl(product, "ar");
   const [viewAr, setViewAr] = useState(false);
-  const color = brandColor(product.brand);
+  const powerTone = product.category === "panels" ? "product-power-panel" : /felicity/i.test(product.brand) ? "product-power-felicity" : "";
   const specs = standardSpecs(product);
   return (
     <article
       onPointerEnter={warm}
       onTouchStart={warm}
-      className="group flex flex-col gap-2 text-right"
+      className="product-card group flex flex-col gap-2 text-right"
     >
-      <div className="relative flex flex-col overflow-hidden rounded-xl bg-card shadow-sm ring-1 ring-border/60 transition group-hover:shadow-lg">
+      <div className="product-card-image relative flex flex-col overflow-hidden bg-card transition group-hover:shadow-sm">
         <BrandBadge brand={product.brand} />
-        <button type="button" onClick={() => { warm(); onOpen(); }} aria-label={product.name} className="flex w-full items-center gap-1.5 bg-linear-to-b from-card to-muted/60 p-2" dir="ltr">
+        <Button variant="presentation" size="presentation" type="button" onClick={() => { warm(); onOpen(); }} aria-label={product.name} className="product-card-media flex w-full items-center gap-1.5 p-2" dir="ltr">
           <span className="relative block aspect-[3/4] w-1/2 shrink-0">
             <img src={product.image} alt={product.name} loading="lazy" decoding="async" width={600} height={800} className="size-full object-contain drop-shadow-md transition duration-500 group-hover:scale-105" />
           </span>
-          <span className="flex min-w-0 flex-1 flex-col items-stretch rounded-md bg-card/95 p-1.5 text-center shadow-sm ring-1 ring-border/50">
+          <span className="product-card-specs flex min-w-0 flex-1 flex-col items-stretch text-center">
             <span className="text-[10px] font-black leading-tight text-navy lg:text-xs">{CAT_EN[product.category]}</span>
-            <span className="my-1 truncate rounded px-1 py-1 text-[11px] font-black lg:text-sm" style={product.category === "panels" ? { background: "#C0392B", color: "#fff" } : color === "#1f2937" ? { background: "#F5F1E8", color: "#1f2937", boxShadow: "inset 0 0 0 1px #e5e0d5" } : { background: color, color: "#fff" }}>{product.power}</span>
+            <span className={`product-power my-1 rounded px-1 py-1 text-[11px] font-black lg:text-sm ${powerTone}`}>{product.power}</span>
             {specs.map(([k, s], i) => (
-              <span key={i} className="flex justify-between gap-1 truncate border-b border-border/60 py-0.5 text-[8.5px] font-semibold text-muted-foreground last:border-0 lg:text-[10px]" dir="rtl"><span className="shrink-0 text-navy">{k}</span><span dir="ltr" className="truncate">{s}</span></span>
+              <span key={i} className="product-card-spec-row flex justify-between gap-1 border-b border-border/60 font-semibold text-muted-foreground last:border-0" dir="rtl"><span className="shrink-0 text-navy">{k}</span><span dir="ltr" className="truncate">{s}</span></span>
             ))}
           </span>
-        </button>
+        </Button>
       </div>
-      <button type="button" onClick={() => { warm(); onOpen(); }} dir="ltr" className="line-clamp-2 rounded-lg bg-navy px-2 py-1.5 text-center text-[9.5px] font-bold leading-snug text-primary-foreground transition hover:opacity-90 lg:text-[11px]">
+      <Button variant="presentation" size="presentation" type="button" onClick={() => { warm(); onOpen(); }} dir="ltr" className="product-card-model line-clamp-2 bg-navy text-center font-bold leading-snug text-navy-foreground transition hover:opacity-90">
         {product.model}
-      </button>
+      </Button>
       {arCatalog && (
-        <button type="button" onClick={() => setViewAr(true)} className="inline-flex items-center justify-center gap-1 text-[10px] font-bold text-muted-foreground hover:text-navy">
+        <Button variant="presentation" size="presentation" type="button" onClick={() => setViewAr(true)} className="inline-flex items-center justify-center gap-1 text-[10px] font-bold text-muted-foreground hover:text-navy">
           <FileText className="size-3" /> كتالوج عربي
-        </button>
+        </Button>
       )}
       {viewAr && arCatalog && <PdfViewer file={{ kind: "Datasheet", label: `كتالوج ${product.model} (عربي)`, url: arCatalog }} onClose={() => setViewAr(false)} />}
     </article>
@@ -325,27 +332,15 @@ const CAT_EN: Record<ProductCategory, string> = {
   storage: "Energy Storage",
 };
 
-/** اللون الرسمي لكل شركة لكبسولة القدرة. */
-function brandColor(b: string) {
-  const k = brandLabel(b).toLowerCase().replace(/[^a-z]/g, "");
-  if (k.includes("deye")) return "#0072ce";
-  if (k.includes("solis")) return "#f06e1e";
-  if (k.includes("lipower")) return "#e60045";
-  if (k.includes("pylontech")) return "#002b66";
-  if (k.includes("hithium")) return "#10b981";
-  if (k.includes("suntech")) return "#C9A24A";
-  return "#1f2937";
-}
-
 function Section({ icon, title, children, defaultOpen = false }: { icon: ReactNode; title: string; children: ReactNode; defaultOpen?: boolean }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
     <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
-      <button type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open} className="flex w-full items-center gap-2.5 px-3.5 py-3 text-right transition hover:bg-muted/60">
+      <Button variant="presentation" size="presentation" type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open} className="flex w-full items-center gap-2.5 px-3.5 py-3 text-right transition hover:bg-muted/60">
         <span className="grid size-8 place-items-center rounded-full bg-navy-soft text-navy [&_svg]:size-4">{icon}</span>
         <span className="flex-1 text-sm font-black text-navy lg:text-[15px]">{title}</span>
         <ChevronDown className={`size-4 text-muted-foreground transition ${open ? "rotate-180" : ""}`} />
-      </button>
+      </Button>
       {open && <div className="border-t border-border/70 px-3.5 py-3 text-sm leading-7 text-foreground">{children}</div>}
     </div>
   );
@@ -418,8 +413,8 @@ function PdfViewer({ file, onClose }: { file: ProductFile; onClose: () => void }
         <div className="flex items-center gap-2 border-b border-border px-3 py-2">
           <FileText className="size-4 shrink-0 text-brand" />
           <span className="flex-1 truncate text-xs font-black text-navy lg:text-sm">{file.label}</span>
-          <button type="button" onClick={() => downloadFile(file)} className="rounded-full bg-navy-soft px-3 py-1 text-[11px] font-bold text-navy transition hover:opacity-90">تحميل</button>
-          <button type="button" onClick={onClose} aria-label="إغلاق" className="grid size-7 place-items-center rounded-full bg-muted text-navy transition hover:bg-border"><X className="size-4" /></button>
+          <Button variant="presentation" size="presentation" type="button" onClick={() => downloadFile(file)} className="rounded-full bg-navy-soft px-3 py-1 text-[11px] font-bold text-navy transition hover:opacity-90">تحميل</Button>
+          <Button variant="presentation" size="presentation" type="button" onClick={onClose} aria-label="إغلاق" className="grid size-7 place-items-center rounded-full bg-muted text-navy transition hover:bg-border"><X className="size-4" /></Button>
         </div>
         <Suspense fallback={<div className="flex-1 bg-muted" />}><PdfPages url={file.url} /></Suspense>
       </div>
@@ -459,7 +454,7 @@ function ShareSheet({ product, onClose }: { product: Product; onClose: () => voi
         <div className="flex items-center gap-2 border-b border-border px-3.5 py-2.5">
           <Share2 className="size-4 text-brand" />
           <span className="flex-1 text-sm font-black text-navy">مشاركة المنتج</span>
-          <button type="button" onClick={onClose} aria-label="إغلاق" className="grid size-7 place-items-center rounded-full bg-muted text-navy transition hover:bg-border"><X className="size-4" /></button>
+          <Button variant="presentation" size="presentation" type="button" onClick={onClose} aria-label="إغلاق" className="grid size-7 place-items-center rounded-full bg-muted text-navy transition hover:bg-border"><X className="size-4" /></Button>
         </div>
         <div className="space-y-3 p-4">
           <div className="grid place-items-center rounded-xl border border-border bg-card/40 p-3">
@@ -467,11 +462,11 @@ function ShareSheet({ product, onClose }: { product: Product; onClose: () => voi
           </div>
           <p className="text-center text-[11px] leading-5 text-muted-foreground">امسح الرمز بالجوال لفتح مواصفات {product.model} وملفاته الرسمية مباشرة.</p>
           <div className="grid gap-2">
-            <button type="button" onClick={share} className="inline-flex items-center justify-center gap-1.5 rounded-full bg-brand px-3 py-2 text-xs font-bold text-brand-foreground transition hover:opacity-90"><Share2 className="size-4" /> مشاركة الملخص الفني</button>
+            <Button variant="presentation" size="presentation" type="button" onClick={share} className="inline-flex items-center justify-center gap-1.5 rounded-full bg-brand px-3 py-2 text-xs font-bold text-brand-foreground transition hover:opacity-90"><Share2 className="size-4" /> مشاركة الملخص الفني</Button>
             <a href={`https://wa.me/?text=${encodeURIComponent(summary)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-1.5 rounded-full bg-skyline px-3 py-2 text-xs font-bold text-skyline-foreground transition hover:opacity-90"><MessageCircle className="size-4" /> إرسال عبر واتساب</a>
-            <button type="button" onClick={copy} className="inline-flex items-center justify-center gap-1.5 rounded-full bg-navy-soft px-3 py-2 text-xs font-bold text-navy transition hover:opacity-90">
+            <Button variant="presentation" size="presentation" type="button" onClick={copy} className="inline-flex items-center justify-center gap-1.5 rounded-full bg-navy-soft px-3 py-2 text-xs font-bold text-navy transition hover:opacity-90">
               {copied ? <><Check className="size-4" /> تم النسخ</> : <><Copy className="size-4" /> نسخ ملخص المواصفات</>}
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -492,27 +487,27 @@ function ProductDetail({ product, onOpen, onBack, backLabel }: { product: Produc
   );
 
   return (
-    <div className="screen-enter w-full space-y-4 pb-4">
+    <div className="catalog-screen screen-enter w-full space-y-4 pb-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <BackButton onClick={onBack} label={backLabel ?? CATEGORIES.find((c) => c.id === product.category)?.title ?? "منتجاتنا"} />
         <div className="flex items-center gap-2">
           {(() => {
             const catalogUrl = officialCatalogUrl(product, lang === "en" ? "en" : "ar");
             return catalogUrl ? (
-              <button type="button" onClick={() => setViewFile({ kind: "Datasheet", label: lang === "en" ? "Official Datasheet (EN)" : "الكتالوج الرسمي (عربي)", url: catalogUrl })} className="inline-flex items-center gap-1.5 rounded-full bg-brand px-3 py-1.5 text-xs font-bold text-brand-foreground shadow-sm transition hover:opacity-90">
+              <Button variant="presentation" size="presentation" type="button" onClick={() => setViewFile({ kind: "Datasheet", label: lang === "en" ? "Official Datasheet (EN)" : "الكتالوج الرسمي (عربي)", url: catalogUrl })} className="inline-flex items-center gap-1.5 rounded-full bg-brand px-3 py-1.5 text-xs font-bold text-brand-foreground shadow-sm transition hover:opacity-90">
                 <FileText className="size-3.5" /> <span translate="no">{lang === "en" ? "Official Datasheet (English)" : translateText("كتالوج المنتج بالعربية", lang)}</span>
-              </button>
+              </Button>
             ) : null;
           })()}
-          <button type="button" onClick={() => setShareOpen(true)} className="inline-flex items-center gap-1.5 rounded-full bg-navy px-3 py-1.5 text-xs font-bold text-skyline-foreground shadow-sm transition hover:opacity-90">
+          <Button variant="presentation" size="presentation" type="button" onClick={() => setShareOpen(true)} className="inline-flex items-center gap-1.5 rounded-full bg-navy px-3 py-1.5 text-xs font-bold text-skyline-foreground shadow-sm transition hover:opacity-90">
             <Share2 className="size-3.5" /> مشاركة / رمز QR
-          </button>
+          </Button>
         </div>
       </div>
 
 
 
-      <section className="grid gap-4 rounded-2xl border border-border bg-card p-3 shadow-sm md:grid-cols-[minmax(0,3fr)_minmax(0,3fr)] lg:p-5">
+      <section className="product-detail-summary grid gap-4 md:grid-cols-2">
         <div className="relative overflow-hidden rounded-xl border border-border/70 bg-background">
           <BrandBadge brand={product.brand} large />
           <div className="overflow-hidden">
@@ -538,7 +533,7 @@ function ProductDetail({ product, onOpen, onBack, backLabel }: { product: Produc
       </section>
 
       {summaryRows.length > 0 && (
-        <section className="rounded-2xl border border-border bg-card p-4 shadow-sm">
+        <section className="product-detail-band">
           <h2 className="mb-2.5 flex items-center gap-2 text-base font-black text-navy"><Gauge className="size-5 text-brand" /> الملخص الفني السريع</h2>
           <div className="grid grid-cols-2 gap-2 lg:grid-cols-3">
             {summaryRows.map(([k, v]) => (
@@ -551,7 +546,7 @@ function ProductDetail({ product, onOpen, onBack, backLabel }: { product: Produc
         </section>
       )}
 
-      <section className="rounded-2xl border border-border bg-card p-4 shadow-sm">
+      <section className="product-detail-band">
         <h2 className="mb-2 flex items-center gap-2 text-base font-black text-navy"><Info className="size-5 text-skyline" /> عن المنتج</h2>
         <p className="text-sm leading-7 text-foreground">{product.about}</p>
       </section>
@@ -571,7 +566,7 @@ function ProductDetail({ product, onOpen, onBack, backLabel }: { product: Produc
                 <p className="mb-1.5 text-xs font-black text-navy">متوفر في كتالوج TAMKEEN — اضغط للانتقال:</p>
                 <div className="grid gap-2 sm:grid-cols-2">
                   {linked.map((lp) => (
-                    <button key={lp.id} type="button" onClick={() => onOpen(lp.id)} className="flex items-center gap-2 rounded-xl border border-border bg-card p-2 text-right transition hover:-translate-y-0.5 hover:shadow-md">
+                    <Button variant="presentation" size="presentation" key={lp.id} type="button" onClick={() => onOpen(lp.id)} className="flex items-center gap-2 rounded-xl border border-border bg-card p-2 text-right transition hover:-translate-y-0.5 hover:shadow-md">
                       <img src={lp.image} alt="" loading="lazy" className="size-12 shrink-0 rounded-lg border border-border/70 object-contain p-0.5" />
                       <span className="min-w-0 flex-1">
                         <span className="block text-[10px] font-bold text-skyline">{lp.brand}</span>
@@ -579,7 +574,7 @@ function ProductDetail({ product, onOpen, onBack, backLabel }: { product: Produc
                         <span className="block truncate text-[10px] text-muted-foreground" dir="ltr">{lp.model} — {lp.power}</span>
                       </span>
                       <ArrowRight className="size-4 shrink-0 text-brand" />
-                    </button>
+                    </Button>
                   ))}
                 </div>
               </div>
@@ -596,8 +591,8 @@ function ProductDetail({ product, onOpen, onBack, backLabel }: { product: Produc
               <div dir={dir} className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border px-3 py-2">
                 <span className="flex items-center gap-2 text-sm font-bold text-navy"><FileText className="size-4 text-brand" /> {label} <span className="text-xs font-normal text-muted-foreground">(PDF)</span></span>
                 <span className="flex gap-1.5">
-                  <button type="button" onClick={() => setViewFile({ kind: "Datasheet", label, url })} className="inline-flex items-center gap-1 rounded-full bg-skyline px-3 py-1 text-xs font-bold text-skyline-foreground transition hover:opacity-90"><Eye className="size-3.5" /> {open}</button>
-                  <button type="button" onClick={() => downloadFile({ kind: "Datasheet", label, url })} className="inline-flex items-center gap-1 rounded-full bg-navy-soft px-3 py-1 text-xs font-bold text-navy transition hover:opacity-90"><Download className="size-3.5" /> {dl}</button>
+                  <Button variant="presentation" size="presentation" type="button" onClick={() => setViewFile({ kind: "Datasheet", label, url })} className="inline-flex items-center gap-1 rounded-full bg-skyline px-3 py-1 text-xs font-bold text-skyline-foreground transition hover:opacity-90"><Eye className="size-3.5" /> {open}</Button>
+                  <Button variant="presentation" size="presentation" type="button" onClick={() => downloadFile({ kind: "Datasheet", label, url })} className="inline-flex items-center gap-1 rounded-full bg-navy-soft px-3 py-1 text-xs font-bold text-navy transition hover:opacity-90"><Download className="size-3.5" /> {dl}</Button>
                 </span>
               </div>
             );

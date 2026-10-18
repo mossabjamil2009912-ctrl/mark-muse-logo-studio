@@ -61,63 +61,68 @@
   --color-overlay: var(--overlay);
   --color-navy: var(--navy);
   --color-navy-soft: var(--navy-soft);
+  --color-navy-foreground: var(--navy-foreground);
+  --color-gold: var(--gold);
   --font-sans: var(--font-app);
 }
 
 :root {
-  --radius: 0.75rem;
+  --radius: 0.5rem;
   --font-app: "Tajawal", "IBM Plex Sans Arabic", system-ui, sans-serif;
-  --background: oklch(0.975 0.006 20);
-  --foreground: oklch(0.24 0.02 255);
-  --card: oklch(1 0 0 / 0.96);
-  --card-foreground: oklch(0.24 0.02 255);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.24 0.02 255);
-  --primary: oklch(0.55 0.2 25);
-  --primary-foreground: oklch(0.99 0.005 20);
-  --secondary: oklch(0.94 0.01 20);
-  --secondary-foreground: oklch(0.28 0.02 255);
-  --muted: oklch(0.95 0.008 20);
-  --muted-foreground: oklch(0.48 0.02 255);
-  --accent: oklch(0.94 0.035 20);
-  --accent-foreground: oklch(0.38 0.12 25);
-  --destructive: oklch(0.56 0.22 25);
-  --destructive-foreground: oklch(0.99 0.003 247);
-  --border: oklch(0.86 0.012 20);
-  --input: oklch(0.88 0.012 20);
-  --ring: oklch(0.55 0.2 25);
-  --chart-1: oklch(0.55 0.2 25);
+  --background: oklch(0.975 0.005 250);
+  --foreground: oklch(0.29 0.04 250);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.54 0.21 25);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.95 0.016 250);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.96 0.008 250);
+  --muted-foreground: oklch(0.52 0.03 250);
+  --accent: oklch(0.94 0.02 250);
+  --accent-foreground: var(--foreground);
+  --destructive: var(--primary);
+  --destructive-foreground: var(--primary-foreground);
+  --border: oklch(0.88 0.017 250);
+  --input: var(--border);
+  --ring: var(--primary);
+  --chart-1: var(--primary);
   --chart-2: oklch(0.55 0.14 237);
   --chart-3: oklch(0.55 0.15 150);
-  --chart-4: oklch(0.65 0.18 30);
+  --chart-4: oklch(0.73 0.12 85);
   --chart-5: oklch(0.45 0.1 255);
-  --sidebar: oklch(0.96 0.008 20);
-  --sidebar-foreground: oklch(0.24 0.02 255);
-  --sidebar-primary: oklch(0.55 0.2 25);
-  --sidebar-primary-foreground: oklch(0.99 0.005 20);
-  --sidebar-accent: oklch(0.93 0.03 20);
-  --sidebar-accent-foreground: oklch(0.24 0.02 255);
-  --sidebar-border: oklch(0.86 0.012 20);
-  --sidebar-ring: oklch(0.55 0.2 25);
-  --brand: oklch(0.55 0.2 25);
-  --brand-foreground: oklch(0.99 0.005 20);
-  --energy: oklch(0.55 0.16 152);
-  --energy-foreground: oklch(0.99 0.008 145);
-  --skyline: oklch(0.5 0.19 25);
-  --skyline-foreground: oklch(0.99 0.005 20);
-  --navy: oklch(0.3 0.06 255);
-  --navy-soft: oklch(0.92 0.02 255);
-  --field: oklch(0.97 0.006 20);
-  --field-foreground: oklch(0.24 0.02 255);
-  --panel: oklch(0.985 0.004 20);
-  --panel-foreground: oklch(0.24 0.02 255);
-  --soft: oklch(0.955 0.008 20);
-  --step: oklch(0.55 0.2 25);
-  --step-foreground: oklch(0.99 0.005 20);
-  --overlay: oklch(0.25 0.02 255);
-  --shadow-soft: 0 8px 28px -12px oklch(0.55 0.2 25 / 0.18);
-  --hero-shade: linear-gradient(90deg, color-mix(in oklab, var(--sidebar) 92%, transparent) 0%, color-mix(in oklab, var(--sidebar) 55%, transparent) 58%, color-mix(in oklab, var(--sidebar) 18%, transparent) 100%);
-  --header-fade: linear-gradient(90deg, var(--card) 0%, color-mix(in oklab, var(--card) 92%, transparent) 55%, color-mix(in oklab, var(--card) 45%, transparent) 100%);
+  --navy: oklch(0.3 0.075 250);
+  --navy-foreground: oklch(1 0 0);
+  --navy-soft: oklch(0.94 0.02 250);
+  --gold: oklch(0.78 0.12 85);
+  --sidebar: var(--navy);
+  --sidebar-foreground: var(--navy-foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: oklch(0.38 0.075 250);
+  --sidebar-accent-foreground: var(--navy-foreground);
+  --sidebar-border: oklch(0.48 0.045 250);
+  --sidebar-ring: var(--primary);
+  --brand: var(--primary);
+  --brand-foreground: var(--primary-foreground);
+  --energy: oklch(0.51 0.13 155);
+  --energy-foreground: var(--primary-foreground);
+  --skyline: var(--navy);
+  --skyline-foreground: var(--navy-foreground);
+  --field: var(--muted);
+  --field-foreground: var(--foreground);
+  --panel: var(--card);
+  --panel-foreground: var(--foreground);
+  --soft: var(--muted);
+  --step: var(--primary);
+  --step-foreground: var(--primary-foreground);
+  --overlay: oklch(0.18 0.04 250);
+  --shadow-soft: 0 2px 8px oklch(0.3 0.04 250 / 0.06);
+  --shadow-raised: 0 12px 38px oklch(0.2 0.04 250 / 0.16);
+  --hero-shade: linear-gradient(90deg, color-mix(in oklab, var(--sidebar) 92%, transparent), transparent);
+  --header-fade: linear-gradient(90deg, var(--card), color-mix(in oklab, var(--card) 45%, transparent));
 }
 
 .dark {
@@ -179,15 +184,13 @@
 
   body {
     background-color: var(--color-background);
-    background-image:
-      radial-gradient(60rem 40rem at 85% -10%, color-mix(in oklab, var(--primary) 9%, transparent), transparent 60%),
-      radial-gradient(50rem 35rem at -10% 110%, color-mix(in oklab, oklch(0.7 0.16 230) 8%, transparent), transparent 60%);
+    background-image: none;
     background-attachment: fixed;
     color: var(--color-foreground);
     font-family: var(--font-app);
   }
   .bg-card {
-    backdrop-filter: blur(14px);
+    backdrop-filter: none;
     box-shadow: var(--shadow-soft);
   }
 }
@@ -354,4 +357,186 @@ html.corporate button, html.corporate a { transition: background-color .15s, col
 /* Light theme: keep white logo artwork readable */
 img[src*="logo-white"], img[src*="logo-full-white"] {
   filter: drop-shadow(0 0 1px oklch(0.25 0.02 255 / 0.9)) drop-shadow(0 2px 6px oklch(0.25 0.02 255 / 0.45));
+}
+
+/* Reference-matched application presentation. Does not touch generated documents or diagram coordinates. */
+html { letter-spacing: 0; }
+body { line-height: 1.55; }
+button, input, textarea, select { font: inherit; }
+button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+button:not(:disabled), a { touch-action: manipulation; }
+:where(button, a, input, select, textarea):focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
+:where(.screen-enter, [role="dialog"]) :is(h1,h2,h3,h4) { color: var(--foreground); }
+:where(.screen-enter, [role="dialog"]) :is(input:not([type="checkbox"]):not([type="range"]),textarea,select) { min-width: 0; }
+:where(.screen-enter, [role="dialog"]) [class*="rounded-xl"],
+:where(.screen-enter, [role="dialog"]) [class*="rounded-2xl"] { border-radius: var(--radius); }
+.tamkeen-brand { display:flex; align-items:center; justify-content:center; gap:10px; color:var(--navy); flex-shrink:0; }
+.tamkeen-brand > img { height:68px; width:auto; object-fit:contain; filter:none; }
+.tamkeen-brand-type { display:flex; flex-direction:column; align-items:center; line-height:1; }
+.tamkeen-brand-type strong { font-size:32px; font-weight:900; }
+.tamkeen-brand-type b { font-family:Arial,sans-serif; font-size:21px; font-weight:800; margin-top:4px; }
+.tamkeen-brand-type span { font-size:10px; font-weight:700; margin-top:7px; white-space:nowrap; }
+.tamkeen-brand-inverse { color:var(--navy-foreground); }
+.tamkeen-brand-compact { gap:6px; }
+.tamkeen-brand-compact > img { height:38px; }
+.tamkeen-brand-compact strong { font-size:20px; }
+.tamkeen-brand-compact b { font-size:13px; margin-top:2px; }
+.tamkeen-brand-compact span { font-size:7px; margin-top:4px; }
+.app-topbar { min-height:54px; background:var(--card); }
+.app-topbar [class*="whitespace-nowrap"] { white-space:normal; }
+.app-main { max-width:1600px; }
+.app-bottom-nav { background:var(--card); box-shadow:var(--shadow-soft); border-color:var(--border); }
+.app-bottom-nav > button { min-height:56px; gap:5px; color:var(--muted-foreground); }
+.app-bottom-nav > button[aria-current="page"] { color:var(--primary); }
+.app-bottom-nav > button span { white-space:normal; text-align:center; line-height:1.25; font-size:9px; }
+.app-home { gap:10px; }
+.home-cover { border-radius:8px; background:var(--navy); }
+.home-cover > img { display:block; width:100%; aspect-ratio:1584/672; object-fit:cover; }
+.home-services { gap:10px; }
+.home-service { border-radius:8px; border:1px solid var(--border); box-shadow:var(--shadow-soft); }
+.home-service-photo { aspect-ratio:1.65; }
+.home-service-body { padding:18px 9px 10px; gap:4px; }
+.home-service-title { font-size:14px; font-weight:800; line-height:1.5; }
+.home-service-description { font-size:11px; line-height:1.6; margin:0 0 4px; min-height:35px; }
+.home-service-cta { background:var(--primary); color:var(--primary-foreground); font-size:11px; padding:5px 14px; border-radius:20px; }
+.home-partners { border-radius:6px; box-shadow:none; }
+.start-screen-content { padding-top:40px; padding-bottom:30px; }
+.start-screen .tamkeen-brand { margin-bottom:20px; }
+.start-screen .tamkeen-brand > img { height:110px; }
+.start-screen .tamkeen-brand-type strong { font-size:42px; }
+.start-screen .tamkeen-brand-type b { font-size:28px; }
+.start-screen h1 { font-size:26px; line-height:1.55; }
+.start-screen h1 span { color:var(--gold); }
+.start-screen p { font-size:13px; }
+.start-screen-sectors { border-top:1px solid var(--gold); padding-top:16px; }
+.start-screen-sectors span { border-color:var(--gold); border-radius:20px; padding:4px 10px; font-size:11px; }
+.start-screen-cta { border-radius:30px; border:1px solid var(--gold); height:50px; max-width:280px; margin-top:24px; box-shadow:var(--shadow-raised); }
+.workspace-body { padding:0; border:0; background:transparent; box-shadow:none; }
+.workspace-heading { align-items:center; gap:8px; }
+.project-options { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.project-option { border-color:var(--border); }
+.project-option-photo { aspect-ratio:1.7; }
+.project-option-content { padding:19px 12px 12px; }
+.project-option-content strong { font-size:15px; }
+.project-option-content small { font-size:11px; line-height:1.6; }
+.project-option:last-child { grid-column:1 / -1; display:grid; grid-template-columns:1fr 1fr; }
+.project-option:last-child .project-option-photo { height:100%; min-height:110px; }
+.project-option-icon { bottom:-12px; border-color:var(--card); background:var(--primary); color:var(--primary-foreground); }
+.catalog-screen { padding-bottom:14px; }
+.catalog-banner { position:relative; overflow:hidden; border-radius:8px; background:var(--navy); color:var(--navy-foreground); min-height:90px; padding:18px 22px; }
+.catalog-banner > img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.45; }
+.catalog-banner > div { position:relative; }
+.catalog-banner h1 { color:var(--navy-foreground); }
+.catalog-categories { gap:12px; }
+.catalog-category { border-radius:8px; }
+.catalog-category img { aspect-ratio:1; }
+.catalog-category-heading { padding:12px; }
+.catalog-category-heading > span:last-child { overflow:visible; }
+.catalog-category-heading span { white-space:normal; }
+.product-card { border:1px solid var(--border); border-radius:8px; background:var(--card); overflow:hidden; gap:0; }
+.product-card-image { box-shadow:none; border-radius:0; }
+.product-card-model { border-radius:5px; margin:0 7px 7px; font-size:10px; padding:5px; }
+.product-card-media { min-height:190px; padding:10px 6px; background:var(--card); }
+.product-card-specs { border:0; box-shadow:none; padding:0; background:transparent; }
+.product-card-spec-row { font-size:9px; white-space:normal; line-height:1.5; padding:3px 0; }
+.product-card-spec-row > span { overflow:visible; white-space:normal; }
+.product-power { background:var(--skyline); color:var(--skyline-foreground); }
+.product-power-panel { background:var(--primary); color:var(--primary-foreground); }
+.product-power-felicity { background:var(--muted); color:var(--foreground); border:1px solid var(--border); }
+.product-detail-summary { border:0; background:transparent; box-shadow:none; padding:0; }
+.product-detail-summary img { max-height:450px; }
+.product-detail-band { border:0; border-bottom:1px solid var(--border); border-radius:0; box-shadow:none; background:transparent; padding:16px 0; }
+.quote-paper { border:1px solid var(--border); border-radius:8px; background:var(--card); color:var(--foreground); overflow:hidden; }
+.quote-letterhead { border-bottom:1px solid var(--border); padding:16px; }
+.quote-paper table { min-width:640px; font-family:var(--font-app); }
+.quote-paper th { background:var(--primary); color:var(--primary-foreground); font-size:11px; padding:9px 6px; }
+.quote-paper td { border:1px solid var(--border); padding:10px 8px; }
+.quote-paper tbody tr:nth-child(even) { background:var(--muted); }
+.quote-item-content { display:grid; grid-template-columns:minmax(0,1fr) 90px; gap:12px; align-items:start; }
+.quote-item-photo { width:90px; height:130px; object-fit:contain; }
+.quote-item-content:not(:has(.quote-item-photo)) { grid-template-columns:minmax(0,1fr); }
+.quote-paper tfoot { background:var(--secondary); }
+.quote-catalog-link { border:1px solid var(--border); background:var(--muted); color:var(--navy); }
+@media (min-width:1024px) {
+ .app-main { padding:24px 32px 28px; }
+ .app-home { gap:18px; }
+ .home-cover { max-height:340px; }
+ .home-cover > img { max-height:340px; object-fit:cover; }
+ .home-services { gap:18px; }
+ .home-service-body { padding:24px 18px 16px; }
+ .home-service-title { font-size:19px; }
+ .home-service-description { font-size:13px; line-height:1.7; min-height:50px; }
+ .home-service-cta { font-size:13px; padding:7px 18px; }
+ .project-options { grid-template-columns:repeat(4,minmax(0,1fr)); }
+ .project-option:last-child { grid-column:1 / -1; max-width:540px; }
+ .product-card-media { min-height:240px; }
+ .product-card-spec-row { font-size:11px; }
+ .start-screen .tamkeen-brand > img { height:150px; }
+ .start-screen h1 { font-size:36px; }
+}
+@media (max-width:420px) {
+ .app-main { padding:10px 10px 80px; }
+ .app-topbar { padding-inline:10px; }
+ .app-topbar .tamkeen-brand-type span { font-size:6px; }
+ .home-service-title { font-size:13px; }
+ .home-service-description { font-size:10px; }
+ .product-card-media { min-height:175px; padding:6px; }
+ .product-card-spec-row { font-size:8px; }
+ .workspace-heading h1 { font-size:20px; }
+ .workspace-heading button { padding:7px; }
+ .start-screen-content { padding:30px 22px; }
+ .start-screen h1 { font-size:22px; }
+}
+@media print { .app-bottom-nav,.app-sidebar,.app-topbar { display:none; } .quote-paper { overflow:visible; } }
+
+.app-sidebar[data-collapsed="true"] nav { padding:0 6px; }
+.app-sidebar[data-collapsed="true"] nav button { padding:12px 6px; justify-content:center; }
+.app-sidebar[data-collapsed="true"] nav button span,.app-sidebar[data-collapsed="true"] nav button > svg:last-child:not(:first-child),.app-sidebar[data-collapsed="true"] > div:last-child,.app-sidebar[data-collapsed="true"] .tamkeen-brand-type { display:none; }
+.app-sidebar[data-collapsed="true"] .tamkeen-brand > img { height:46px; }
+.app-sidebar[data-collapsed="true"] > div:first-child { padding-inline:4px; }
+.app-sidebar .tamkeen-brand { flex-direction:column; }
+.app-sidebar svg[viewBox="0 0 200 160"] { display:none; }
+[data-screen="projects"] > section > .workspace-body > .mb-5:has(> .min-w-0:empty) { display:none; }
+[data-screen="projects"] .workspace-body > .mt-6 { margin-top:0; padding-top:0; border-top:0; }
+.catalog-brand-small > img { height:18px; }
+.catalog-brand-small .tamkeen-brand-type strong { font-size:10px; }
+.catalog-brand-small .tamkeen-brand-type b { font-size:7px; }
+.catalog-brand-small .tamkeen-brand-type span { display:none; }
+.catalog-brand-small { gap:3px; }
+.catalog-brand-large > img { height:32px; }
+.catalog-brand-large .tamkeen-brand-type strong { font-size:18px; }
+.catalog-brand-large .tamkeen-brand-type b { font-size:12px; }
+.catalog-brand-large .tamkeen-brand-type span { font-size:6px; }
+.engineering-report h4 { color:var(--navy-foreground); padding:9px 12px; font-size:12px; }
+.engineering-report > div:first-child { padding:12px; }
+.engineering-report input { min-height:40px; }
+.engineering-report { min-width:0; }
+.engineering-report [dir="ltr"] { direction:ltr; }
+@media (max-width:639px) {
+ .quote-paper table { display:block; min-width:0; width:100%; }
+ .quote-paper thead { display:none; }
+ .quote-paper tbody { display:block; }
+ .quote-paper tbody tr { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:0; padding:12px; border-bottom:1px solid var(--border); position:relative; }
+ .quote-paper tbody td { border:0; font-size:10px; padding:8px 4px; overflow-wrap:anywhere; }
+ .quote-paper tbody td:first-child { position:absolute; top:12px; inset-inline-end:12px; background:var(--primary); color:var(--primary-foreground); border-radius:50%; width:22px; height:22px; display:grid; place-items:center; padding:0; }
+ .quote-paper tbody td:nth-child(2) { grid-column:1 / -1; padding-inline-end:28px; text-align:start; }
+ .quote-paper tbody td:nth-child(3)::before { content:"الوحدة"; }
+ .quote-paper tbody td:nth-child(4)::before { content:"الكمية"; }
+ .quote-paper tbody td:nth-child(5)::before { content:"سعر الوحدة"; }
+ .quote-paper tbody td:nth-child(6)::before { content:"الإجمالي"; }
+ .quote-paper tbody td:nth-child(n+3)::before { display:block; color:var(--muted-foreground); margin-bottom:4px; font-weight:400; }
+ .quote-paper tbody td:nth-child(n+3) { background:var(--muted); }
+ .quote-paper tfoot { display:block; }
+ .quote-paper tfoot tr { display:flex; justify-content:space-between; }
+ .quote-paper tfoot td { border:0; }
+ .quote-letterhead { gap:8px; font-size:10px; }
+ .quote-letterhead .tamkeen-brand-type span { font-size:6px; }
+ .quote-letterhead .tamkeen-brand-compact > img { height:30px; }
+}
+@media (max-width:639px) {
+ .home-service-body { padding:16px 8px 9px; }
+ .home-service-description { font-size:10px; line-height:1.5; min-height:30px; }
+ .home-service-photo { aspect-ratio:1.85; }
+ .home-service-cta { white-space:nowrap; padding:5px 10px; }
+ .home-service-title { font-size:13px; }
 }

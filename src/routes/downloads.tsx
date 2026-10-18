@@ -1,3 +1,4 @@
+import { TamkeenBrand } from "@/components/tamkeen-brand";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/downloads")({
@@ -26,9 +27,9 @@ function DownloadsPage() {
       dir="rtl"
       className="min-h-screen bg-background text-foreground flex items-center justify-center p-6"
     >
-      <div className="w-full max-w-xl bg-card border border-border rounded-3xl p-8 sm:p-10 shadow-lg">
+      <div className="w-full max-w-xl p-8 sm:p-10">
         <div className="flex items-center gap-4 mb-6">
-          <img src="/brand/app-icon.png" alt="TAMKEEN" className="w-16 h-16 rounded-2xl" />
+          <TamkeenBrand compact />
           <div>
             <h1 className="text-2xl font-bold">تطبيق TAMKEEN لويندوز</h1>
             <p className="text-sm text-muted-foreground mt-1">نسخة سطح المكتب — 64 بت</p>
