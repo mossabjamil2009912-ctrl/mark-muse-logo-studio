@@ -31,3 +31,5 @@
 - Desktop client output and final Nitro output use separate directories to prevent duplicate public assets in packages.
 
 - Explicitly language-rendered catalog labels opt out of DOM translation; translate shared payloads before sending them, because DOM translation cannot cover clipboard or sharing data.
+- Render shared brand identity through TamkeenBrand with the original emblem and live lettering, so it remains legible at every screen size.
+- Keep the existing workflow state machine and API routes intact; visual screen variants use data-screen and shared semantic tokens, so presentation changes cannot mutate engineering or order data.
