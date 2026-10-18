@@ -621,19 +621,19 @@ export function studySpeech(study: {
     "Your PVsyst simulation study is ready",
     annual ? `Annual production about ${annual} kilowatt hours` : "",
     pr ? `with a performance ratio of ${pr} percent` : "",
-    "You can download the full report, continue the purchase, go back to the quote, or request the SLD diagram",
+    "You can download the full report, request a quote, contact sales, or request the SLD diagram",
   ].filter(Boolean).join(". ");
   if (lang === "zh") return [
     "您的PVsyst模拟研究已准备好",
     annual ? `年发电量约${annual}千瓦时` : "",
     pr ? `性能比${pr}%` : "",
-    "您可以下载完整报告、继续购买、返回报价，或申请SLD图纸",
+    "您可以下载完整报告、申请报价、联系销售，或申请SLD图纸",
   ].filter(Boolean).join("，");
   return [
     "دِرَاسَةُ المُحَاكَاةِ الشَّمْسِيَّةِ جَاهِزَة",
     annual ? `الإِنْتَاجُ السَّنَوِيُّ حَوَالِي ${annual} كِيلُو وَاط سَاعَة` : "",
     pr ? `وَمُعَامِلُ الأَدَاءِ ${pr} بِالمِئَة` : "",
-    "يُمْكِنُكَ تَحْمِيلُ التَّقْرِيرِ الكَامِل، أَوْ مُتَابَعَةُ الشِّرَاء، أَوِ العَوْدَةُ لِعَرْضِ السِّعْر، أَوْ طَلَبُ مُخَطَّطِ إِسْ إِلْ دِي",
+    "يُمْكِنُكَ تَحْمِيلُ التَّقْرِيرِ الكَامِل، أَوْ طَلَبُ عَرْضِ سِعْر، أَوِ التَّوَاصُلُ مَعَ المَبِيعَات، أَوْ طَلَبُ مُخَطَّطِ إِسْ إِلْ دِي",
   ].filter(Boolean).join(". ");
 }
 

@@ -14,6 +14,13 @@ const S = (ar: string, en: string, zh: string, input = false): Script => ({ ar, 
 
 export const SCRIPTS: Record<string, Script> = {
   // ===== القوائم =====
+  welcome_services: S("مَرْحَبًا بِكَ فِي عَرْشِ الهَنْدَسَةِ لِلْحُلُولِ التِّقْنِيَّةِ الذَّكِيَّة. اخْتَرِ الخِدْمَةَ المَطْلُوبَة: طَلَبُ عَرْضِ سِعْر، حُلُولُ أَنْظِمَةِ الطَّاقَة، أَوِ الدَّعْمُ الفَنِّيّ.", "Welcome to ARSH ENGINEERING. Choose the service you need: price quote, energy solutions, or technical support.", "欢迎来到阿尔什工程。请选择服务：申请报价、能源系统方案或技术支持。"),
+  ind_starter: S("حَدِّدْ طَرِيقَةَ تَشْغِيلِ المُحَرِّكَاتِ فِي مَصْنَعِك: تَشْغِيلٌ مُبَاشِرٌ أَوْ سْتَار دِلْتَا، أَوْ بَادِئٌ نَاعِم، أَوْ مُغَيِّرُ سُرْعَة.", "Choose how your factory motors start: direct or star-delta, soft starter, or variable speed drive.", "请选择工厂电机的启动方式：直接或星三角启动、软启动器，或变频器。"),
+  ind_night_kw: S("الحِمْلُ اللَّيْلِيّ. أَدْخِلْ حِمْلَ المَصْنَعِ أَثْنَاءَ اللَّيْلِ بِالكِيلُووَاط.", "Night load. Enter the factory's night-time load in kilowatts.", "夜间负荷。请以千瓦输入工厂夜间负荷。", true),
+  ind_bill: S("أَدْخِلْ مُتَوَسِّطَ فَاتُورَةِ الكَهْرَبَاءِ الشَّهْرِيَّةِ لِمَصْنَعِك.", "Enter your factory's average monthly electricity bill.", "请输入工厂每月平均电费。", true),
+  ind_shifts_custom: S("اكْتُبْ عَدَدَ الوَرْدِيَّاتِ وَأَوْقَاتَهَا.", "Type the number of shifts and their times.", "请输入班次数量及时间。", true),
+  ind_quote_name: S("أَدْخِلِ اسْمَ المَصْنَعِ أَوِ الجِهَةِ الَّتِي سَتُعْتَمَدُ فِي عَرْضِ السِّعْرِ الرَّسْمِيّ.", "Enter the factory or company name for the official quote.", "请输入正式报价单上的工厂或单位名称。", true),
+  sld_custom: S("المُخَطَّطُ التَّنْفِيذِيّ. أَدْخِلْ بَيَانَاتِ مَنْظُومَتِكَ لِإِعْدَادِ المُخَطَّطِ الكَهْرَبَائِيّ.", "Execution diagram. Enter your system details to prepare the electrical diagram.", "施工图。请输入系统数据以生成电气图。", true),
   quote_menu: S("طَلَبُ عَرْضِ سِعْر. حَدِّدْ نَوْعَ طَلَبِكَ.", "Price quote. Choose the type of your request.", "申请报价。请选择您的请求类型。"),
   energy_menu: S("حُلُولُ أَنْظِمَةِ الطَّاقَة. يُمْكِنُكَ طَلَبُ دِرَاسَةٍ فَنِّيَّة، أَوِ التَّوَاصُلُ مَعَ فَرِيقِ عَرْشِ الهَنْدَسَة.", "Energy solutions. Explore the available solutions and choose the one that suits you.", "能源系统方案。了解可用方案，选择适合您的方案。"),
   menu_sys3: S("حَدِّدْ نَوْعَ نِظَامِ المَشْرُوع: مَنْظُومَاتُ المَنَازِلِ وَالفِلَل، حُلُولُ المَتَاجِرِ وَالشَّرِكَات، مَحَطَّاتُ المَصَانِعِ وَالمُنْشَآت، طَاقَةُ الآبَارِ وَالرِّيِّ الزِّرَاعِيّ، طَلَبُ مُعَدَّاتٍ فَرْدِيَّة.", "Choose your project system type: home and villa systems, shop and business solutions, factory and facility plants, wells and agricultural irrigation energy, or individual equipment request.", "请确定项目的系统类型：住宅与别墅系统、商店与商业解决方案、工厂与设施电站、水井与农业灌溉能源、单体设备申请。"),
