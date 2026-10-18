@@ -1630,7 +1630,7 @@ function QuoteWorkspace({ view, session, step, draft, setDraft, onPick, onBack, 
     return ok;
   };
   const ecoGate = (node: ReactNode) => resumeNow ? node
-    : ecoAcc.kind === "waiting" ? <StudyWaiting kind="eco" readyAt={ecoAcc.readyAt} previous={!ecoStarted} onBack={onStudies} />
+    : ecoAcc.kind === "waiting" ? <StudyWaiting kind="eco" readyAt={ecoAcc.readyAt} previous={!ecoStarted} onBack={onHome} />
     : ecoAcc.kind === "pay" || ecoAcc.kind === "review" ? <StudyPayment kind="eco" status={ecoAcc} customer={String(session["name"] || session["client_name"] || "")} city={String(session["city"] || "")} />
     : <>{ecoAcc.kind === "free" && <FreeStudyNote kind="eco" />}{node}</>;
   // شاشة دراسة الجدوى الاقتصادية المستقلة
@@ -1684,7 +1684,7 @@ function QuoteWorkspace({ view, session, step, draft, setDraft, onPick, onBack, 
   const customerName = String(session["name"] || session["client_name"] || savedClientName() || "");
   const customerCity = String(session["city"] || "");
   const attachGate = (kind: "sld" | "eco", acc: typeof sldAcc) =>
-    acc.kind === "waiting" ? <StudyWaiting kind={kind} readyAt={acc.readyAt} previous onBack={onStudies} />
+    acc.kind === "waiting" ? <StudyWaiting kind={kind} readyAt={acc.readyAt} previous onBack={onHome} />
     : acc.kind === "pay" || acc.kind === "review" ? <StudyPayment kind={kind} status={acc} customer={customerName} city={customerCity} />
     : null;
 
@@ -1750,7 +1750,7 @@ function QuoteWorkspace({ view, session, step, draft, setDraft, onPick, onBack, 
             {studyLocked ? (
               access.kind === "pay" || access.kind === "review"
                 ? <StudyPayment status={access} customer={String(session["name"] || session["client_name"] || "")} city={String(session["city"] || "")} />
-                : <StudyWaiting readyAt={pendingAt} previous={access.kind === "waiting" && access.sig !== studySig} onBack={onStudies} />
+                : <StudyWaiting readyAt={pendingAt} previous={access.kind === "waiting" && access.sig !== studySig} onBack={onHome} />
             ) : ecoScreen && !ecoOwned ? (
               attachGate("eco", ecoAcc)
             ) : sldScreen && !sldOwned ? (
@@ -1828,7 +1828,7 @@ function QuoteWorkspace({ view, session, step, draft, setDraft, onPick, onBack, 
                   ? (() => { const info = shiftEntryInfo(session); return <ShiftEntry key={`shift-${info.offset}-${info.count}`} count={info.count} offset={info.offset} onSubmit={onPick} />; })()
                   : step === "pv_loads"
                     ? (access.kind === "waiting"
-                      ? <StudyWaiting readyAt={access.readyAt} previous onBack={onStudies} />
+                      ? <StudyWaiting readyAt={access.readyAt} previous onBack={onHome} />
                       : access.kind === "pay" || access.kind === "review"
                       ? <StudyPayment status={access} customer={String(session["name"] || session["client_name"] || "")} city={String(session["city"] || "")} />
                       : <>{access.kind === "free" && <FreeStudyNote />}<HourlyLoadEntry onSubmit={onPick} /></>)
