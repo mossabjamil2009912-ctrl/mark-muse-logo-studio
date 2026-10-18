@@ -47,4 +47,4 @@
 - [x] Recheck all 11 inverter detail pages, specifications, compatibility, sharing, and available English datasheets (125 kW has no attached datasheet).
 - [x] استبدال الهوية بشعار واسم «تمكين للحلول التقنية الذكية»
 
-- [ ] تلوين حرف T في شعار تمكين بالأزرق (شاشة البدء وكل المواضع)
+- [x] تلوين حرف T في شعار تمكين بالأزرق (شاشة البدء وكل المواضع)
