@@ -530,3 +530,10 @@ button:not(:disabled), a { touch-action: manipulation; }
  .quote-letterhead .tamkeen-brand-type span { font-size:6px; }
  .quote-letterhead .tamkeen-brand-compact > img { height:30px; }
 }
+@media (max-width:639px) {
+ .home-service-body { padding:16px 8px 9px; }
+ .home-service-description { font-size:10px; line-height:1.5; min-height:30px; }
+ .home-service-photo { aspect-ratio:1.85; }
+ .home-service-cta { white-space:nowrap; padding:5px 10px; }
+ .home-service-title { font-size:13px; }
+}
