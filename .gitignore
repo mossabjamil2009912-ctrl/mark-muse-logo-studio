@@ -33,3 +33,7 @@ dist-ssr
 
 dist-electron
 desktop-release
+
+electron-release/
+dist-electron/
+dist-electron-client/
