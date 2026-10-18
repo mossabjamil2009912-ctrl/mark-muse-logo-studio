@@ -35,7 +35,9 @@ import {
   Bell,
   Building2,
   Sprout,
+  Store,
   Check,
+  ChevronLeft,
   ChevronDown,
   CircleDollarSign,
   Download,
@@ -1489,6 +1491,14 @@ function HomeDashboard({ onService, onProducts }: { onService: (kind: "quote" | 
   return (
     <div className="app-home screen-enter flex min-h-0 w-full flex-col gap-2">
       <CorporateHero />
+      <section className="home-welcome flex shrink-0 items-center justify-start gap-3 rounded-xl border border-border bg-card px-3 py-2 lg:hidden">
+        <img src={logoMark} alt="" width={439} height={546} className="h-14 w-auto" />
+        <div className="leading-tight">
+          <p className="text-base font-black text-navy">تمكين</p>
+          <p className="text-sm font-black text-brand">للحلول التقنية والهندسية</p>
+          <p className="text-sm font-bold text-navy">مرحباً عميلنا</p>
+        </div>
+      </section>
       <section data-photo-section className="home-cover relative shrink-0 overflow-hidden border border-border bg-navy">
         <LangImg ar={homeHeroAr} en={homeHeroEn} zh={homeHeroZh} alt="تمكين للحلول التقنية والهندسية" loading="eager" fetchPriority="high" />
       </section>
@@ -1499,15 +1509,15 @@ function HomeDashboard({ onService, onProducts }: { onService: (kind: "quote" | 
 
 
       <section className="home-services stagger-in grid shrink-0 grid-cols-2 gap-2 lg:grid-cols-4">
-        <ServiceCard image={refCardQuote} icon={<FileText />} title="صمّم منظومتك" description="احصل على أفضل العروض والأسعار المناسبة لمشروعك." action="انطلق للتكوين" tone="brand" onClick={() => onService("quote")} />
-        <ServiceCard image={refCardEnergy} icon={<Sun />} title="الدراسات الهندسية" description="اكتشف حلولنا المتكاملة لأنظمة الشمسية للمنازل والمنشآت." action="حلول الطاقة" tone="energy" onClick={() => onService("energy")} />
-        <ServiceCard image={refCardSupport} icon={<Headphones />} title="خدماتنا واستشاراتنا" description="فريقنا المتخصص جاهز لمساعدتك في أي استفسار أو مشكلة فنية." action="تواصل معنا" tone="skyline" onClick={() => onService("support")} />
-        <ServiceCard image={refCardProducts} icon={<Package />} title="الأجهزة والمنتجات" description="اكتشف منتجات TAMKEEN، وتعرّف على مواصفاتها واستخداماتها واطلع على الكتالوجات والأدلة." action="استكشف المنتجات" tone="navy" onClick={onProducts} />
+        <ServiceCard image={refCardQuote} icon={<FileText />} title="صمّم منظومتك" description="احصل على أفضل التصاميم الهندسية لمشاريعك الشمسية." action="دخول التطبيق" tone="brand" onClick={() => onService("quote")} />
+        <ServiceCard image={refCardEnergy} icon={<Sun />} title="الدراسات الهندسية" description="التصميم الكامل لمشاريع الطاقة الشمسية بأعلى معايير الجودة والكفاءة." action="دخول التطبيق" tone="energy" onClick={() => onService("energy")} />
+        <ServiceCard image={refCardSupport} icon={<Headphones />} title="خدماتنا واستشاراتنا" description="نقدم خدمات متكاملة واستشارات فنية لدعم مشاريعك في كل المراحل." action="تواصل معنا" tone="skyline" onClick={() => onService("support")} />
+        <ServiceCard image={refCardProducts} icon={<Package />} title="الأجهزة والمنتجات" description="مجموعة متكاملة من أفضل الأجهزة والمنتجات الطاقة الشمسية المعتمدة عالمياً." action="استكشف المنتجات" tone="navy" onClick={onProducts} />
       </section>
 
-      <footer className="shrink-0 rounded-xl bg-navy px-3 py-2.5 text-center text-[11px] font-bold text-skyline-foreground lg:hidden">
-        <p className="flex items-center justify-center gap-1.5"><Leaf className="size-4 text-energy" /> معاً نحو طاقة مستدامة</p>
-        <p className="mt-1 opacity-80">جميع الحقوق محفوظة © 2026 TAMKEEN</p>
+      <footer className="shrink-0 rounded-xl bg-navy px-3 py-2.5 text-center text-navy-foreground lg:hidden">
+        <p className="flex items-center justify-center gap-2 text-base font-black"><span className="h-px w-8 bg-gold" /><span className="grid size-8 place-items-center rounded-full border-2 border-gold"><Leaf className="size-4 text-gold" /></span> معاً نحو طاقة مستدامة<span className="h-px w-8 bg-gold" /></p>
+        <p className="mt-1 text-[11px] opacity-80">حلول مبتكرة ... لمستقبل أنظف</p>
       </footer>
     </div>
   );
@@ -1555,17 +1565,17 @@ function Feature({ icon, text }: { icon: ReactNode; text: string }) {
 }
 
 function ServiceCard({ image, icon, title, description, action, tone, onClick }: { image: string; icon: ReactNode; title: string; description: string; action: string; tone: "brand" | "energy" | "skyline" | "navy"; onClick: () => void }) {
-  const circle = tone === "brand" ? "bg-brand text-brand-foreground" : tone === "energy" ? "bg-brand text-brand-foreground" : tone === "navy" ? "bg-navy text-skyline-foreground" : "bg-skyline text-skyline-foreground";
+  const circle = tone ? "bg-brand text-brand-foreground" : "";
   const btn = "bg-brand text-brand-foreground";
 
   return (
     <Button variant="presentation" size="presentation" type="button" onClick={onClick} aria-label={title} className="home-service group flex flex-col overflow-hidden rounded-xl border border-border bg-card text-right shadow-sm transition hover:shadow-md">
       <span data-photo-frame className="home-service-photo block aspect-[16/9] w-full overflow-hidden bg-muted"><img data-photo src={image} alt={title} loading="eager" decoding="async" width={1280} height={720} className="size-full object-cover transition duration-500 group-hover:scale-[1.03]" /></span>
-      <span className="home-service-body relative flex flex-1 flex-col px-2 pb-2 pt-4 text-center lg:px-3 lg:pb-2.5 lg:pt-5">
-        <span className={`absolute -top-3 right-1/2 grid size-6 translate-x-1/2 place-items-center rounded-full border-2 border-card shadow-md lg:size-8 ${circle} [&_svg]:size-3 lg:[&_svg]:size-4`}>{icon}</span>
+      <span className="home-service-body relative flex flex-1 flex-col px-2 pb-2 pt-7 text-center lg:px-3 lg:pb-2.5 lg:pt-5">
+        <span className={`absolute -top-5 right-1/2 grid size-10 translate-x-1/2 place-items-center rounded-full border-2 border-card shadow-md lg:size-12 ${circle} [&_svg]:size-5 lg:[&_svg]:size-6`}>{icon}</span>
         <span className="home-service-title font-black text-navy">{title}</span>
         <span className="home-service-description mx-auto line-clamp-2 max-w-xs text-muted-foreground">{description}</span>
-        <span className={`home-service-cta mx-auto mb-0 mt-auto inline-flex w-full max-w-32 items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold shadow-sm transition group-hover:opacity-90 lg:max-w-44 lg:gap-1.5 lg:px-3 lg:py-1.5 lg:text-[13px] ${btn}`}>
+        <span className={`home-service-cta mx-auto mb-0 mt-auto inline-flex w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold shadow-sm transition group-hover:opacity-90 lg:max-w-44 lg:gap-1.5 lg:px-3 lg:py-1.5 lg:text-[13px] ${btn}`}>
           <ArrowRight className="size-3 lg:size-4" />{action}
         </span>
 
@@ -2067,10 +2077,10 @@ function OptionGrid({ options, selected, projectCards = false, energyCards = fal
 
     const projectVisual = (title: string) => {
       if (/سكن|منازل|فلل/.test(title)) return { image: residentialImage, icon: House, subtitle: "للمنازل والفلل" };
-      if (/تجار|متاجر|شركات/.test(title)) return { image: commercialImage, icon: Building2, subtitle: "للمتاجر والمكاتب والشركات" };
-      if (/زراع/.test(title)) return { image: agricultureImage, icon: Sun, subtitle: "للمزارع وأنظمة الري" };
-      if (/صنف|معدات|Item/.test(title)) return { image: itemRequestImage, icon: Zap, subtitle: "ألواح، إنفرترات، بطاريات" };
-      return { image: industrialImage, icon: Zap, subtitle: "للمشاريع الصناعية والمنشآت الكبرى" };
+      if (/تجار|متاجر|شركات/.test(title)) return { image: commercialImage, icon: Store, subtitle: "للمتاجر والمكاتب والشركات" };
+      if (/زراع/.test(title)) return { image: agricultureImage, icon: Sprout, subtitle: "للمزارع وأنظمة الري" };
+      if (/صنف|معدات|Item/.test(title)) return { image: itemRequestImage, icon: Package, subtitle: "ألواح، إنفرترات، بطاريات" };
+      return { image: industrialImage, icon: Factory, subtitle: "للمشاريع الصناعية والمنشآت الكبرى" };
     };
     return (
       <div className="project-options stagger-in grid grid-cols-2 gap-2.5">
@@ -2079,15 +2089,17 @@ function OptionGrid({ options, selected, projectCards = false, energyCards = fal
           const Icon = visual.icon;
           const inactive = /قريباً/.test(option.title);
           return (
-            <Button variant="presentation" size="presentation" key={`${option.id}-${index}`} type="button" onClick={() => onSelect(option.id)} className="project-option group overflow-hidden rounded-lg border border-border bg-card text-right shadow-sm transition hover:shadow-md">
-              <span data-photo-frame className="project-option-photo relative block aspect-[2/1] w-full overflow-hidden border-b border-border bg-muted">
-                <img data-photo src={visual.image} alt="" loading="eager" decoding="async" fetchPriority="high" className={`size-full object-cover transition duration-500 group-hover:scale-[1.03] ${inactive ? "opacity-65" : ""}`} />
+            <Button variant="presentation" size="presentation" key={`${option.id}-${index}`} type="button" onClick={() => onSelect(option.id)} data-selected={selected === option.id || undefined} className={`project-option group flex flex-col overflow-hidden rounded-xl border-2 bg-card text-center shadow-sm transition hover:shadow-md ${selected === option.id ? "border-brand" : "border-transparent"}`}>
+              <span data-photo-frame className="project-option-photo relative block aspect-[16/9] w-full shrink-0 overflow-visible bg-muted">
+                <span className="block size-full overflow-hidden"><img data-photo src={visual.image} alt="" loading="eager" decoding="async" fetchPriority="high" className={`size-full object-cover transition duration-500 group-hover:scale-[1.03] ${inactive ? "opacity-65" : ""}`} /></span>
                 {inactive && <span className="absolute right-2 top-2 rounded-full bg-overlay/55 px-2 py-0.5 text-[10px] font-bold text-brand-foreground">قريباً</span>}
-                <span className={`project-option-icon absolute -bottom-3.5 right-2.5 grid size-8 place-items-center rounded-full border-2 border-card ${index === 1 ? "bg-brand text-brand-foreground" : "bg-secondary text-skyline"}`}><Icon className="size-3.5" /></span>
+                {selected === option.id && <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-brand px-2 py-0.5 text-[10px] font-bold text-brand-foreground">محدد <Check className="size-3" /></span>}
+                <span className="project-option-icon absolute -bottom-5 right-1/2 grid size-10 translate-x-1/2 place-items-center rounded-full border-2 border-card bg-brand text-brand-foreground shadow-md"><Icon className="size-5" /></span>
               </span>
-              <span className="project-option-content flex flex-col px-2.5 pb-2 pt-5">
-                <strong className="text-[13px] font-black">{option.title}</strong>
-                <small className="mt-0.5 text-[10.5px] font-semibold text-muted-foreground">{visual.subtitle}</small>
+              <span className="project-option-content flex flex-1 flex-col items-center px-2.5 pb-2.5 pt-7">
+                <strong className="text-[15px] font-black leading-6 text-navy">{option.title}</strong>
+                <small className="mt-1 text-[11px] font-semibold text-muted-foreground">{visual.subtitle}</small>
+                <span className={`mt-auto grid h-6 w-10 place-items-center self-end rounded-full pt-0 ${selected === option.id ? "bg-brand text-brand-foreground" : "bg-muted text-navy"}`} style={{ marginTop: 10 }}><ChevronLeft className="size-4" /></span>
               </span>
             </Button>
           );
