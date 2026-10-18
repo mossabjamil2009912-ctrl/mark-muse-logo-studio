@@ -36,8 +36,8 @@ for (const lang of ["ar", "en", "zh"] as const) {
   for (const cat of CATEGORIES) {
     const items = productsByCategory(cat.id);
     catalogTexts.push(`${cat.title}. اختر الشركة المصنّعة لعرض موديلاتها.`);
-    for (const b of new Set(items.map((p) => p.brand))) {
-      catalogTexts.push(`${cat.title} من ${b}. يتوفر ${items.filter((p) => p.brand === b).length} موديل.`);
+    for (const b of new Set(items.map((p) => (/hithium/i.test(p.brand) ? "HiTHIUM" : p.brand)))) {
+      catalogTexts.push(`${cat.title} من ${b}. يتوفر ${items.filter((p) => (/hithium/i.test(p.brand) ? "HiTHIUM" : p.brand) === b).length} موديل.`);
     }
   }
   sources.push(...catalogTexts.map((text) => translateText(text, lang)));
