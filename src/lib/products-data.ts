@@ -1050,7 +1050,7 @@ const STANDARD_CRITERIA: Record<ProductCategory, Criterion[]> = {
     { label: "القدرة", keys: [], fixed: (p) => p.power },
     { label: "الأوجه", keys: [], fixed: (p) => (/LP3|HP3|three|ثلاثي|3P|EU3/i.test(p.model + p.name + specText(p)) ? "Three Phase" : "Single Phase") },
     { label: "MPPT", keys: [/عدد\s*MPPT/, /^MPPT/] },
-    { label: "البطارية", keys: [], fixed: (p) => (/HP|HV|160|جهد عال/i.test(p.model) || /160[–-]|200[–-]|800 ?V/.test(batteryText(p)) ? "HV Battery" : "LV Battery 48V") },
+    { label: "البطارية", keys: [], fixed: (p) => (/HP|HV|160|جهد عال/i.test(p.model) || /160[–-]|200[–-]|800 ?V/.test(batteryText(p)) ? "HV Battery" : (/\b24 ?V\b/.test(batteryText(p)) && !/48 ?V/.test(batteryText(p)) ? "LV Battery 24V" : "LV Battery 48V")) },
   ],
   batteries: [
     { label: "الكيمياء", keys: [], fixed: () => "LiFePO4" },
