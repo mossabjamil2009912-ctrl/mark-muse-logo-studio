@@ -4,7 +4,7 @@ import logoAsset from "@/assets/actes-logo-sld.png.asset.json";
 
 /**
  * يصدّر المخطط الأحادي كلوحة هندسية رسمية A4 عرضية:
- * إطار الرسم + كتلة بيانات اللوحة (Title Block) بشعار عرش الهندسة للحلول التقنية الذكية + جدول الكابلات
+ * إطار الرسم + كتلة بيانات اللوحة (Title Block) بشعار تمكين للحلول التقنية الذكية + جدول الكابلات
  * وحصر الأصناف والملاحظات. يعتمد على نفس الرسم الظاهر في الشاشة.
  */
 const LOGO = logoAsset.url;
@@ -39,7 +39,7 @@ export function downloadSldSheet(
 
   const titleBlock = (page: string) => `
   <div class="tb">
-    <div class="tb-logo"><img src="${LOGO}" alt="TAMKEEN"/><span>TAMKEEN &amp; SOLUTIONS</span></div>
+    <div class="tb-logo"><img src="${LOGO}" alt="TAMKEEN"/><span>TAMKEEN SMART TECH SOLUTIONS</span></div>
     <table class="tb-grid">
       <tr><th>PROJECT</th><td colspan="3">${esc(t.project)}</td></tr>
       <tr><th>CLIENT</th><td>${esc(t.customer || "—")}</td><th>LOCATION</th><td>${esc(t.city || "—")}</td></tr>

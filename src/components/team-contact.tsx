@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { Check, Copy, MessageCircle, Phone, X } from "lucide-react";
 
 export const ADMIN_PHONE = "777350287";
-const WA_URL = `https://wa.me/967${ADMIN_PHONE}?text=${encodeURIComponent("السلام عليكم، أرغب في الاستفسار عن خدمات عرش الهندسة للحلول التقنية الذكية.")}`;
+const WA_URL = `https://wa.me/967${ADMIN_PHONE}?text=${encodeURIComponent("السلام عليكم، أرغب في الاستفسار عن خدمات تمكين للحلول التقنية الذكية.")}`;
 
 export function openTeamContact() {
   window.dispatchEvent(new Event("arsh:team"));
 }
 
-/** بطاقة تواصل الإدارة: تظهر فور الضغط على «فريق عرش الهندسة». */
+/** بطاقة تواصل الإدارة: تظهر فور الضغط على «فريق تمكين». */
 export function TeamContact() {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -23,7 +23,7 @@ export function TeamContact() {
       <div dir="rtl" className="w-full max-w-sm rounded-2xl border border-brand/40 bg-card p-6 text-center shadow-2xl" onClick={(e) => e.stopPropagation()}>
         <button type="button" onClick={() => setOpen(false)} aria-label="إغلاق" className="float-left grid size-8 place-items-center rounded-full hover:bg-muted"><X className="size-4" /></button>
         <img src="/brand/whatsapp.jpg" alt="واتساب" className="mx-auto size-20 rounded-full object-contain mix-blend-multiply" />
-        <p className="mt-3 text-base font-black">إدارة عرش الهندسة للحلول التقنية الذكية</p>
+        <p className="mt-3 text-base font-black">إدارة تمكين للحلول التقنية الذكية</p>
         <p className="mt-2 text-sm leading-6 text-muted-foreground">يسعدنا تواصلكم المباشر معنا عبر واتساب لطلب أي خدمة أو استشارة هندسية أو معاينة ميدانية.</p>
         <div className="mt-4 flex items-center justify-between gap-3 rounded-lg border border-border bg-muted/40 px-4 py-3">
           <span dir="ltr" className="text-xl font-black tracking-wider text-brand">{ADMIN_PHONE}</span>

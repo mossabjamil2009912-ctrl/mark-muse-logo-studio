@@ -49,9 +49,9 @@ export type View = {
 };
 
 const BRAND_LINES = [
-  "عرش الهندسة للحلول التقنية الذكية",
-  "عرش الهندسة للحلول التقنية الذكية لإستيراد أنظمة الطاقة",
-  "عرش الهندسة للحلول التقنية الذكية لاستيراد أنظمة الطاقة",
+  "تمكين للحلول التقنية الذكية",
+  "تمكين للحلول التقنية الذكية لإستيراد أنظمة الطاقة",
+  "تمكين للحلول التقنية الذكية لاستيراد أنظمة الطاقة",
 ];
 
 const DROP_PATTERNS = [
@@ -286,7 +286,7 @@ export function buildView(r: BotResult, step: string): View {
       .map((i) => ({ title: i.name, lines: [...(i.details || []), `الكمية: ${i.qty}`] }));
   }
   if (hasQuote && !heading) heading = "عرض السعر الرسمي";
-  if (!heading) heading = "عرش الهندسة للحلول التقنية الذكية";
+  if (!heading) heading = "تمكين للحلول التقنية الذكية";
 
   const interactiveOptions = options.filter((o) => !/العودة/.test(o.title));
   const needsInput = interactiveOptions.length === 0 || /أدخل|ادخل|اكتب|يرجى إدخال|كم /.test(texts.join("\n"));

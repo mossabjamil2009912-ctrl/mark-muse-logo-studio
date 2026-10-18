@@ -77,7 +77,7 @@ const PREVIEW_IDS: Partial<Record<ProductCategory, string[]>> = {};
 function CategoriesScreen({ onPick, onBack }: { onPick: (c: ProductCategory | "all") => void; onBack: () => void }) {
   useScreenVoice(
     "catalog-home",
-    "قسم منتجات عرش الهندسة للحلول التقنية الذكية. اختر الفئة التي تريد استعراضها: الألواح الشمسية، أو الإنفرترات، أو بطاريات الليثيوم، أو أنظمة التخزين.",
+    "قسم منتجات تمكين للحلول التقنية الذكية. اختر الفئة التي تريد استعراضها: الألواح الشمسية، أو الإنفرترات، أو بطاريات الليثيوم، أو أنظمة التخزين.",
   );
   return (
     <div className="screen-enter w-full space-y-5 pb-4">

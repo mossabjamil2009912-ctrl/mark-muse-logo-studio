@@ -45,3 +45,4 @@
 ## Current request: inverter detail English verification
 - [x] Correct remaining inverter suitability translations and shared summaries.
 - [x] Recheck all 11 inverter detail pages, specifications, compatibility, sharing, and available English datasheets (125 kW has no attached datasheet).
+- [x] استبدال الهوية بشعار واسم «تمكين للحلول التقنية الذكية»
