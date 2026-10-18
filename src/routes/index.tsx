@@ -1486,8 +1486,9 @@ function HomeDashboard({ onService, onProducts }: { onService: (kind: "quote" | 
   return (
     <div className="screen-enter flex min-h-0 w-full flex-col gap-2 lg:h-full">
       <CorporateHero />
-      <section data-photo-section className="shrink-0 overflow-hidden rounded-2xl border border-border bg-card shadow-sm lg:flex-1 lg:max-h-[30dvh]">
-        <LangImg ar={homeHeroAr} en={homeHeroEn} zh={homeHeroZh} alt="تمكين للحلول التقنية الذكية" loading="eager" decoding="sync" fetchPriority="high" className="block aspect-[1584/672] w-full object-contain bg-background lg:h-full lg:w-full lg:aspect-auto" />
+      <section data-photo-section className="relative shrink-0 overflow-hidden rounded-2xl border border-border bg-navy shadow-sm lg:flex-1 lg:max-h-[30dvh]">
+        <LangImg ar={homeHeroAr} en={homeHeroEn} zh={homeHeroZh} alt="" aria-hidden="true" className="absolute inset-0 size-full scale-110 object-cover opacity-70 blur-2xl" />
+        <LangImg ar={homeHeroAr} en={homeHeroEn} zh={homeHeroZh} alt="تمكين للحلول التقنية الذكية" loading="eager" decoding="sync" fetchPriority="high" className="relative block aspect-[1584/672] w-full object-contain lg:h-full lg:w-full lg:aspect-auto" />
       </section>
 
 
