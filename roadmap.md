@@ -1,5 +1,14 @@
 # Roadmap
 
+## Current request: comprehensive reference-matched TAMKEEN redesign
+- [ ] Inventory all routes, screen states, dialogs and shared controls; map seven approved references.
+- [ ] Unify reference colors, typography, surfaces and shared controls without changing functional logic.
+- [ ] Match start, home, project categories, catalog categories/list/detail and quote references.
+- [ ] Apply matching presentation to engineering, forms, orders, notifications, account, settings and administration.
+- [ ] Verify mobile and desktop layouts; preserve the existing offline Electron shell.
+- [ ] Run regression tests and exercise real app navigation, filters, details, catalogs and engineering inputs.
+- [ ] Record verified coverage, Windows status and any external blockers in a completion report.
+
 ## Current request: replacement offline Windows app
 - [x] Remove all product videos and video players as requested.
 - [x] Remove obsolete online-only desktop distribution.
