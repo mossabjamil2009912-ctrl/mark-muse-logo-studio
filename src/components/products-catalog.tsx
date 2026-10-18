@@ -108,13 +108,13 @@ function CategoriesScreen({ onPick, onBack }: { onPick: (c: ProductCategory | "a
               className="catalog-category group flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-2.5 text-right shadow-sm transition hover:border-navy/40 hover:shadow-md"
             >
               <span className="catalog-category-heading flex items-center gap-2.5 px-1 py-2">
-                <span className={`grid size-11 shrink-0 place-items-center rounded-xl [&_svg]:size-6 ${CAT_TONE[cat.id]}`}>{CAT_BIG_ICON[cat.id]}</span>
+                <span className={`grid size-10 shrink-0 place-items-center rounded-xl [&_svg]:size-5 ${CAT_TONE[cat.id]}`}>{CAT_BIG_ICON[cat.id]}</span>
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-base font-black leading-tight text-navy lg:text-lg">{cat.title}</span>
+                  <span className="block whitespace-nowrap text-[15px] font-black leading-tight text-navy lg:text-lg">{cat.title}</span>
                   <span className="mt-0.5 block text-[10.5px] font-semibold text-muted-foreground">{`${items.length} موديل`}</span>
                 </span>
               </span>
-              <span className="mt-1 flex items-end justify-center gap-1 rounded-xl bg-muted p-2">
+              <span className="mt-1 flex flex-1 items-center justify-center gap-1 rounded-xl bg-muted p-2">
                 {preview.map((p) => (
                   <span key={p.id} className="min-w-0 flex-1">
                     <img src={p.image} alt={p.name} loading="lazy" className="aspect-square w-full object-contain mix-blend-multiply" />

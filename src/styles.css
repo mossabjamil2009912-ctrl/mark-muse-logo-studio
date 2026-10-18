@@ -441,7 +441,7 @@ button:not(:disabled), a { touch-action: manipulation; }
 .catalog-category img { aspect-ratio:1; }
 .catalog-category-heading { padding:6px 4px; }
 .catalog-category-heading > span:last-child { overflow:visible; }
-.catalog-category-heading span { white-space:normal; }
+.catalog-category-heading span { white-space:nowrap; }
 .product-card { border:1px solid var(--border); border-radius:8px; background:var(--card); overflow:hidden; gap:0; }
 .product-card-image { box-shadow:none; border-radius:0; }
 .product-card-model { border-radius:5px; margin:0 7px 7px; font-size:10px; padding:5px; }
