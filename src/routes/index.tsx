@@ -2636,15 +2636,11 @@ function productForQuoteItem(text: string): CatalogProduct | null {
 function QuoteItemSpecs({ text }: { text: string }) {
   const product = productForQuoteItem(text);
   if (!product) return null;
-  const rows = product.specs.flatMap((g) => g.rows);
   const ar = officialCatalogUrl(product, "ar");
   const en = officialCatalogUrl(product, "en");
+  if (!ar && !en) return null;
   return (
-    <div className="mt-1.5 border-t border-black/30 pt-1.5">
-      <p className="text-[10px] font-bold" dir="ltr">{product.brand} — {product.model}</p>
-      <ul className="mt-1 grid gap-x-3 gap-y-0.5 text-[10px] leading-4 sm:grid-cols-2">
-        {rows.map(([k, v], i) => <li key={i}><span className="font-bold">{k}:</span> {v}</li>)}
-      </ul>
+    <div className="mt-1.5">
       {(ar || en) && (
         <div className="mt-1.5 flex flex-wrap gap-1.5">
           {ar && <a href={ar} target="_blank" rel="noopener" className="rounded border border-black px-2 py-0.5 text-[10px] font-bold hover:bg-black/5">كتالوج عربي</a>}
