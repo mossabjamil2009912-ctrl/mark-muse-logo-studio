@@ -377,6 +377,11 @@ button:not(:disabled), a { touch-action: manipulation; }
 .tamkeen-brand-type b { font-family:Arial,sans-serif; font-size:21px; font-weight:800; margin-top:4px; }
 .tamkeen-brand-type span { font-size:10px; font-weight:700; margin-top:7px; white-space:nowrap; }
 .tamkeen-brand-inverse { color:var(--navy-foreground); }
+.start-brand { gap:16px; }
+.start-brand > img { height:150px; }
+.start-brand strong { font-size:58px; }
+.start-brand b { font-size:36px; }
+.start-brand span { font-size:13px; color:var(--gold); }
 .tamkeen-brand-compact { gap:6px; }
 .tamkeen-brand-compact > img { height:38px; }
 .tamkeen-brand-compact strong { font-size:20px; }
