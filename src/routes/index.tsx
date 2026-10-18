@@ -35,6 +35,7 @@ import {
   Bell,
   Building2,
   Sprout,
+  Store,
   Check,
   ChevronLeft,
   ChevronDown,
@@ -2076,10 +2077,10 @@ function OptionGrid({ options, selected, projectCards = false, energyCards = fal
 
     const projectVisual = (title: string) => {
       if (/سكن|منازل|فلل/.test(title)) return { image: residentialImage, icon: House, subtitle: "للمنازل والفلل" };
-      if (/تجار|متاجر|شركات/.test(title)) return { image: commercialImage, icon: Building2, subtitle: "للمتاجر والمكاتب والشركات" };
-      if (/زراع/.test(title)) return { image: agricultureImage, icon: Sun, subtitle: "للمزارع وأنظمة الري" };
-      if (/صنف|معدات|Item/.test(title)) return { image: itemRequestImage, icon: Zap, subtitle: "ألواح، إنفرترات، بطاريات" };
-      return { image: industrialImage, icon: Zap, subtitle: "للمشاريع الصناعية والمنشآت الكبرى" };
+      if (/تجار|متاجر|شركات/.test(title)) return { image: commercialImage, icon: Store, subtitle: "للمتاجر والمكاتب والشركات" };
+      if (/زراع/.test(title)) return { image: agricultureImage, icon: Sprout, subtitle: "للمزارع وأنظمة الري" };
+      if (/صنف|معدات|Item/.test(title)) return { image: itemRequestImage, icon: Package, subtitle: "ألواح، إنفرترات، بطاريات" };
+      return { image: industrialImage, icon: Factory, subtitle: "للمشاريع الصناعية والمنشآت الكبرى" };
     };
     return (
       <div className="project-options stagger-in grid grid-cols-2 gap-2.5">
