@@ -994,7 +994,7 @@ function StartScreen({ clientName, onStart }: { clientName: string; onStart: () 
             onClick={onStart}
             className="mt-9 inline-flex h-16 w-full max-w-sm items-center justify-center gap-3 rounded-2xl bg-brand text-xl font-black text-brand-foreground shadow-2xl transition hover:opacity-90 active:scale-[0.99]"
           >
-            <Sparkles className="size-6" /> ابدأ
+            ابدأ
           </button>
 
           <p className="mt-8 text-[11px] font-semibold opacity-70">عرش الهندسة للحلول التقنية الذكية — جميع الحقوق محفوظة</p>
