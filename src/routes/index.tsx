@@ -2658,8 +2658,8 @@ function QuoteItemSpecs({ text }: { text: string }) {
     <div className="mt-1.5">
       {(ar || en) && (
         <div className="mt-1.5 flex flex-wrap gap-1.5">
-          {ar && <a href={ar} target="_blank" rel="noopener" className="quote-catalog-link rounded px-2 py-1 text-[10px] font-bold hover:bg-muted">كتالوج عربي</a>}
-          {en && <a href={en} target="_blank" rel="noopener" className="quote-catalog-link rounded px-2 py-1 text-[10px] font-bold hover:bg-muted">English Catalog</a>}
+          {ar && <a href={ar} target="_blank" rel="noopener" className="quote-catalog-link inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-bold hover:bg-muted"><FileText className="size-3.5" />كتالوج عربي</a>}
+          {en && <a href={en} target="_blank" rel="noopener" className="quote-catalog-link inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-bold hover:bg-muted"><FileText className="size-3.5" />English Catalog</a>}
         </div>
       )}
     </div>
