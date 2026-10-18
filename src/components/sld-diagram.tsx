@@ -77,7 +77,7 @@ const THEMES = {
     "--sld-soft": "#6b7280",
     "--sld-fill": "#ffffff",
     "--sld-band": "#eef2f7",
-    "--sld-brand": "#C9A24A",
+    "--sld-brand": "#C0392B",
     "--sld-ok": "#167544",
     "--sld-ok-bg": "#e9f8ef",
     "--sld-warn": "#8A6A28",

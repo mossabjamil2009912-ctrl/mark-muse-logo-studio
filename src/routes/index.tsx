@@ -2631,7 +2631,7 @@ function QuoteCard({ quote }: { quote: NonNullable<View["quote"]> }) {
         <div data-quote-scroll className="overflow-x-auto">
           <table className="w-full min-w-[700px] border-collapse text-right text-xs">
             <thead>
-              <tr className="bg-[#C9A24A] text-black">
+              <tr className="bg-[#C0392B] text-white">
                 <th className="border border-black p-2 text-center text-[13px] font-bold">م</th>
                 <th className="border border-black p-2 text-center text-[13px] font-bold">البند والمواصفات</th>
                 <th className="border border-black p-2 text-center text-[13px] font-bold">الوحدة</th>
@@ -2676,7 +2676,7 @@ function QuoteCard({ quote }: { quote: NonNullable<View["quote"]> }) {
       <button
         type="button"
         onClick={() => downloadQuotePdf(quote)}
-        className="mt-3 inline-flex items-center gap-2 rounded-md bg-[#C9A24A] px-5 py-2.5 text-xs font-bold text-black transition hover:brightness-95"
+        className="mt-3 inline-flex items-center gap-2 rounded-md bg-[#C0392B] px-5 py-2.5 text-xs font-bold text-black transition hover:brightness-95"
       >
         <Download className="size-4" /> تحميل ملف عرض السعر
       </button>

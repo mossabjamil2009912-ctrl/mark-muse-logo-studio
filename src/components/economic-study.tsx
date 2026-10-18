@@ -19,7 +19,7 @@ import type { View } from "@/lib/present";
 const nf = (n: number, d = 0) => n.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
 
 /** ألوان الدراسة الاقتصادية — زمردي مالي مع أزرق التقارير. */
-const C = { blue: "#1c3f94", green: "#15803d", red: "#c0392b", grid: "#b9c0cf", amber: "#f5a01e" };
+const C = { blue: "#1c3f94", green: "#15803d", red: "#c0392b", grid: "#b9c0cf", amber: "#e53935" };
 
 const MONTHS_AR = ["ينا", "فبر", "مار", "أبر", "ماي", "يون", "يول", "أغس", "سبت", "أكت", "نوف", "ديس"];
 

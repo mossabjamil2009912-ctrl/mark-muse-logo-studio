@@ -91,13 +91,13 @@ export function buildDatasheetHtml(product: Product, autoPrint = false): string 
   .sheet{width:190mm;margin:0 auto;page-break-after:always}
   .sheet:last-child{page-break-after:auto}
 
-  .hd{display:flex;align-items:center;justify-content:space-between;gap:6mm;border-bottom:2.4pt solid #B8913F;padding-bottom:2mm}
+  .hd{display:flex;align-items:center;justify-content:space-between;gap:6mm;border-bottom:2.4pt solid #C0392B;padding-bottom:2mm}
   .hd img{height:16mm;object-fit:contain}
   .hd .r{text-align:left}
   .hd .brand{font-size:15pt;font-weight:800;letter-spacing:.5px;color:#141210}
-  .hd .model{font-size:10pt;font-weight:700;color:#B8913F;direction:ltr}
+  .hd .model{font-size:10pt;font-weight:700;color:#C0392B;direction:ltr}
   .bar{background:#141210;color:#fff;padding:1.5mm 4mm;margin-top:0;font-size:10.5pt;font-weight:800;display:flex;justify-content:space-between;align-items:center}
-  .bar .pw{background:#B8913F;padding:.6mm 3mm;border-radius:2mm;direction:ltr;font-size:11pt}
+  .bar .pw{background:#C0392B;padding:.6mm 3mm;border-radius:2mm;direction:ltr;font-size:11pt}
 
   .top{display:flex;gap:5mm;margin-top:4mm;align-items:stretch}
   .photo{width:62mm;border:.6pt solid #E3D6B4;border-radius:2mm;display:flex;align-items:center;justify-content:center;padding:2mm;background:#fbfcfe}
@@ -109,7 +109,7 @@ export function buildDatasheetHtml(product: Product, autoPrint = false): string 
   .kv td{border:.5pt solid #E3D6B4;padding:1.2mm 2mm;font-weight:700}
   .about{margin-top:2.5mm;font-size:8.2pt;line-height:1.7;text-align:justify;color:#3a4560}
 
-  h3{font-size:10pt;margin:5mm 0 2mm;color:#141210;border-right:3pt solid #B8913F;padding-right:2.5mm}
+  h3{font-size:10pt;margin:5mm 0 2mm;color:#141210;border-right:3pt solid #C0392B;padding-right:2.5mm}
   .cols{display:flex;gap:6mm}
   .cols>div{flex:1}
   ul{margin:0;padding-inline-start:5mm;font-size:8.2pt;line-height:1.7}
