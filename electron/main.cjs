@@ -82,7 +82,33 @@ function createWindow() {
     if (/^https?:\/\//i.test(url)) void shell.openExternal(url);
     return { action: "deny" };
   });
-  void win.loadURL(`http://127.0.0.1:${port}/`);
+  if (port) void win.loadURL(`http://127.0.0.1:${port}/`);
+}
+
+// Hybrid sync: live site when online (always latest), bundled local server when offline.
+const LIVE_URL = process.env.ARSH_LIVE_URL || "https://logo-crafted-art.lovable.app/";
+let localReady = null;
+
+function ensureLocal() {
+  if (!localReady) localReady = startServer();
+  return localReady;
+}
+
+async function isOnline() {
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 1000);
+    const res = await fetch(LIVE_URL, { method: "HEAD", signal: ctrl.signal, cache: "no-store" });
+    clearTimeout(t);
+    return res.ok || res.status < 500;
+  } catch {
+    return false;
+  }
+}
+
+async function loadLocal() {
+  await ensureLocal();
+  await win.loadURL(`http://127.0.0.1:${port}/`);
 }
 
 Menu.setApplicationMenu(null);
@@ -90,8 +116,9 @@ if (!app.requestSingleInstanceLock()) app.quit();
 app.on("second-instance", () => { if (win) { win.restore(); win.focus(); } });
 
 app.whenReady().then(async () => {
+  const online = await isOnline();
   try {
-    await startServer();
+    if (!online) await ensureLocal();
   } catch (err) {
     console.error("failed to start local server", err);
     dialog.showErrorBox("ARSH ENGINEERING", "تعذر تشغيل التطبيق المحلي. أغلق النسخ الأخرى ثم حاول مجددًا.");
@@ -99,6 +126,13 @@ app.whenReady().then(async () => {
     return;
   }
   createWindow();
+  if (online) {
+    // If the live site fails mid-load, fall back to the offline copy.
+    win.webContents.once("did-fail-load", (_e, code, _d, _u, isMain) => {
+      if (isMain && code !== -3) void loadLocal().catch(() => {});
+    });
+    void win.loadURL(LIVE_URL);
+  }
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
