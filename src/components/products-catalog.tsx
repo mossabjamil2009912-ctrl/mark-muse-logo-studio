@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { TamkeenBrand } from "@/components/tamkeen-brand";
-import homeHero from "@/assets/actes-home-hero.webp";
+import homeHero from "@/assets/start-bg-desktop.webp";
 import { lazy, Suspense, useEffect, useMemo, useState, type ReactNode } from "react";
 const PdfPages = lazy(() => import("@/components/pdf-pages"));
 import { ArrowRight, Search, BatteryCharging, Check, ChevronDown, Container, Copy, Download, Eye, FileText, Gauge, Info, Layers, Link2, ListChecks, MessageCircle, Share2, Sparkles, Sun, Users, Wrench, X, Zap } from "lucide-react";
