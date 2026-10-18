@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useMemo, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import {
@@ -181,12 +182,12 @@ export function PurchaseFlow({ quote, customer, projectType, city }: { quote: Qu
             راجع بنود عرض السعر أعلاه. عند التأكيد سيتم إرسال طلبك إلى إدارة TAMKEEN لبدء إجراءات الشراء.
           </p>
           <div className="flex flex-wrap gap-3">
-            <button type="button" onClick={startPurchase} disabled={busy} className="inline-flex min-w-52 flex-1 items-center justify-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-black text-brand-foreground shadow-md transition hover:opacity-90 disabled:opacity-60 sm:flex-none">
+            <Button variant="presentation" size="presentation" type="button" onClick={startPurchase} disabled={busy} className="inline-flex min-w-52 flex-1 items-center justify-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-black text-brand-foreground shadow-md transition hover:opacity-90 disabled:opacity-60 sm:flex-none">
               {busy ? <Loader2 className="size-4 animate-spin" /> : <Check className="size-4" />} تأكيد العرض ومتابعة الشراء
-            </button>
-            <button type="button" onClick={() => setEditOpen((value) => !value)} className="inline-flex min-w-48 flex-1 items-center justify-center gap-2 rounded-full border border-skyline/45 bg-card px-6 py-3 text-sm font-black text-skyline transition hover:bg-muted sm:flex-none">
+            </Button>
+            <Button variant="presentation" size="presentation" type="button" onClick={() => setEditOpen((value) => !value)} className="inline-flex min-w-48 flex-1 items-center justify-center gap-2 rounded-full border border-skyline/45 bg-card px-6 py-3 text-sm font-black text-skyline transition hover:bg-muted sm:flex-none">
               <PencilLine className="size-4" /> طلب تعديل على العرض
-            </button>
+            </Button>
           </div>
         </div>
       )}
@@ -207,16 +208,16 @@ export function PurchaseFlow({ quote, customer, projectType, city }: { quote: Qu
               const Icon = item.icon;
               const active = method === item.id;
               return (
-                <button
+                <Button variant="presentation" size="presentation"
                   key={item.id}
                   type="button"
                   onClick={() => { setMethod(item.id); setStage("details"); }}
-                  className={`flex h-full flex-col gap-2 rounded-xl border p-4 text-right transition hover:-translate-y-0.5 hover:border-brand/60 hover:shadow-md ${active ? "border-brand bg-brand/5" : "border-border bg-card"}`}
+                  className={`flex h-full flex-col gap-2 rounded-lg border p-4 text-right transition hover:-translate-y-0.5 hover:border-brand/60 hover:shadow-md ${active ? "border-brand bg-brand/5" : "border-border bg-card"}`}
                 >
                   <span className="grid size-10 place-items-center rounded-lg bg-secondary text-skyline"><Icon className="size-5" /></span>
                   <span className="text-sm font-black">{item.label}</span>
                   <span className="text-[11px] leading-5 text-muted-foreground">{item.hint}</span>
-                </button>
+                </Button>
               );
             })}
           </div>
@@ -227,7 +228,7 @@ export function PurchaseFlow({ quote, customer, projectType, city }: { quote: Qu
         <div className="mt-5 space-y-4">
           <div className="flex items-center justify-between gap-3">
             <h4 className="text-sm font-black">{PAYMENT_LABELS[method]}</h4>
-            <button type="button" onClick={() => setStage("method")} className="text-xs font-bold text-skyline underline">تغيير طريقة الدفع</button>
+            <Button variant="presentation" size="presentation" type="button" onClick={() => setStage("method")} className="text-xs font-bold text-skyline underline">تغيير طريقة الدفع</Button>
           </div>
 
           {method === "network" && (
@@ -253,9 +254,9 @@ export function PurchaseFlow({ quote, customer, projectType, city }: { quote: Qu
             </label>
           )}
 
-          <button type="button" onClick={confirmOrder} disabled={!ready || busy} className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-black text-brand-foreground shadow-md transition hover:opacity-90 disabled:opacity-50 sm:w-auto sm:min-w-64">
+          <Button variant="presentation" size="presentation" type="button" onClick={confirmOrder} disabled={!ready || busy} className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-black text-brand-foreground shadow-md transition hover:opacity-90 disabled:opacity-50 sm:w-auto sm:min-w-64">
             {busy ? <Loader2 className="size-4 animate-spin" /> : <BadgeCheck className="size-4" />} {busy ? "جارٍ إرسال الإشعار..." : "تأكيد الطلب"}
-          </button>
+          </Button>
           {sendError && <p role="alert" className="rounded-md border border-destructive/35 bg-destructive/10 px-4 py-3 text-xs font-bold text-destructive">{sendError}</p>}
         </div>
       )}
@@ -273,7 +274,7 @@ export function PurchaseFlow({ quote, customer, projectType, city }: { quote: Qu
         <div className="mt-4 rounded-lg border border-border bg-muted/40 p-4">
           <label className="text-xs font-black">ما التعديل المطلوب على العرض؟</label>
           <textarea value={editNote} onChange={(event) => setEditNote(event.target.value)} rows={3} className="mt-2 w-full rounded-md border border-input bg-card px-4 py-3 text-sm outline-none focus:border-brand" placeholder="مثال: زيادة عدد البطاريات إلى 4" />
-          <button type="button" onClick={() => { if (!orderId) startPurchase(); window.setTimeout(sendEdit, 0); }} className="mt-3 rounded-full bg-skyline px-6 py-2.5 text-xs font-black text-skyline-foreground">إرسال طلب التعديل</button>
+          <Button variant="presentation" size="presentation" type="button" onClick={() => { if (!orderId) startPurchase(); window.setTimeout(sendEdit, 0); }} className="mt-3 rounded-full bg-skyline px-6 py-2.5 text-xs font-black text-skyline-foreground">إرسال طلب التعديل</Button>
         </div>
       )}
     </section>

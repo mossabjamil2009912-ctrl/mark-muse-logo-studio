@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useMemo, useState } from "react";
 import { Bell, Check, Eye, FileText, ShieldCheck, X } from "lucide-react";
 import { ecoAccess, useReadyStudy } from "@/lib/pvsyst-access";
@@ -49,7 +50,7 @@ export function NotificationsBell({ isAdmin }: { isAdmin: boolean }) {
 
   return (
     <>
-      <button
+      <Button variant="presentation" size="presentation"
         type="button"
         onClick={() => setOpen((value) => { if (!value) markAllSeen(audience); return !value; })}
         aria-label="الإشعارات"
@@ -59,29 +60,29 @@ export function NotificationsBell({ isAdmin }: { isAdmin: boolean }) {
         {unread > 0 && (
           <span className="absolute -right-0.5 -top-0.5 grid min-w-4 place-items-center rounded-full bg-brand px-1 text-[10px] font-black text-brand-foreground">{unread}</span>
         )}
-      </button>
+      </Button>
 
       {open && (
         <div className="fixed inset-0 z-[60]" onClick={() => setOpen(false)}>
           <div
-            className="absolute left-3 top-[72px] max-h-[70vh] w-[min(420px,calc(100vw-1.5rem))] overflow-y-auto rounded-xl border border-border bg-card p-3 shadow-2xl"
+            className="absolute left-3 top-[72px] max-h-[70vh] w-[min(420px,calc(100vw-1.5rem))] overflow-y-auto rounded-lg border border-border bg-card p-3 shadow-2xl"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="flex items-center justify-between px-2 pb-2">
               <p className="text-sm font-black">{isAdmin ? "إشعارات الإدارة" : "إشعارات طلباتي"}</p>
-              <button type="button" onClick={() => setOpen(false)} className="grid size-7 place-items-center rounded-full hover:bg-muted"><X className="size-4" /></button>
+              <Button variant="presentation" size="presentation" type="button" onClick={() => setOpen(false)} className="grid size-7 place-items-center rounded-full hover:bg-muted"><X className="size-4" /></Button>
             </div>
             {studyNotifs.map(({ n: studyNotif, title }) => (
               <div key={title} className={`mb-2 rounded-lg border p-3 text-right ${studyNotif.opened ? "border-border" : "border-brand/40 bg-brand/5"}`}>
                 <strong className="text-xs font-black">{title}</strong>
                 <span className="mt-1 block text-[11px] leading-5 text-muted-foreground">دراستك جاهزة، اضغط لفتحها.</span>
-                <button
+                <Button variant="presentation" size="presentation"
                   type="button"
                   onClick={() => { setOpen(false); window.dispatchEvent(new CustomEvent("arsh:open-study", { detail: studyNotif.snapshot })); }}
                   className="mt-2 inline-flex items-center gap-1 rounded-full bg-skyline px-3 py-1.5 text-[11px] font-black text-skyline-foreground"
                 >
                   <FileText className="size-3.5" /> فتح الدراسة
-                </button>
+                </Button>
               </div>
             ))}
             {items.length === 0 && !studyNotif ? (
@@ -90,7 +91,7 @@ export function NotificationsBell({ isAdmin }: { isAdmin: boolean }) {
               <ul className="space-y-2">
                 {items.map((notif) => (
                   <li key={notif.id}>
-                    <button
+                    <Button variant="presentation" size="presentation"
                       type="button"
                       onClick={() => openNotif(notif)}
                       className={`w-full rounded-lg border p-3 text-right transition hover:border-brand/60 ${notif.state === "sent" ? "border-brand/40 bg-brand/5" : "border-border bg-card"}`}
@@ -103,7 +104,7 @@ export function NotificationsBell({ isAdmin }: { isAdmin: boolean }) {
                       <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-secondary px-2.5 py-1 text-[10px] font-black text-skyline">
                         <Eye className="size-3" /> {NOTIF_STATE_LABELS[notif.state]}
                       </span>
-                    </button>
+                    </Button>
                   </li>
                 ))}
               </ul>
@@ -121,13 +122,13 @@ function AdminOrderPanel({ order, notifs, onClose }: { order: Order; notifs: Not
   const flow = statusFlow(order.method);
   return (
     <div className="fixed inset-0 z-[70] grid place-items-center bg-overlay/50 p-4 backdrop-blur-[2px]" onClick={onClose}>
-      <div className="max-h-[88vh] w-full max-w-3xl overflow-y-auto rounded-xl border border-border bg-card p-5 shadow-2xl" onClick={(event) => event.stopPropagation()}>
+      <div className="max-h-[88vh] w-full max-w-3xl overflow-y-auto rounded-lg border border-border bg-card p-5 shadow-2xl" onClick={(event) => event.stopPropagation()}>
         <header className="flex items-start justify-between gap-3 border-b border-border pb-4">
           <div className="min-w-0">
             <p className="flex items-center gap-2 text-lg font-black"><ShieldCheck className="size-5 text-brand" /> تفاصيل الطلب</p>
             <p className="mt-1 text-xs text-muted-foreground">رقم الطلب: {order.id} — رقم العرض: {order.quoteNumber || "—"}</p>
           </div>
-          <button type="button" onClick={onClose} className="grid size-8 shrink-0 place-items-center rounded-full hover:bg-muted"><X className="size-4" /></button>
+          <Button variant="presentation" size="presentation" type="button" onClick={onClose} className="grid size-8 shrink-0 place-items-center rounded-full hover:bg-muted"><X className="size-4" /></Button>
         </header>
 
         <dl className="mt-4 grid gap-2 rounded-md bg-muted/45 p-3 text-xs sm:grid-cols-3">
@@ -167,14 +168,14 @@ function AdminOrderPanel({ order, notifs, onClose }: { order: Order; notifs: Not
             <p className="mb-2 text-sm font-black">تحديث حالة الطلب</p>
             <div className="flex flex-wrap gap-2">
               {flow.map((status) => (
-                <button
+                <Button variant="presentation" size="presentation"
                   key={status}
                   type="button"
                   onClick={() => setStatus(order.id, status)}
                   className={`rounded-full px-4 py-2 text-[11px] font-black transition ${order.status === status ? "bg-brand text-brand-foreground" : "border border-border bg-card hover:bg-muted"}`}
                 >
                   {STATUS_LABELS[status]}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -193,12 +194,12 @@ function AdminOrderPanel({ order, notifs, onClose }: { order: Order; notifs: Not
                   <span className="min-w-0"><strong className="block truncate">{notif.title}</strong><small className="text-muted-foreground">{NOTIF_STATE_LABELS[notif.state]}</small></span>
                   {notif.state !== "confirmed" && notif.state !== "cancelled" && (
                     <span className="flex shrink-0 items-center gap-2">
-                      <button type="button" onClick={() => markConfirmed(notif.id)} className="inline-flex items-center gap-1 rounded-full bg-energy px-3 py-1.5 text-[10px] font-black text-energy-foreground">
+                      <Button variant="presentation" size="presentation" type="button" onClick={() => markConfirmed(notif.id)} className="inline-flex items-center gap-1 rounded-full bg-energy px-3 py-1.5 text-[10px] font-black text-energy-foreground">
                         <Check className="size-3" /> تأكيد
-                      </button>
-                      <button type="button" onClick={() => markCancelled(notif.id)} className="inline-flex items-center gap-1 rounded-full bg-destructive px-3 py-1.5 text-[10px] font-black text-destructive-foreground">
+                      </Button>
+                      <Button variant="presentation" size="presentation" type="button" onClick={() => markCancelled(notif.id)} className="inline-flex items-center gap-1 rounded-full bg-destructive px-3 py-1.5 text-[10px] font-black text-destructive-foreground">
                         <X className="size-3" /> إلغاء
-                      </button>
+                      </Button>
                     </span>
                   )}
                 </li>

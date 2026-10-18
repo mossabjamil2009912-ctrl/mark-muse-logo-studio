@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useRef, useState } from "react";
 import { FileUp, Loader2 } from "lucide-react";
 import { averageDays, parseLoadPdf, type LoadPdf } from "@/lib/load-pdf";
@@ -41,10 +42,10 @@ export function LoadPdfImport({ onApply }: { onApply: (values: string[], client:
     <div className="mt-3 rounded-md border border-dashed border-brand/50 bg-background p-3">
       <input ref={ref} type="file" accept="application/pdf" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) void read(f); e.target.value = ""; }} />
       <div className="flex flex-wrap items-center gap-2">
-        <button type="button" onClick={() => ref.current?.click()} disabled={busy} className="inline-flex items-center gap-2 rounded-md bg-brand px-3 py-2 text-xs font-bold text-brand-foreground disabled:opacity-60">
+        <Button variant="presentation" size="presentation" type="button" onClick={() => ref.current?.click()} disabled={busy} className="inline-flex items-center gap-2 rounded-md bg-brand px-3 py-2 text-xs font-bold text-brand-foreground disabled:opacity-60">
           {busy ? <Loader2 className="size-4 animate-spin" /> : <FileUp className="size-4" />}
           رفع تقرير قياس الأحمال (PDF)
-        </button>
+        </Button>
         <span className="text-[11px] text-muted-foreground">يقرأ الجدول ويحسب متوسط الأيام ويعبّئ الخانات تلقائياً</span>
       </div>
       {err && <p className="mt-2 text-xs font-bold text-destructive">{err}</p>}
@@ -62,7 +63,7 @@ export function LoadPdfImport({ onApply }: { onApply: (values: string[], client:
           {res.days.length > 1 && (
             <div className="flex flex-wrap gap-2">
               {([["avg", "متوسط الأيام المختارة"], ["max", "اليوم الأعلى استهلاكاً"]] as const).map(([k, l]) => (
-                <button key={k} type="button" onClick={() => setHow(k)} className={`rounded-md border px-3 py-1.5 font-bold ${how === k ? "border-primary bg-primary text-primary-foreground" : "border-border"}`}>{l}</button>
+                <Button variant="presentation" size="presentation" key={k} type="button" onClick={() => setHow(k)} className={`rounded-md border px-3 py-1.5 font-bold ${how === k ? "border-primary bg-primary text-primary-foreground" : "border-border"}`}>{l}</Button>
               ))}
               {how === "avg" && (
                 <label className="flex items-center gap-1.5"><input type="checkbox" checked={skipZero} onChange={(e) => setSkipZero(e.target.checked)} className="size-4 accent-primary" />تجاهل ساعات التوقف (القيم الصفرية)</label>
@@ -76,7 +77,7 @@ export function LoadPdfImport({ onApply }: { onApply: (values: string[], client:
               <div className="rounded bg-muted p-2"><p className="text-muted-foreground">نهار / ليل</p><p className="font-black tabular-nums">{total ? Math.round((dayKwh / total) * 100) : 0}% / {total ? 100 - Math.round((dayKwh / total) * 100) : 0}%</p></div>
             </div>
           )}
-          <button type="button" disabled={!chosen.length} onClick={() => { onApply(profile.map(r2), res.client); setDone(true); }} className="rounded-md bg-skyline px-4 py-2 font-bold text-skyline-foreground disabled:opacity-50">تعبئة الخانات بهذه القيم</button>
+          <Button variant="presentation" size="presentation" type="button" disabled={!chosen.length} onClick={() => { onApply(profile.map(r2), res.client); setDone(true); }} className="rounded-md bg-primary px-4 py-2 font-bold text-primary-foreground disabled:opacity-50">تعبئة الخانات بهذه القيم</Button>
           {done && <span className="ms-2 font-bold text-primary">✓ تمت تعبئة الـ 24 خانة</span>}
         </div>
       )}

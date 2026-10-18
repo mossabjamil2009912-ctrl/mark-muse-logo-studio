@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Download, FileText, X } from "lucide-react";
 import type { Product } from "@/lib/products-data";
@@ -9,7 +10,7 @@ export function BrandProductDetail({ product, accent, onClose, gallery }: { prod
     <div dir="rtl" className="fixed inset-0 z-50 overflow-y-auto bg-background">
       <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-background/95 px-5 py-3 backdrop-blur">
         <p className="font-bold" dir="ltr">{product.model.split(" ")[0]}</p>
-        <button onClick={onClose} aria-label="إغلاق" className="rounded-full border border-border p-2 hover:bg-muted"><X className="h-5 w-5" /></button>
+        <Button variant="presentation" size="presentation" onClick={onClose} aria-label="إغلاق" className="rounded-full border border-border p-2 hover:bg-muted"><X className="h-5 w-5" /></Button>
       </div>
       <ProductBody product={product} accent={accent} gallery={gallery} />
     </div>
@@ -30,14 +31,14 @@ export function ProductBody({ product: p, accent, gallery }: { product: Product;
           <div className="text-right">
             <p className="text-sm text-muted-foreground" dir="ltr" style={{ textAlign: "right" }}>{p.brand}</p>
             <h1 className="mt-1 text-3xl font-bold sm:text-5xl" dir="ltr" style={{ textAlign: "right" }}>{p.model.split(" ")[0]}</h1>
-            <p className="mt-2 text-xl font-bold" style={{ color: accent }} dir="ltr">{p.power}</p>
+            <p className="mt-2 text-xl font-bold text-primary" dir="ltr">{p.power}</p>
           </div>
           <div className="flex items-center justify-center"><img src={p.image} alt={p.name} className="max-h-[45svh] object-contain" /></div>
         </div>
       </section>
       {/* صورة ووصف المنتج */}
       <section className="mx-auto grid max-w-7xl gap-8 px-5 py-12 md:grid-cols-2">
-        <div className="overflow-hidden rounded-2xl bg-muted">
+        <div className="overflow-hidden rounded-lg bg-muted">
           <div className="flex h-72 items-center justify-center"><img src={p.image} alt={p.name} className="max-h-[80%] object-contain" /></div>
         </div>
         <div>
@@ -45,7 +46,7 @@ export function ProductBody({ product: p, accent, gallery }: { product: Product;
           <p className="mt-4 leading-8">{p.about || p.description}</p>
           <p className="mt-4 text-sm text-muted-foreground">{p.suitableFor}</p>
           <div className="mt-5 flex flex-wrap gap-2">
-            {ar && <a href={ar} target="_blank" rel="noreferrer" className="flex items-center gap-1 rounded-full px-4 py-2 text-sm text-background" style={{ background: accent }}><FileText className="h-4 w-4" />الكتالوج بالعربية</a>}
+            {ar && <a href={ar} target="_blank" rel="noreferrer" className="flex items-center gap-1 rounded-full px-4 py-2 text-sm text-background" style={{ background: "var(--primary)" }}><FileText className="h-4 w-4" />الكتالوج بالعربية</a>}
             {en && <a href={en} target="_blank" rel="noreferrer" className="flex items-center gap-1 rounded-full border border-border px-4 py-2 text-sm"><Download className="h-4 w-4" />EN Datasheet</a>}
           </div>
         </div>
@@ -55,10 +56,10 @@ export function ProductBody({ product: p, accent, gallery }: { product: Product;
           <div className="mx-auto max-w-7xl px-5">
             <h2 className="mb-5 text-xl font-bold">صور المنتج من {p.brand}</h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {gallery.map((g) => <img key={g} src={g} alt={p.model} loading="lazy" className="h-56 w-full rounded-xl bg-background object-cover" />)}
+              {gallery.map((g) => <img key={g} src={g} alt={p.model} loading="lazy" className="h-56 w-full rounded-lg bg-background object-cover" />)}
             </div>
             <div className="mt-6 flex flex-wrap gap-2">
-              {ar && <a href={ar} target="_blank" rel="noreferrer" className="flex items-center gap-1 rounded-full px-4 py-2 text-sm text-background" style={{ background: accent }}><FileText className="h-4 w-4" />الكتالوج بالعربية (TAMKEEN)</a>}
+              {ar && <a href={ar} target="_blank" rel="noreferrer" className="flex items-center gap-1 rounded-full px-4 py-2 text-sm text-background" style={{ background: "var(--primary)" }}><FileText className="h-4 w-4" />الكتالوج بالعربية (TAMKEEN)</a>}
               {en && <a href={en} target="_blank" rel="noreferrer" className="flex items-center gap-1 rounded-full border border-border bg-background px-4 py-2 text-sm"><Download className="h-4 w-4" />الكتالوج بالإنجليزية</a>}
             </div>
           </div>
@@ -66,19 +67,19 @@ export function ProductBody({ product: p, accent, gallery }: { product: Product;
       )}
       <section className="mx-auto max-w-7xl px-5 pb-16">
         <div className="flex gap-6 border-b border-border">
-          {tabs.map((t, i) => <button key={t} onClick={() => setTab(i)} className="-mb-px border-b-2 py-3 text-sm font-medium" style={{ borderColor: tab === i ? accent : "transparent", color: tab === i ? accent : undefined }}>{t}</button>)}
+          {tabs.map((t, i) => <Button variant="presentation" size="presentation" key={t} onClick={() => setTab(i)} className="-mb-px border-b-2 py-3 text-sm font-medium" style={{ borderColor: tab === i ? accent : "transparent", color: tab === i ? accent : undefined }}>{t}</Button>)}
         </div>
         {tab === 0 && (
           <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {p.features.map((f) => <div key={f} className="rounded-xl border border-border p-4 text-sm leading-7">{f}</div>)}
-            {p.uses.map((u) => <div key={u} className="rounded-xl bg-muted/50 p-4 text-sm leading-7">{u}</div>)}
+            {p.features.map((f) => <div key={f} className="rounded-lg border border-border p-4 text-sm leading-7">{f}</div>)}
+            {p.uses.map((u) => <div key={u} className="rounded-lg bg-muted/50 p-4 text-sm leading-7">{u}</div>)}
           </div>
         )}
         {tab === 1 && (
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             {p.specs.map((g) => (
-              <div key={g.title} className="rounded-xl border border-border p-4">
-                <h4 className="mb-2 font-bold" style={{ color: accent }}>{g.title}</h4>
+              <div key={g.title} className="rounded-lg border border-border p-4">
+                <h4 className="mb-2 font-bold text-primary">{g.title}</h4>
                 <table className="w-full text-sm"><tbody>{g.rows.map(([k, v]) => <tr key={k} className="border-b border-border last:border-0"><td className="py-1.5 text-muted-foreground">{k}</td><td className="py-1.5 font-medium" dir="ltr" style={{ textAlign: "right" }}>{v}</td></tr>)}</tbody></table>
               </div>
             ))}
@@ -86,7 +87,7 @@ export function ProductBody({ product: p, accent, gallery }: { product: Product;
         )}
         {tab === 2 && (
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            {p.files.map((f) => <a key={f.url} href={f.url} target="_blank" rel="noreferrer" className="flex items-center justify-between rounded-xl border border-border p-4 text-sm hover:bg-muted"><span>{f.label}</span><Download className="h-4 w-4" /></a>)}
+            {p.files.map((f) => <a key={f.url} href={f.url} target="_blank" rel="noreferrer" className="flex items-center justify-between rounded-lg border border-border p-4 text-sm hover:bg-muted"><span>{f.label}</span><Download className="h-4 w-4" /></a>)}
           </div>
         )}
       </section>

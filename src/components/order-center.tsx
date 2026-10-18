@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useMemo, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { Check, ClipboardList, Loader2, X } from "lucide-react";
@@ -38,7 +39,7 @@ export function OrderCenterButton({ isAdmin }: { isAdmin: boolean }) {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <button
+      <Button variant="presentation" size="presentation"
         type="button"
         onClick={() => setOpen(true)}
         aria-label={isAdmin ? "قائمة إشعارات العملاء" : "طلباتي"}
@@ -46,18 +47,18 @@ export function OrderCenterButton({ isAdmin }: { isAdmin: boolean }) {
         className="grid size-9 place-items-center rounded-full text-navy transition hover:bg-muted"
       >
         <ClipboardList className="size-5" />
-      </button>
+      </Button>
       {open && (
         <div className="fixed inset-0 z-[70] grid place-items-center bg-overlay/50 p-4 backdrop-blur-[2px]" onClick={() => setOpen(false)}>
           <div
-            className="max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-xl border border-border bg-card p-5 shadow-2xl"
+            className="max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-lg border border-border bg-card p-5 shadow-2xl"
             onClick={(event) => event.stopPropagation()}
           >
             <header className="flex items-center justify-between gap-3 border-b border-border pb-4">
               <p className="text-base font-black">{isAdmin ? "إشعارات العملاء" : "طلباتي السابقة"}</p>
-              <button type="button" onClick={() => setOpen(false)} className="grid size-8 place-items-center rounded-full hover:bg-muted">
+              <Button variant="presentation" size="presentation" type="button" onClick={() => setOpen(false)} className="grid size-8 place-items-center rounded-full hover:bg-muted">
                 <X className="size-4" />
-              </button>
+              </Button>
             </header>
             {isAdmin ? <AdminNoticeList /> : <ClientOrderList />}
           </div>
@@ -71,14 +72,14 @@ function Tabs({ items, value, onChange }: { items: { id: string; label: string; 
   return (
     <div className="mt-4 flex flex-wrap gap-2">
       {items.map((item) => (
-        <button
+        <Button variant="presentation" size="presentation"
           key={item.id}
           type="button"
           onClick={() => onChange(item.id)}
           className={`rounded-full px-4 py-2 text-[11px] font-black transition ${value === item.id ? "bg-brand text-brand-foreground" : "border border-border bg-card hover:bg-muted"}`}
         >
           {item.label} ({item.count})
-        </button>
+        </Button>
       ))}
     </div>
   );
@@ -188,14 +189,14 @@ function ClientOrderCard({ order }: { order: Order }) {
                 placeholder="أعد إدخال رقم الحوالة أو رقم مرجع العملية"
                 className="mt-2 w-full rounded-md border border-input bg-card px-4 py-2.5 text-sm outline-none focus:border-brand"
               />
-              <button
+              <Button variant="presentation" size="presentation"
                 type="button"
                 onClick={resubmit}
                 disabled={busy}
                 className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-brand px-5 py-2.5 text-[11px] font-black text-brand-foreground disabled:opacity-60"
               >
                 {busy ? <Loader2 className="size-3.5 animate-spin" /> : <Check className="size-3.5" />} إرسال الرقم من جديد
-              </button>
+              </Button>
               {error && <p role="alert" className="mt-2 text-[11px] font-bold text-destructive">{error}</p>}
             </>
           )}
@@ -258,37 +259,37 @@ function AdminNoticeList() {
                         <p className="w-full rounded-md border border-energy/35 bg-energy/10 px-3 py-2 text-[10px] font-black text-energy">
                           طلب تواصل — يُرجى الاتصال بالعميل لإتمام التفاصيل (بلا تأكيد أو إلغاء فاتورة).
                         </p>
-                        <button
+                        <Button variant="presentation" size="presentation"
                           type="button"
                           onClick={() => markSeen(notif.id)}
                           className="inline-flex items-center gap-1 rounded-full border border-border px-4 py-2 text-[10px] font-black"
                         >
                           تمت المشاهدة
-                        </button>
+                        </Button>
                       </>
                     ) : (
                       <>
-                        <button
+                        <Button variant="presentation" size="presentation"
                           type="button"
                           onClick={() => markConfirmed(notif.id)}
                           className="inline-flex items-center gap-1 rounded-full bg-energy px-4 py-2 text-[10px] font-black text-energy-foreground"
                         >
                           <Check className="size-3" /> تأكيد الفاتورة
-                        </button>
-                        <button
+                        </Button>
+                        <Button variant="presentation" size="presentation"
                           type="button"
                           onClick={() => markCancelled(notif.id)}
                           className="inline-flex items-center gap-1 rounded-full bg-destructive px-4 py-2 text-[10px] font-black text-destructive-foreground"
                         >
                           <X className="size-3" /> إلغاء الفاتورة
-                        </button>
-                        <button
+                        </Button>
+                        <Button variant="presentation" size="presentation"
                           type="button"
                           onClick={() => markSeen(notif.id)}
                           className="inline-flex items-center gap-1 rounded-full border border-border px-4 py-2 text-[10px] font-black"
                         >
                           تمت المشاهدة
-                        </button>
+                        </Button>
                       </>
                     )}
                   </div>

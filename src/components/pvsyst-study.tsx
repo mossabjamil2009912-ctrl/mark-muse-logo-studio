@@ -1,3 +1,5 @@
+import { TamkeenBrand } from "@/components/tamkeen-brand";
+import { Button } from "@/components/ui/button";
 import { useMemo, useState } from "react";
 import {
   ArrowLeft,
@@ -79,7 +81,7 @@ const COL_AR: Record<string, string> = {
 };
 
 /** ألوان تقرير PVsyst الرسمية */
-const C = { blue: "#1c3f94", sun: "#e53935", violet: "#7b3fa0", red: "#c0392b", grid: "#b9c0cf", head: "#dfe4ee", lc: "#a02bf0", ls: "#0f8a24", yf: "#8c1218" };
+const C = { blue: "var(--navy)", sun: "var(--primary)", violet: "var(--chart-5)", red: "var(--primary)", grid: "var(--border)", head: "var(--secondary)", lc: "var(--chart-2)", ls: "var(--energy)", yf: "var(--primary)" };
 
 type Props = {
   study: NonNullable<View["study"]>;
@@ -296,7 +298,7 @@ export default function PvsystStudy({ study, actions }: Props) {
   const liveTilt = s.tilt ?? s.baseTilt ?? 15;
 
   return (
-    <section className={actions ? "" : "mt-3 rounded-lg border border-border bg-card p-3"}>
+    <section className="engineering-report pvsyst-report">
       {/* ترويسة تقرير PVsyst الرسمية */}
       <div className="overflow-hidden rounded-md border" style={{ borderColor: C.grid }}>
         <div className="flex items-center gap-3 px-3 py-2" dir="ltr" style={{ background: C.head }}>
@@ -318,7 +320,7 @@ export default function PvsystStudy({ study, actions }: Props) {
               {s.kwp ? ` — Variant: ${nf(s.kwp, 0)} kWp` : ""}
             </p>
           </div>
-          <img src={actesLogoPlain.url} alt="TAMKEEN" className="h-9 w-auto shrink-0 object-contain" />
+          <TamkeenBrand compact />
         </div>
         <div className="flex flex-wrap gap-x-4 gap-y-1 border-t px-3 py-1.5 text-[9.5px] text-neutral-600" dir="ltr" style={{ borderColor: C.grid }}>
           <span>Date: {dstr}</span>
@@ -327,34 +329,34 @@ export default function PvsystStudy({ study, actions }: Props) {
         </div>
         {/* شريط الإجراءات السريع */}
         <div className="flex flex-wrap items-center gap-1.5 border-t bg-card px-3 py-2" style={{ borderColor: C.grid }}>
-          <button
+          <Button variant="presentation" size="presentation"
             type="button"
             onClick={() => downloadPvsystReport(result, eco)}
-            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-bold text-white shadow-sm transition hover:opacity-90"
+            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-bold text-navy-foreground shadow-sm transition hover:opacity-90"
             style={{ background: C.blue }}
           >
             <Download className="size-3.5" />
             تحميل تقرير PDF
-          </button>
+          </Button>
           {hasMonths && (
-            <button
+            <Button variant="presentation" size="presentation"
               type="button"
               onClick={exportCsv}
-              className="inline-flex items-center gap-1.5 rounded-full border border-black/10 bg-white px-3 py-1 text-[11px] font-bold text-foreground shadow-sm transition hover:bg-black/5"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-[11px] font-bold text-foreground shadow-sm transition hover:bg-muted"
             >
               <Table2 className="size-3.5" />
               تصدير Excel / CSV
-            </button>
+            </Button>
           )}
           {hasMonths && (
-            <button
+            <Button variant="presentation" size="presentation"
               type="button"
               onClick={() => setArTerms((v) => !v)}
-              className="inline-flex items-center gap-1.5 rounded-full border border-black/10 bg-white px-3 py-1 text-[11px] font-bold text-foreground shadow-sm transition hover:bg-black/5"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-[11px] font-bold text-foreground shadow-sm transition hover:bg-muted"
             >
               <Languages className="size-3.5" />
               {arTerms ? "الرموز الهندسية" : "التسميات العربية"}
-            </button>
+            </Button>
           )}
         </div>
       </div>
@@ -406,7 +408,7 @@ export default function PvsystStudy({ study, actions }: Props) {
       {/* ملخص المشروع والنظام */}
       {specs.length > 0 && (
         <>
-          <h4 className="mt-4 rounded-t-md px-2 py-1 text-[11px] font-black text-white" style={{ background: C.blue }} dir="ltr">
+          <h4 className="mt-4 rounded-t-md px-2 py-1 text-[11px] font-black text-navy-foreground" style={{ background: C.blue }} dir="ltr">
             Project and system summary
           </h4>
           <dl className="grid gap-px border-x border-b sm:grid-cols-2 lg:grid-cols-3" style={{ borderColor: C.grid, background: C.grid }}>
@@ -423,7 +425,7 @@ export default function PvsystStudy({ study, actions }: Props) {
       {/* المؤشرات الرئيسية */}
       {kpis.length > 0 && (
         <>
-          <h4 className="mt-4 rounded-t-md px-2 py-1 text-[11px] font-black text-white" style={{ background: C.blue }} dir="ltr">
+          <h4 className="mt-4 rounded-t-md px-2 py-1 text-[11px] font-black text-navy-foreground" style={{ background: C.blue }} dir="ltr">
             Main simulation results
           </h4>
           <div className="grid grid-cols-2 gap-px border-x border-b lg:grid-cols-3" style={{ borderColor: C.grid, background: C.grid }}>
@@ -442,29 +444,29 @@ export default function PvsystStudy({ study, actions }: Props) {
       {s.baseTilt !== null && hasMonths && (
         <div className="mt-3 rounded-md border" style={{ borderColor: C.grid }}>
           <div className="flex flex-wrap items-center gap-2 px-2.5 py-2">
-            <button
+            <Button variant="presentation" size="presentation"
               type="button"
               onClick={() => setGeoOpen((v) => !v)}
-              className="inline-flex items-center gap-1.5 rounded-full border border-black/10 bg-white px-3 py-1 text-[11px] font-bold text-foreground shadow-sm transition hover:bg-black/5"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-[11px] font-bold text-foreground shadow-sm transition hover:bg-muted"
             >
               <Compass className="size-3.5" />
               تعديل زاوية الميلان والاتجاه (اختياري)
-            </button>
+            </Button>
             <span className="text-[10px] text-muted-foreground">
               الحالي: {s.tilt}° / {s.azimuth}
             </span>
             {s.orientationCustom && (
-              <button
+              <Button variant="presentation" size="presentation"
                 type="button"
                 onClick={() => {
                   setTilt(null);
                   setAzimuth(0);
                 }}
-                className="inline-flex items-center gap-1 rounded-full border border-black/10 px-2.5 py-1 text-[10px] font-bold text-muted-foreground transition hover:bg-black/5"
+                className="inline-flex items-center gap-1 rounded-full border border-border px-2.5 py-1 text-[10px] font-bold text-muted-foreground transition hover:bg-muted"
               >
                 <RotateCcw className="size-3" />
                 استعادة الزوايا الافتراضية
-              </button>
+              </Button>
             )}
           </div>
 
@@ -543,18 +545,18 @@ export default function PvsystStudy({ study, actions }: Props) {
                 {AZIMUTH_OPTIONS.map((opt) => {
                   const on = (s.azimuthDeg ?? 0) === opt.value;
                   return (
-                    <button
+                    <Button variant="presentation" size="presentation"
                       key={opt.value}
                       type="button"
                       onClick={() => setAzimuth(opt.value)}
                       className={`rounded-full border px-3 py-1 text-[11px] font-bold transition ${
-                        on ? "border-transparent text-white" : "border-black/10 text-foreground hover:bg-black/5"
+                        on ? "border-transparent text-navy-foreground" : "border-border text-foreground hover:bg-muted"
                       }`}
                       style={on ? { background: C.blue } : undefined}
                     >
                       {opt.label}
                       {opt.value === 0 ? " (الأفضل)" : ""}
-                    </button>
+                    </Button>
                   );
                 })}
               </div>
@@ -583,7 +585,7 @@ export default function PvsystStudy({ study, actions }: Props) {
       {/* جدول التوازن الشهري الكامل */}
       {hasMonths && totals && (
         <>
-          <h4 className="mt-4 rounded-t-md px-2 py-1 text-[11px] font-black text-white" style={{ background: C.blue }} dir="ltr">
+          <h4 className="mt-4 rounded-t-md px-2 py-1 text-[11px] font-black text-navy-foreground" style={{ background: C.blue }} dir="ltr">
             Balances and main results
           </h4>
           <div className="-mx-1 overflow-x-auto px-1" data-quote-scroll dir="ltr">
@@ -685,7 +687,7 @@ export default function PvsystStudy({ study, actions }: Props) {
             </div>
             {hover?.chart === "norm" && months[hover.i] && (
               <div
-                className="pointer-events-none absolute right-2 top-7 rounded-md border bg-white/95 px-2 py-1.5 text-[9px] shadow-lg"
+                className="pointer-events-none absolute right-2 top-7 rounded-md border bg-card/95 px-2 py-1.5 text-[9px] shadow-lg"
                 style={{ borderColor: C.grid }}
                 dir="rtl"
               >
@@ -744,7 +746,7 @@ export default function PvsystStudy({ study, actions }: Props) {
             </div>
             {hover?.chart === "pr" && months[hover.i] && (
               <div
-                className="pointer-events-none absolute right-2 top-7 rounded-md border bg-white/95 px-2 py-1.5 text-[9px] shadow-lg"
+                className="pointer-events-none absolute right-2 top-7 rounded-md border bg-card/95 px-2 py-1.5 text-[9px] shadow-lg"
                 style={{ borderColor: C.grid }}
                 dir="rtl"
               >
@@ -804,7 +806,7 @@ export default function PvsystStudy({ study, actions }: Props) {
           </div>
           {hover?.chart === "cons" && months[hover.i] && (
             <div
-              className="pointer-events-none absolute right-2 top-7 rounded-md border bg-white/95 px-2 py-1.5 text-[9px] shadow-lg"
+              className="pointer-events-none absolute right-2 top-7 rounded-md border bg-card/95 px-2 py-1.5 text-[9px] shadow-lg"
               style={{ borderColor: C.grid }}
               dir="rtl"
             >
@@ -836,12 +838,12 @@ export default function PvsystStudy({ study, actions }: Props) {
       {/* مخطط شلال الفواقد */}
       {result.lossBreakdown.length > 0 && (
         <>
-          <h4 className="mt-4 rounded-t-md px-2 py-1 text-[11px] font-black text-white" style={{ background: C.blue }} dir="ltr">
+          <h4 className="mt-4 rounded-t-md px-2 py-1 text-[11px] font-black text-navy-foreground" style={{ background: C.blue }} dir="ltr">
             Loss diagram over the whole year
           </h4>
           <div className="border-x border-b p-2" style={{ borderColor: C.grid }} dir="ltr">
             {result.annualIrradiation && (
-              <div className="mb-1.5 rounded px-2 py-1 text-[10px] font-black text-white" style={{ background: C.sun }}>
+              <div className="mb-1.5 rounded px-2 py-1 text-[10px] font-black text-navy-foreground" style={{ background: C.sun }}>
                 {nf(result.annualIrradiation)} kWh/m² — Global horizontal irradiation on collector plane
               </div>
             )}
@@ -888,7 +890,7 @@ export default function PvsystStudy({ study, actions }: Props) {
               })}
             </ul>
             {result.annualEnergy && (
-              <div className="mt-2 rounded px-2 py-1 text-[10px] font-black text-white" style={{ background: C.blue }}>
+              <div className="mt-2 rounded px-2 py-1 text-[10px] font-black text-navy-foreground" style={{ background: C.blue }}>
                 {nf(result.annualEnergy)} kWh — Energy injected into grid
               </div>
             )}
@@ -908,44 +910,44 @@ export default function PvsystStudy({ study, actions }: Props) {
 
 
       <div className="mt-4 flex flex-wrap gap-2">
-        <button
+        <Button variant="presentation" size="presentation"
           type="button"
           onClick={() => downloadPvsystReport(result, eco)}
-          className="inline-flex items-center justify-center gap-1.5 rounded-full border border-black/10 bg-white px-4 py-1.5 text-xs font-bold text-foreground shadow-sm transition hover:bg-black/5"
+          className="inline-flex items-center justify-center gap-1.5 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-bold text-foreground shadow-sm transition hover:bg-muted"
         >
           <Download className="size-3.5" />
           تحميل التقرير الكامل
-        </button>
+        </Button>
         {hasMonths && (
-          <button
+          <Button variant="presentation" size="presentation"
             type="button"
             onClick={exportCsv}
-            className="inline-flex items-center justify-center gap-1.5 rounded-full border border-black/10 bg-white px-4 py-1.5 text-xs font-bold text-foreground shadow-sm transition hover:bg-black/5"
+            className="inline-flex items-center justify-center gap-1.5 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-bold text-foreground shadow-sm transition hover:bg-muted"
           >
             <Share2 className="size-3.5" />
             تصدير بيانات المحاكاة
-          </button>
+          </Button>
         )}
       </div>
 
       {actions && (
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
-          <button
+          <Button variant="presentation" size="presentation"
             type="button"
             onClick={actions.onBuy}
             className="flex items-center justify-center gap-2 rounded-full border border-border bg-card text-foreground hover:border-energy px-4 py-3 text-sm font-black shadow-sm transition"
           >
             <ShoppingCart className="size-4 text-energy" />
             طلب عرض سعر
-          </button>
-          <button
+          </Button>
+          <Button variant="presentation" size="presentation"
             type="button"
             onClick={actions.onSales}
             className="flex items-center justify-center gap-2 rounded-full border border-border bg-card px-4 py-3 text-sm font-black text-foreground shadow-sm transition hover:border-brand hover:text-brand"
           >
             <Headphones className="size-4 text-brand" />
             التواصل مع المبيعات
-          </button>
+          </Button>
         </div>
       )}
     </section>

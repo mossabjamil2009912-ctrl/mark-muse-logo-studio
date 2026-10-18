@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useMemo, useState } from "react";
 import { ArrowLeft, BadgeDollarSign, Download, Headphones, Leaf, LineChart, Network, RotateCcw, ShoppingCart } from "lucide-react";
 import { buildPvsystStudy, STUDY_SITE_NAMES } from "@/lib/pvsyst-engine";
@@ -19,7 +20,7 @@ import type { View } from "@/lib/present";
 const nf = (n: number, d = 0) => n.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
 
 /** ألوان الدراسة الاقتصادية — زمردي مالي مع أزرق التقارير. */
-const C = { blue: "#1c3f94", green: "#15803d", red: "#c0392b", grid: "#b9c0cf", amber: "#e53935" };
+const C = { blue: "var(--navy)", green: "var(--energy)", red: "var(--primary)", grid: "var(--border)", amber: "var(--gold)" };
 
 const MONTHS_AR = ["ينا", "فبر", "مار", "أبر", "ماي", "يون", "يول", "أغس", "سبت", "أكت", "نوف", "ديس"];
 
@@ -87,14 +88,14 @@ export default function EconomicStudy({ study, actions }: Props) {
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
             {STUDY_SITE_NAMES.map((name) => (
-              <button
+              <Button variant="presentation" size="presentation"
                 key={name}
                 type="button"
                 onClick={() => setSitePick(name)}
                 className="rounded-full border border-border bg-card px-4 py-2 text-sm font-bold text-navy transition hover:border-brand hover:text-brand"
               >
                 {name}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
@@ -144,8 +145,8 @@ export default function EconomicStudy({ study, actions }: Props) {
   );
 
   return (
-    <section className="flex flex-col" dir="rtl">
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-md px-3 py-2 text-white" style={{ background: C.green }}>
+    <section className="engineering-report flex flex-col" dir="rtl">
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-md px-3 py-2 text-navy-foreground" style={{ background: C.green }}>
         <span className="inline-flex items-center gap-2 text-[13px] font-black">
           <BadgeDollarSign className="size-4" />
           دراسة الجدوى الاقتصادية والوفر البيئي
@@ -157,46 +158,46 @@ export default function EconomicStudy({ study, actions }: Props) {
       <div className="mt-3 rounded-md border p-2.5" style={{ borderColor: C.grid }}>
         <div className="mb-2 flex items-center justify-between">
           <p className="text-[11px] font-black" style={{ color: C.blue }}>مدخلات الدراسة</p>
-          <button type="button" onClick={reset} className="inline-flex items-center gap-1 rounded-full border border-black/10 px-2 py-[3px] text-[10px] font-bold">
+          <Button variant="presentation" size="presentation" type="button" onClick={reset} className="inline-flex items-center gap-1 rounded-full border border-border px-2 py-[3px] text-[10px] font-bold">
             <RotateCcw className="size-3" /> استعادة القيم التلقائية
-          </button>
+          </Button>
         </div>
         <div className="grid gap-2 sm:grid-cols-4">
           <label className="block">
             <span className="text-[10px] text-muted-foreground">تكلفة المنظومة ($)</span>
             <input type="number" min={0} step={50} value={capex || ""} placeholder="من عرض السعر"
               onChange={(e) => setCapexInput(Number(e.target.value) || 0)}
-              className="mt-0.5 w-full rounded-md border border-black/10 bg-background px-2 py-1 text-[12px] font-bold tabular-nums" />
+              className="mt-0.5 w-full rounded-md border border-border bg-background px-2 py-1 text-[12px] font-bold tabular-nums" />
           </label>
           <label className="block">
             <span className="text-[10px] text-muted-foreground">سعر الكيلوواط ساعة ($)</span>
             <input type="number" min={0} step={0.01} value={tariff}
               onChange={(e) => setTariff(Math.max(0, Number(e.target.value)))}
-              className="mt-0.5 w-full rounded-md border border-black/10 bg-background px-2 py-1 text-[12px] font-bold tabular-nums" />
+              className="mt-0.5 w-full rounded-md border border-border bg-background px-2 py-1 text-[12px] font-bold tabular-nums" />
             <span className="text-[9px] text-muted-foreground">≈ {nf(tariff * FX_YER)} ريال</span>
           </label>
           <label className="block">
             <span className="text-[10px] text-muted-foreground">سعر لتر الديزل ($)</span>
             <input type="number" min={0} step={0.05} value={dieselPrice}
               onChange={(e) => setDieselPrice(Math.max(0, Number(e.target.value)))}
-              className="mt-0.5 w-full rounded-md border border-black/10 bg-background px-2 py-1 text-[12px] font-bold tabular-nums" />
+              className="mt-0.5 w-full rounded-md border border-border bg-background px-2 py-1 text-[12px] font-bold tabular-nums" />
           </label>
           <label className="block">
             <span className="text-[10px] text-muted-foreground">تصاعد أسعار الطاقة سنوياً (%)</span>
             <input type="number" min={0} max={15} step={0.5} value={escalation}
               onChange={(e) => setEscalation(Math.max(0, Number(e.target.value)))}
-              className="mt-0.5 w-full rounded-md border border-black/10 bg-background px-2 py-1 text-[12px] font-bold tabular-nums" />
+              className="mt-0.5 w-full rounded-md border border-border bg-background px-2 py-1 text-[12px] font-bold tabular-nums" />
           </label>
         </div>
         {!capex && (
-          <p className="mt-2 rounded-md px-2 py-1.5 text-[10.5px]" style={{ background: "#fdf3e3", color: "#8a5a10" }}>
+          <p className="mt-2 rounded-md px-2 py-1.5 text-[10.5px]" style={{ background: "var(--muted)", color: "var(--foreground)" }}>
             أدخل تكلفة المنظومة لعرض فترة الاسترداد وتكلفة إنتاج الكيلوواط ساعة.
           </p>
         )}
       </div>
 
       {/* ==== المؤشرات المالية ==== */}
-      <h4 className="mt-4 rounded-t-md px-2 py-1 text-[11px] font-black text-white" style={{ background: C.blue }}>
+      <h4 className="mt-4 rounded-t-md px-2 py-1 text-[11px] font-black text-navy-foreground" style={{ background: C.blue }}>
         المؤشرات المالية الرئيسية
       </h4>
       <div className="grid grid-cols-2 gap-px border lg:grid-cols-4" style={{ borderColor: C.grid, background: C.grid }}>
@@ -211,12 +212,12 @@ export default function EconomicStudy({ study, actions }: Props) {
       </div>
 
       {/* ==== منحنى التدفق النقدي ==== */}
-      <h4 className="mt-4 rounded-t-md px-2 py-1 text-[11px] font-black text-white" style={{ background: C.blue }}>
+      <h4 className="mt-4 rounded-t-md px-2 py-1 text-[11px] font-black text-navy-foreground" style={{ background: C.blue }}>
         منحنى التدفق النقدي التراكمي ونقطة كسر التعادل
       </h4>
       <div className="border-x border-b p-2" style={{ borderColor: C.grid }}>
         <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="منحنى التدفق النقدي التراكمي">
-          <rect x={PAD.l} y={PAD.t} width={W - PAD.l - PAD.r} height={H - PAD.t - PAD.b} fill="#fff" stroke={C.grid} />
+          <rect x={PAD.l} y={PAD.t} width={W - PAD.l - PAD.r} height={H - PAD.t - PAD.b} fill="var(--card)" stroke={C.grid} />
           <rect x={PAD.l} y={PAD.t} width={W - PAD.l - PAD.r} height={Math.max(0, zeroY - PAD.t)} fill="#ecfdf3" />
           {[0, 0.25, 0.5, 0.75, 1].map((f) => {
             const v = cMin + (cMax - cMin) * f;
@@ -224,11 +225,11 @@ export default function EconomicStudy({ study, actions }: Props) {
             return (
               <g key={f}>
                 <line x1={PAD.l} y1={y} x2={W - PAD.r} y2={y} stroke={C.grid} strokeDasharray="3 3" />
-                <text x={PAD.l - 6} y={y + 3} textAnchor="end" fontSize="9" fill="#666">{nf(Math.round(v))}</text>
+                <text x={PAD.l - 6} y={y + 3} textAnchor="end" fontSize="9" fill="var(--muted-foreground)">{nf(Math.round(v))}</text>
               </g>
             );
           })}
-          <line x1={PAD.l} y1={zeroY} x2={W - PAD.r} y2={zeroY} stroke="#444" strokeWidth="1.2" />
+          <line x1={PAD.l} y1={zeroY} x2={W - PAD.r} y2={zeroY} stroke="var(--foreground)" strokeWidth="1.2" />
           <path d={cashPath} fill="none" stroke={C.green} strokeWidth="2.4" />
           {paybackX !== null && (
             <g>
@@ -240,9 +241,9 @@ export default function EconomicStudy({ study, actions }: Props) {
             </g>
           )}
           {rows.filter((_, i) => i % 5 === 4 || i === 0).map((r, _i) => (
-            <text key={r.year} x={cx(r.year)} y={H - 10} textAnchor="middle" fontSize="9" fill="#666">{r.year}</text>
+            <text key={r.year} x={cx(r.year)} y={H - 10} textAnchor="middle" fontSize="9" fill="var(--muted-foreground)">{r.year}</text>
           ))}
-          <text x={PAD.l} y={H - 10} textAnchor="middle" fontSize="9" fill="#666">0</text>
+          <text x={PAD.l} y={H - 10} textAnchor="middle" fontSize="9" fill="var(--muted-foreground)">0</text>
         </svg>
         <p className="text-center text-[9.5px] text-muted-foreground">
           الرصيد يبدأ سالباً بقيمة رأس المال ({nf(capex)} $) ويتحول إلى أرباح صافية بعد نقطة التعادل.
@@ -250,25 +251,25 @@ export default function EconomicStudy({ study, actions }: Props) {
       </div>
 
       {/* ==== مقارنة التكلفة المتراكمة ==== */}
-      <h4 className="mt-4 rounded-t-md px-2 py-1 text-[11px] font-black text-white" style={{ background: C.blue }}>
+      <h4 className="mt-4 rounded-t-md px-2 py-1 text-[11px] font-black text-navy-foreground" style={{ background: C.blue }}>
         مقارنة التكلفة المتراكمة: الديزل والشبكة مقابل منظومة TAMKEEN
       </h4>
       <div className="border-x border-b p-2" style={{ borderColor: C.grid }}>
         <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="مقارنة التكلفة المتراكمة">
-          <rect x={PAD.l} y={PAD.t} width={W - PAD.l - PAD.r} height={H - PAD.t - PAD.b} fill="#fff" stroke={C.grid} />
+          <rect x={PAD.l} y={PAD.t} width={W - PAD.l - PAD.r} height={H - PAD.t - PAD.b} fill="var(--card)" stroke={C.grid} />
           {[0, 0.25, 0.5, 0.75, 1].map((f) => {
             const y = py(compMax * f);
             return (
               <g key={f}>
                 <line x1={PAD.l} y1={y} x2={W - PAD.r} y2={y} stroke={C.grid} strokeDasharray="3 3" />
-                <text x={PAD.l - 6} y={y + 3} textAnchor="end" fontSize="9" fill="#666">{nf(Math.round(compMax * f))}</text>
+                <text x={PAD.l - 6} y={y + 3} textAnchor="end" fontSize="9" fill="var(--muted-foreground)">{nf(Math.round(compMax * f))}</text>
               </g>
             );
           })}
           <path d={basePath} fill="none" stroke={C.red} strokeWidth="2.4" />
           <path d={solarPath} fill="none" stroke={C.green} strokeWidth="2.4" />
           {rows.filter((r) => r.year % 5 === 0).map((r) => (
-            <text key={r.year} x={cx(r.year)} y={H - 10} textAnchor="middle" fontSize="9" fill="#666">{r.year}</text>
+            <text key={r.year} x={cx(r.year)} y={H - 10} textAnchor="middle" fontSize="9" fill="var(--muted-foreground)">{r.year}</text>
           ))}
         </svg>
         <div className="flex justify-center gap-4 text-[9.5px] font-bold">
@@ -280,33 +281,33 @@ export default function EconomicStudy({ study, actions }: Props) {
       {/* ==== الوفر الشهري ==== */}
       {months.length === 12 && (
         <>
-          <h4 className="mt-4 rounded-t-md px-2 py-1 text-[11px] font-black text-white" style={{ background: C.blue }}>
+          <h4 className="mt-4 rounded-t-md px-2 py-1 text-[11px] font-black text-navy-foreground" style={{ background: C.blue }}>
             الوفر المالي الشهري المتوقع
           </h4>
           <div className="border-x border-b p-2" style={{ borderColor: C.grid }}>
             <svg viewBox="0 0 720 190" className="w-full" role="img" aria-label="الوفر المالي الشهري">
-              <rect x="46" y="10" width="660" height="140" fill="#fff" stroke={C.grid} />
+              <rect x="46" y="10" width="660" height="140" fill="var(--card)" stroke={C.grid} />
               {monthSavings.map((v, i) => {
                 const h = (v / msMax) * 134;
                 const x = 52 + i * 54;
                 return (
                   <g key={i}>
                     <rect x={x} y={150 - h} width="38" height={h} fill={C.green} opacity="0.85" />
-                    <text x={x + 19} y={146 - h} textAnchor="middle" fontSize="8.5" fill="#333">{nf(v)}</text>
-                    <text x={x + 19} y={166} textAnchor="middle" fontSize="9" fill="#666">{MONTHS_AR[i]}</text>
+                    <text x={x + 19} y={146 - h} textAnchor="middle" fontSize="8.5" fill="var(--foreground)">{nf(v)}</text>
+                    <text x={x + 19} y={166} textAnchor="middle" fontSize="9" fill="var(--muted-foreground)">{MONTHS_AR[i]}</text>
                   </g>
                 );
               })}
-              <text x="40" y="18" textAnchor="end" fontSize="9" fill="#666">{nf(msMax)}</text>
-              <text x="40" y="152" textAnchor="end" fontSize="9" fill="#666">0</text>
-              <text x="376" y="184" textAnchor="middle" fontSize="9" fill="#666">USD / month</text>
+              <text x="40" y="18" textAnchor="end" fontSize="9" fill="var(--muted-foreground)">{nf(msMax)}</text>
+              <text x="40" y="152" textAnchor="end" fontSize="9" fill="var(--muted-foreground)">0</text>
+              <text x="376" y="184" textAnchor="middle" fontSize="9" fill="var(--muted-foreground)">USD / month</text>
             </svg>
           </div>
         </>
       )}
 
       {/* ==== تحليل الحساسية ==== */}
-      <h4 className="mt-4 rounded-t-md px-2 py-1 text-[11px] font-black text-white" style={{ background: C.blue }}>
+      <h4 className="mt-4 rounded-t-md px-2 py-1 text-[11px] font-black text-navy-foreground" style={{ background: C.blue }}>
         تحليل الحساسية — ثلاثة سيناريوهات
       </h4>
       <div className="overflow-x-auto border-x border-b" style={{ borderColor: C.grid }}>
@@ -334,11 +335,11 @@ export default function EconomicStudy({ study, actions }: Props) {
       </div>
 
       {/* ==== جدول التدفق النقدي ==== */}
-      <h4 className="mt-4 flex items-center justify-between rounded-t-md px-2 py-1 text-[11px] font-black text-white" style={{ background: C.blue }}>
+      <h4 className="mt-4 flex items-center justify-between rounded-t-md px-2 py-1 text-[11px] font-black text-navy-foreground" style={{ background: C.blue }}>
         <span>جدول التدفق النقدي لـ {LIFETIME_YEARS} سنة</span>
-        <button type="button" onClick={() => setTableOpen((v) => !v)} className="rounded-full bg-white/20 px-2 py-[2px] text-[10px] font-bold">
+        <Button variant="presentation" size="presentation" type="button" onClick={() => setTableOpen((v) => !v)} className="rounded-full bg-navy-foreground/20 px-2 py-[2px] text-[10px] font-bold">
           {tableOpen ? "إخفاء" : "عرض"}
-        </button>
+        </Button>
       </h4>
       {tableOpen && (
         <div className="max-h-80 overflow-auto border-x border-b" style={{ borderColor: C.grid }}>
@@ -370,7 +371,7 @@ export default function EconomicStudy({ study, actions }: Props) {
       )}
 
       {/* ==== الأثر البيئي ==== */}
-      <h4 className="mt-4 inline-flex items-center gap-1.5 rounded-t-md px-2 py-1 text-[11px] font-black text-white" style={{ background: C.green }}>
+      <h4 className="mt-4 inline-flex items-center gap-1.5 rounded-t-md px-2 py-1 text-[11px] font-black text-navy-foreground" style={{ background: C.green }}>
         <Leaf className="size-3.5" /> الأثر البيئي والمكافئات
       </h4>
       <div className="grid grid-cols-2 gap-px border lg:grid-cols-4" style={{ borderColor: C.grid, background: C.grid }}>
@@ -390,25 +391,25 @@ export default function EconomicStudy({ study, actions }: Props) {
         كجم ثاني أكسيد الكربون لكل كيلوواط ساعة. الأرقام تقديرية لأغراض الدراسة.
       </p>
 
-      <button
+      <Button variant="presentation" size="presentation"
         type="button"
         onClick={() => downloadEconomicReport(result, eco, rows, scenarios, equiv, escalation / 100)}
-        className="mt-4 inline-flex items-center justify-center gap-1.5 self-start rounded-full border border-black/10 bg-white px-4 py-1.5 text-xs font-bold text-foreground shadow-sm transition hover:bg-black/5"
+        className="mt-4 inline-flex items-center justify-center gap-1.5 self-start rounded-full border border-border bg-card px-4 py-1.5 text-xs font-bold text-foreground shadow-sm transition hover:bg-muted"
       >
         <Download className="size-3.5" />
         تحميل تقرير الجدوى الاقتصادية
-      </button>
+      </Button>
 
       {actions && (
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
-          <button type="button" onClick={actions.onBuy}
+          <Button variant="presentation" size="presentation" type="button" onClick={actions.onBuy}
             className="flex items-center justify-center gap-2 rounded-full border border-border bg-card text-foreground hover:border-energy px-4 py-3 text-sm font-black shadow-sm transition">
             <ShoppingCart className="size-4 text-energy" /> طلب عرض سعر
-          </button>
-          <button type="button" onClick={actions.onSales}
+          </Button>
+          <Button variant="presentation" size="presentation" type="button" onClick={actions.onSales}
             className="flex items-center justify-center gap-2 rounded-full border border-border bg-card px-4 py-3 text-sm font-black text-foreground shadow-sm transition hover:border-brand hover:text-brand">
             <Headphones className="size-4 text-brand" /> التواصل مع المبيعات
-          </button>
+          </Button>
         </div>
       )}
     </section>

@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useMemo, useState } from "react";
 import {
   BatteryCharging,
@@ -86,7 +87,7 @@ export default function QuoteVariants({ variants, active, onPick, study }: Props
   }, [variants, study]);
 
   return (
-    <section className="mb-4 rounded-xl border border-border bg-soft p-3 sm:p-4">
+    <section className="mb-4 rounded-lg border border-border bg-soft p-3 sm:p-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h3 className="inline-flex items-center gap-2 text-sm font-black text-navy">
           <span className="grid size-7 place-items-center rounded-lg bg-brand/10 text-brand [&_svg]:size-4">
@@ -94,14 +95,14 @@ export default function QuoteVariants({ variants, active, onPick, study }: Props
           </span>
           بدائل المنظومة
         </h3>
-        <button
+        <Button variant="presentation" size="presentation"
           type="button"
           onClick={() => setOpen((v) => !v)}
           className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-[11px] font-bold text-navy transition hover:border-brand hover:text-brand"
         >
           <Columns3 className="size-3.5" />
           {open ? "إخفاء المقارنة" : "مقارنة البدائل جنباً إلى جنب"}
-        </button>
+        </Button>
       </div>
 
       <div className="mt-3 grid gap-2 sm:grid-cols-3">
@@ -111,11 +112,11 @@ export default function QuoteVariants({ variants, active, onPick, study }: Props
           const on = variant.id === active;
           const m = metrics[variant.id];
           return (
-            <button
+            <Button variant="presentation" size="presentation"
               key={variant.id}
               type="button"
               onClick={() => onPick(variant.id)}
-              className={`flex h-full flex-col gap-1.5 rounded-xl border-2 p-3 text-right transition hover:-translate-y-0.5 hover:shadow-md ${on ? tone.ring + " shadow-md" : "border-border bg-card"}`}
+              className={`flex h-full flex-col gap-1.5 rounded-lg border-2 p-3 text-right transition hover:-translate-y-0.5 hover:shadow-md ${on ? tone.ring + " shadow-md" : "border-border bg-card"}`}
             >
               <span className="flex items-center gap-2">
                 <span
@@ -139,7 +140,7 @@ export default function QuoteVariants({ variants, active, onPick, study }: Props
                 </span>
                 {variant.batteryKwh > 0 && (
                   <span className="inline-flex items-center gap-1">
-                    <BatteryCharging className="size-3 text-emerald-600" />{" "}
+                    <BatteryCharging className="size-3 text-energy" />{" "}
                     {nf(variant.batteryKwh, 1)} kWh
                   </span>
                 )}
@@ -159,7 +160,7 @@ export default function QuoteVariants({ variants, active, onPick, study }: Props
                   استرداد ≈ {nf(m.payback, 1)} سنة
                 </span>
               )}
-            </button>
+            </Button>
           );
         })}
       </div>
