@@ -135,7 +135,7 @@ export default function QuoteVariants({ variants, active, onPick, study }: Props
               </span>
               <span className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-1 text-[10px] font-bold text-navy">
                 <span className="inline-flex items-center gap-1">
-                  <Sun className="size-3 text-amber-500" /> {nf(variant.kwp, 1)} kWp
+                  <Sun className="size-3 text-primary" /> {nf(variant.kwp, 1)} kWp
                 </span>
                 {variant.batteryKwh > 0 && (
                   <span className="inline-flex items-center gap-1">

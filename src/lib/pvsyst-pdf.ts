@@ -46,7 +46,7 @@ const LOSS_EN: Record<string, string> = {
 
 /** شعار PVsyst (لوح شمسي وشمس) بنفس ألوان البرنامج. */
 const PV_MARK = `<svg class="pvmark" viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="34" cy="26" r="20" fill="#f5a01e"/>
+  <circle cx="34" cy="26" r="20" fill="#e53935"/>
   <g transform="skewX(-16) translate(14 30)">
     <rect x="0" y="0" width="76" height="48" fill="#1c3f94"/>
     <g stroke="#ffffff" stroke-width="2.4">

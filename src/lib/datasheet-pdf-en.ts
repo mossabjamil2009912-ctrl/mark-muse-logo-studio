@@ -70,13 +70,13 @@ export function buildDatasheetHtmlEn(product: Product, autoPrint = false): strin
   .sheet{width:190mm;margin:0 auto;page-break-after:always}
   .sheet:last-child{page-break-after:auto}
 
-  .hd{display:flex;align-items:center;justify-content:space-between;gap:6mm;border-bottom:2.4pt solid #B8913F;padding-bottom:2mm}
+  .hd{display:flex;align-items:center;justify-content:space-between;gap:6mm;border-bottom:2.4pt solid #C0392B;padding-bottom:2mm}
   .hd img{height:16mm;object-fit:contain}
   .hd .r{text-align:right}
   .hd .brand{font-size:15pt;font-weight:800;letter-spacing:.5px;color:#141210}
-  .hd .model{font-size:10pt;font-weight:700;color:#B8913F}
+  .hd .model{font-size:10pt;font-weight:700;color:#C0392B}
   .bar{background:#141210;color:#fff;padding:1.5mm 4mm;font-size:10.5pt;font-weight:800;display:flex;justify-content:space-between;align-items:center}
-  .bar .pw{background:#B8913F;padding:.6mm 3mm;border-radius:2mm;font-size:11pt}
+  .bar .pw{background:#C0392B;padding:.6mm 3mm;border-radius:2mm;font-size:11pt}
 
   .top{display:flex;gap:5mm;margin-top:4mm;align-items:stretch}
   .photo{width:62mm;border:.6pt solid #E3D6B4;border-radius:2mm;display:flex;align-items:center;justify-content:center;padding:2mm;background:#fbfcfe}

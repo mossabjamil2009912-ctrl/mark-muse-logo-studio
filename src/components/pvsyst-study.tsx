@@ -79,7 +79,7 @@ const COL_AR: Record<string, string> = {
 };
 
 /** ألوان تقرير PVsyst الرسمية */
-const C = { blue: "#1c3f94", sun: "#f5a01e", violet: "#7b3fa0", red: "#c0392b", grid: "#b9c0cf", head: "#dfe4ee", lc: "#a02bf0", ls: "#0f8a24", yf: "#8c1218" };
+const C = { blue: "#1c3f94", sun: "#e53935", violet: "#7b3fa0", red: "#c0392b", grid: "#b9c0cf", head: "#dfe4ee", lc: "#a02bf0", ls: "#0f8a24", yf: "#8c1218" };
 
 type Props = {
   study: NonNullable<View["study"]>;
@@ -868,7 +868,7 @@ export default function PvsystStudy({ study, actions }: Props) {
                           style={{
                             width: `${width}%`,
                             background: gain
-                              ? `linear-gradient(90deg, ${C.blue}, #C9A24A)`
+                              ? `linear-gradient(90deg, ${C.blue}, #C0392B)`
                               : `linear-gradient(90deg, ${C.red}, #e8775f)`,
                           }}
                         />

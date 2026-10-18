@@ -7,7 +7,7 @@ const PV_USD_KWP = 450, BAT_USD_KWH = 300, INV_USD_KW = 150;
 const BAT_MOD = 16, RACK = 15, PANEL_W = 635;
 const nf = (n: number, d = 0) => n.toLocaleString("en-US", { maximumFractionDigits: d, minimumFractionDigits: d });
 const hh = (h: number) => `${String(h % 24).padStart(2, "0")}:00`;
-const C = { sun: "#f5a01e", bat: "#15803d", gen: "#7f1d1d", load: "#e60012", grid: "#d5dae4" };
+const C = { sun: "#e53935", bat: "#15803d", gen: "#7f1d1d", load: "#e60012", grid: "#d5dae4" };
 
 type Hour = { h: number; load: number; pv: number; direct: number; batOut: number; charge: number; gen: number; soc: number };
 
