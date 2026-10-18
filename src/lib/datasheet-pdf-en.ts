@@ -1,4 +1,4 @@
-// النسخة الإنجليزية من كتالوج الموديل (Model Datasheet — English) بهوية عرش الهندسة للحلول التقنية الذكية.
+// النسخة الإنجليزية من كتالوج الموديل (Model Datasheet — English) بهوية تمكين للحلول التقنية الذكية.
 // نفس بيانات المصنّع الواردة في products-data.ts، مترجمة عبر datasheet-en-dictionary.ts فقط.
 import type { Product } from "./products-data";
 import actesLogo from "@/assets/actes-logo.png.asset.json";

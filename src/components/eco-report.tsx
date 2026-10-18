@@ -516,7 +516,7 @@ export function EcoReport({ kw, price: price0, onBuy, onEdit, onSales, system, p
         </div>
         <footer className="flex flex-wrap items-center justify-between gap-3 rounded-xl px-5 py-4" style={{ background: R.ink }}>
           <div className="flex items-center gap-3"><span className="rounded bg-white px-2 py-1"><img src={LOGO} alt="TAMKEEN" className="h-12 w-auto" /></span><b dir="ltr" className="text-sm" style={{ color: "#fff" }}>TAMKEEN Energy Systems & Solutions</b></div>
-          <span className="text-[12px]" style={{ color: "#9ca3af" }}>من إعداد شركة عرش الهندسة للحلول التقنية الذكية</span>
+          <span className="text-[12px]" style={{ color: "#9ca3af" }}>من إعداد شركة تمكين للحلول التقنية الذكية</span>
         </footer>
         </Page>
       </div>
@@ -525,7 +525,7 @@ export function EcoReport({ kw, price: price0, onBuy, onEdit, onSales, system, p
         <button type="button" onClick={() => void download()} disabled={busy} className="inline-flex items-center gap-2 rounded-md bg-navy px-5 py-3 text-sm font-black text-primary-foreground disabled:opacity-60"><Download className="size-4" /> {busy ? "جارٍ التجهيز..." : "حفظ التقرير PDF (عالي الدقة)"}</button>
         {onBuy && <button type="button" onClick={onBuy} className="inline-flex items-center gap-2 rounded-md border border-border bg-card text-foreground hover:border-energy px-5 py-3 text-sm font-black transition"><ShoppingCart className="size-4 text-energy" />متابعة الشراء</button>}
         {onEdit && <button type="button" onClick={onEdit} className="rounded-md border border-border px-4 py-2 text-xs font-bold">رجوع</button>}
-        {onSales && <button type="button" onClick={onSales} className="rounded-md border border-border px-4 py-2 text-xs font-bold">تواصل مع فريق عرش الهندسة للحلول التقنية الذكية</button>}
+        {onSales && <button type="button" onClick={onSales} className="rounded-md border border-border px-4 py-2 text-xs font-bold">تواصل مع فريق تمكين للحلول التقنية الذكية</button>}
       </div>}
     </div>
   );

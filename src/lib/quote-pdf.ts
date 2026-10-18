@@ -56,7 +56,7 @@ export function downloadQuotePdf(quote: Quote) {
   @page{size:A4;margin:12mm}
 </style></head><body>
 <div class="head">
-  <div><p class="t1">عرش الهندسة للحلول التقنية الذكية</p><p class="t2">عرض سعر</p></div>
+  <div><p class="t1">تمكين للحلول التقنية الذكية</p><p class="t2">عرض سعر</p></div>
   <div class="meta"><p>رقم العرض: ${esc(quote.number || "—")}</p><p>العميل: ${esc(quote.customer || "—")}</p></div>
 </div>
 <table>

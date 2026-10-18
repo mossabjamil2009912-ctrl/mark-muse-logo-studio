@@ -8,9 +8,9 @@ const TERMS: [RegExp, string][] = [
   // منع تكرار «بالريال بالريال»، وتوحيد العملة إلى «بالريال اليمني» دائماً
   [new RegExp(`(?:${RIYAL}\\s+)+(?=${RIYAL})`, "g"), ""],
   [new RegExp(`${RIYAL}(?!${D}\\s*${YEMENI})`, "g"), "بِالرِّيَالِ اليَمَنِيّ"],
-  [/\bACTES\b|اكتس|أكتس/gi, "عَرْشُ الهَنْدَسَة"],
-  [/\bARSH\s+ENGINEERING\b/gi, "عَرْشُ الهَنْدَسَة"],
-  [/\bARSH\b/gi, "عَرْش"],
+  [/\bACTES\b|اكتس|أكتس/gi, "تَمْكِين"],
+  [/\bARSH\s+ENGINEERING\b/gi, "تَمْكِين"],
+  [/\bARSH\b/gi, "تَمْكِين"],
   [/\bJinko\s*Solar\b|\bJinkoSolar\b/gi, "جِينْكُو سُولَار"],
   [/\bJinko\b|جينكو/gi, "جِينْكُو"],
   [/\bFelicity\s*Solar\b/gi, "فِيلِيسِيتِي سُولَار"],
@@ -147,9 +147,9 @@ export function prepareArabicSpeech(text: string): string {
       const L: Record<string, string> = { A: "إيه", B: "بي", C: "سي", D: "دي", E: "إي", F: "إف", G: "جي", H: "إتش", I: "آي", J: "جيه", K: "كيه", L: "إل", M: "إم", N: "إن", O: "أو", P: "بي", Q: "كيو", R: "آر", S: "إس", T: "تي", U: "يو", V: "في", W: "دبليو", X: "إكس", Y: "واي", Z: "زد" };
       const spelled = letters.toUpperCase().split("").map((c) => L[c] || c).join(" ");
       const nums = digits.split("").map((c) => ONES[Number(c)]).join(" ");
-      return `عَرْشُ الهَنْدَسَة ${spelled} ${nums} `;
+      return `تَمْكِين ${spelled} ${nums} `;
     })
-    .replace(/\bACTES\s*-\s*/gi, "عَرْشُ الهَنْدَسَة، ")
+    .replace(/\bACTES\s*-\s*/gi, "تَمْكِين، ")
     .replace(/(\d)(?=[A-Za-z\u0621-\u064A])/g, "$1 ")
     .replace(/([A-Za-z])(?=\d)/g, "$1 ")
     .replace(/(\d)\s*A\b/g, "$1 أمبير")
