@@ -264,7 +264,6 @@ function makerLogo(b: string) {
 }
 
 function BrandBadge({ brand, large = false }: { brand: string; large?: boolean }) {
-  const [lang] = useLang();
   const logo = makerLogo(brand);
   return (
     <span dir="ltr" className={`pointer-events-none flex w-full items-center justify-between gap-2 border-b border-border/70 bg-card ${large ? "h-14 px-3" : "h-7 px-2"}`}>
