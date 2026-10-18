@@ -937,7 +937,7 @@ function AccountChoice({ onClient, onAdmin }: { onClient: () => void; onAdmin: (
       <div className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--overlay)_70%,transparent)_0%,color-mix(in_oklab,var(--overlay)_35%,transparent)_50%,color-mix(in_oklab,var(--overlay)_85%,transparent)_100%)]" />
 
       <div className="relative z-10 w-full max-w-md rounded-2xl border border-border bg-card/95 p-7 text-center shadow-2xl backdrop-blur-sm sm:p-8">
-        <LangImg ar={actesLogoAr} en={actesLogoEn} zh={actesLogoZh} alt="TAMKEEN — تمكين للحلول التقنية والهندسية" className="mx-auto h-16 w-auto object-contain sm:h-20" />
+        <LangImg ar={actesLogoWhite} en={actesLogoWhite} zh={actesLogoWhite} alt="TAMKEEN — تمكين للحلول التقنية والهندسية" className="mx-auto h-16 w-auto object-contain sm:h-20" />
         <p className="mt-4 text-[11px] font-black tracking-[0.3em] text-navy" dir="ltr">TAMKEEN</p>
         <h1 className="mt-2 text-xl font-black leading-8 text-foreground sm:text-2xl">تمكين للحلول التقنية والهندسية</h1>
         <p className="mt-2 text-sm leading-6 text-muted-foreground">اختر طريقة الدخول للمتابعة</p>
