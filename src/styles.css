@@ -485,3 +485,13 @@ button:not(:disabled), a { touch-action: manipulation; }
  .start-screen h1 { font-size:22px; }
 }
 @media print { .app-bottom-nav,.app-sidebar,.app-topbar { display:none; } .quote-paper { overflow:visible; } }
+
+.app-sidebar[data-collapsed="true"] nav { padding:0 6px; }
+.app-sidebar[data-collapsed="true"] nav button { padding:12px 6px; justify-content:center; }
+.app-sidebar[data-collapsed="true"] nav button span,.app-sidebar[data-collapsed="true"] nav button > svg:last-child:not(:first-child),.app-sidebar[data-collapsed="true"] > div:last-child,.app-sidebar[data-collapsed="true"] .tamkeen-brand-type { display:none; }
+.app-sidebar[data-collapsed="true"] .tamkeen-brand > img { height:46px; }
+.app-sidebar[data-collapsed="true"] > div:first-child { padding-inline:4px; }
+.app-sidebar .tamkeen-brand { flex-direction:column; }
+.app-sidebar svg[viewBox="0 0 200 160"] { display:none; }
+[data-screen="projects"] > section > .workspace-body > .mb-5:has(> .min-w-0:empty) { display:none; }
+[data-screen="projects"] .workspace-body > .mt-6 { margin-top:0; padding-top:0; border-top:0; }
