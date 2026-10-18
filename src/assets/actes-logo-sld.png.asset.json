@@ -1,5 +1,11 @@
 {
-  "url": "/media/actes-logo-sld.png",
+  "version": 1,
+  "asset_id": "207ad077-e2ce-41c0-a1e2-d2c2e66cedc6",
+  "project_id": "b6624918-6de4-4b01-ae84-dd48a3694d98",
+  "url": "/__l5e/assets-v1/207ad077-e2ce-41c0-a1e2-d2c2e66cedc6/actes-logo-sld.png",
+  "r2_key": "a/v1/b6624918-6de4-4b01-ae84-dd48a3694d98/207ad077-e2ce-41c0-a1e2-d2c2e66cedc6/actes-logo-sld.png",
+  "original_filename": "actes-logo-sld.png",
+  "size": 410234,
   "content_type": "image/png",
-  "size": 260757
+  "created_at": "2026-10-18T19:59:56Z"
 }

@@ -39,7 +39,7 @@ export function downloadSldSheet(
 
   const titleBlock = (page: string) => `
   <div class="tb">
-    <div class="tb-logo"><img src="${LOGO}" alt="ARSH ENGINEERING"/><span>ARSH ENGINEERING &amp; SOLUTIONS</span></div>
+    <div class="tb-logo"><img src="${LOGO}" alt="TAMKEEN"/><span>TAMKEEN &amp; SOLUTIONS</span></div>
     <table class="tb-grid">
       <tr><th>PROJECT</th><td colspan="3">${esc(t.project)}</td></tr>
       <tr><th>CLIENT</th><td>${esc(t.customer || "—")}</td><th>LOCATION</th><td>${esc(t.city || "—")}</td></tr>
@@ -93,7 +93,7 @@ export function downloadSldSheet(
     : "";
 
   const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"/>
-<title>ARSH ENGINEERING — Single Line Diagram ${esc(ref)}</title>
+<title>TAMKEEN — Single Line Diagram ${esc(ref)}</title>
 <style>
   @page{size:A4 landscape;margin:8mm}
   *{box-sizing:border-box}

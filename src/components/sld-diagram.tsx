@@ -2036,7 +2036,7 @@ export default function SldDiagram({ params, number, actions }: Props) {
       ctx.drawImage(img, 0, 0, cv.width, cv.height);
       const a = document.createElement("a");
       a.href = cv.toDataURL("image/png");
-      a.download = `ARSH-SLD-${number || model.title.ref || "diagram"}.png`;
+      a.download = `TAMKEEN-SLD-${number || model.title.ref || "diagram"}.png`;
       a.click();
       done();
     };
@@ -2337,9 +2337,9 @@ export default function SldDiagram({ params, number, actions }: Props) {
           ))}
         </div>
         <div className="flex items-center justify-between gap-3 border-t border-border bg-muted/40 px-2.5 py-2">
-          <img src={logoAsset.url} alt="ARSH ENGINEERING" className="h-8 w-auto" />
+          <img src={logoAsset.url} alt="TAMKEEN" className="h-8 w-auto" />
           <p className="text-[9px] font-bold text-muted-foreground">
-            ARSH ENGINEERING &amp; SOLUTIONS — SINGLE LINE DIAGRAM — REV 01
+            TAMKEEN &amp; SOLUTIONS — SINGLE LINE DIAGRAM — REV 01
           </p>
         </div>
       </div>

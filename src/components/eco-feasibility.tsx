@@ -515,7 +515,7 @@ export function EcoSystemStudy({ onSales, onResult, resume }: { onSales?: () => 
           <div className="mx-auto flex h-full w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-2xl">
             <div className="flex items-center gap-2 border-b border-border px-3 py-2">
               <FileText className="size-4 shrink-0 text-brand" />
-              <span className="flex-1 truncate text-xs font-black text-navy lg:text-sm">تقرير دراسة الجدوى الاقتصادية — ARSH ENGINEERING</span>
+              <span className="flex-1 truncate text-xs font-black text-navy lg:text-sm">تقرير دراسة الجدوى الاقتصادية — TAMKEEN</span>
               <button type="button" onClick={() => setShowReport(false)} aria-label="إغلاق" className="grid size-7 place-items-center rounded-full bg-muted text-navy transition hover:bg-border"><X className="size-4" /></button>
             </div>
             <div className="flex-1 overflow-auto bg-muted p-2 sm:p-4">

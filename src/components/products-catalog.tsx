@@ -83,7 +83,7 @@ function CategoriesScreen({ onPick, onBack }: { onPick: (c: ProductCategory | "a
     <div className="screen-enter w-full space-y-5 pb-4">
       <header className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-[10px] font-black tracking-[0.3em] text-brand" dir="ltr">ARSH ENGINEERING PRODUCTS</p>
+          <p className="text-[10px] font-black tracking-[0.3em] text-brand" dir="ltr">TAMKEEN PRODUCTS</p>
           <h1 className="mt-1 text-xl font-black text-navy lg:text-3xl">تعرّف على منتجاتنا</h1>
           <p className="mt-0.5 text-xs text-muted-foreground lg:text-sm">اختر الفئة لاستعراض الموديلات ومواصفاتها وملفاتها الرسمية.</p>
         </div>
@@ -271,7 +271,7 @@ function BrandBadge({ brand, large = false }: { brand: string; large?: boolean }
       <span className={`flex items-center font-black tracking-wide text-navy ${large ? "text-base" : "text-[10px]"}`}>
         {logo ? <img src={logo} alt={brandLabel(brand)} className={large ? "h-7 w-auto max-w-36" : "h-3.5 w-auto max-w-16"} /> : brandLabel(brand)}
       </span>
-      <img src={lang === "en" ? logoMarkEn : "/brand/actes-logo-full-white.png"} alt="ARSH ENGINEERING" className={large ? "h-10 w-auto" : "h-4 w-auto"} />
+      <img src={lang === "en" ? logoMarkEn : "/brand/actes-logo-full-white.png"} alt="TAMKEEN" className={large ? "h-10 w-auto" : "h-4 w-auto"} />
     </span>
   );
 }
@@ -569,7 +569,7 @@ function ProductDetail({ product, onOpen, onBack, backLabel }: { product: Produc
             </div>
             {linked.length > 0 && (
               <div className="mt-3">
-                <p className="mb-1.5 text-xs font-black text-navy">متوفر في كتالوج ARSH ENGINEERING — اضغط للانتقال:</p>
+                <p className="mb-1.5 text-xs font-black text-navy">متوفر في كتالوج TAMKEEN — اضغط للانتقال:</p>
                 <div className="grid gap-2 sm:grid-cols-2">
                   {linked.map((lp) => (
                     <button key={lp.id} type="button" onClick={() => onOpen(lp.id)} className="flex items-center gap-2 rounded-xl border border-border bg-card p-2 text-right transition hover:-translate-y-0.5 hover:shadow-md">

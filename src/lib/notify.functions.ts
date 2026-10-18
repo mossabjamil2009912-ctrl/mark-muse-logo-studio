@@ -72,7 +72,7 @@ export function buildDecisionMessages(input: {
   const ref = input.quoteNumber || input.orderId;
   const confirm = input.action === "confirm";
   const clientText = [
-    confirm ? "✅ <b>تأكيد الفاتورة — ARSH ENGINEERING</b>" : "❌ <b>إلغاء الفاتورة — ARSH ENGINEERING</b>",
+    confirm ? "✅ <b>تأكيد الفاتورة — TAMKEEN</b>" : "❌ <b>إلغاء الفاتورة — TAMKEEN</b>",
     `🧾 رقم الفاتورة: ${escapeHtml(ref)}`,
     input.transferRef ? `💳 رقم الحوالة: ${escapeHtml(input.transferRef)}` : "",
     "",

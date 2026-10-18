@@ -135,7 +135,7 @@ function cleanSpeechText(raw: string) {
 
 /** اسم الشركة بحروف كبيرة يُتهجّى حرفاً حرفاً في النطق الأجنبي، فنكتبه ككلمة واحدة «Actes». */
 function fixBrandSpeech(text: string) {
-  return text.replace(/ARSH ENGINEERING/g, "Arsh Engineering");
+  return text.replace(/TAMKEEN/g, "Tamkeen Engineering");
 }
 
 function speechText(arabic: string, lang: Lang, localized = false) {

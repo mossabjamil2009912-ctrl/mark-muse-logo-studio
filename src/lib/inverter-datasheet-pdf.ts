@@ -41,7 +41,7 @@ const categoryLabel = (product: Product) =>
 /** اسم الملف المقترح عند الحفظ كـ PDF. */
 export function datasheetFileName(product: Product): string {
   const model = modelCode(product).replace(/[^A-Za-z0-9.\-]+/g, "-").replace(/(^-|-$)/g, "");
-  return `ARSH-Datasheet-${model}.pdf`;
+  return `TAMKEEN-Datasheet-${model}.pdf`;
 }
 
 /** يبني صفحات جدول المواصفات: أول مجموعة هي المواصفات الخاصة بهذه القدرة. */
@@ -128,7 +128,7 @@ export function buildDatasheetHtml(product: Product, autoPrint = false): string 
 
 <div class="sheet">
   <div class="hd">
-    <img src="${logo}" alt="ARSH ENGINEERING"/>
+    <img src="${logo}" alt="TAMKEEN"/>
     <div class="r">
       <div class="brand">${esc(product.brand)}</div>
       <div class="model">${esc(modelCode(product))}</div>
@@ -159,14 +159,14 @@ export function buildDatasheetHtml(product: Product, autoPrint = false): string 
   ${product.suitableFor ? `<h3>لمن يناسب</h3><p style="font-size:8.2pt;line-height:1.7;margin:0">${esc(product.suitableFor)}</p>` : ""}
 
   <div class="ft">
-    <span><b>شركة عرش الهندسة للحلول التقنية الذكية</b> — ARSH ENGINEERING Energy Systems &amp; Solutions</span>
+    <span><b>شركة عرش الهندسة للحلول التقنية الذكية</b> — TAMKEEN Energy Systems &amp; Solutions</span>
     <span>${esc(today)} — صفحة 1</span>
   </div>
 </div>
 
 <div class="sheet">
   <div class="hd">
-    <img src="${logo}" alt="ARSH ENGINEERING"/>
+    <img src="${logo}" alt="TAMKEEN"/>
     <div class="r">
       <div class="brand">المواصفات الفنية</div>
       <div class="model">${esc(modelCode(product))} — ${esc(product.power)}</div>

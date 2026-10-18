@@ -145,7 +145,7 @@ export default function PvsystStudy({ study, actions }: Props) {
       ? ((result.annualEnergy - baseAnnual) / baseAnnual) * 100
       : null;
 
-  const project = result.customer || result.reference || "ARSH ENGINEERING Project";
+  const project = result.customer || result.reference || "TAMKEEN Project";
   const sysTitle = s.batteryKwh ? "Grid-Connected System with storage" : "Grid-Connected System";
   const today = new Date();
   const dstr = `${String(today.getDate()).padStart(2, "0")}/${String(today.getMonth() + 1).padStart(2, "0")}/${String(today.getFullYear()).slice(2)}`;
@@ -242,7 +242,7 @@ export default function PvsystStudy({ study, actions }: Props) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `ARSH-PVsyst-${result.reference || "study"}.csv`;
+    a.download = `TAMKEEN-PVsyst-${result.reference || "study"}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -318,7 +318,7 @@ export default function PvsystStudy({ study, actions }: Props) {
               {s.kwp ? ` — Variant: ${nf(s.kwp, 0)} kWp` : ""}
             </p>
           </div>
-          <img src={actesLogoPlain.url} alt="ARSH ENGINEERING" className="h-9 w-auto shrink-0 object-contain" />
+          <img src={actesLogoPlain.url} alt="TAMKEEN" className="h-9 w-auto shrink-0 object-contain" />
         </div>
         <div className="flex flex-wrap gap-x-4 gap-y-1 border-t px-3 py-1.5 text-[9.5px] text-neutral-600" dir="ltr" style={{ borderColor: C.grid }}>
           <span>Date: {dstr}</span>
