@@ -34,6 +34,7 @@ import {
   BatteryCharging,
   Bell,
   Building2,
+  Sprout,
   Check,
   ChevronDown,
   CircleDollarSign,
@@ -928,7 +929,7 @@ function ActesApp() {
   );
 }
 
-const START_SECTORS = ["سكني", "تجاري", "زراعي", "صناعي"];
+const START_SECTORS = [{ label: "سكني", Icon: Settings }, { label: "تجاري", Icon: Building2 }, { label: "زراعي", Icon: Sprout }, { label: "صناعي", Icon: Factory }];
 
 
 // شاشة الزائر الجديد: اختيار عميل أو مشرف (لا تظهر فيها شاشة «ابدأ»)
@@ -977,19 +978,23 @@ function StartScreen({ clientName, onStart }: { clientName: string; onStart: () 
 
       <div className="start-screen-content relative z-10 grid h-full place-items-center overflow-y-auto px-6 py-10">
         <div className="flex w-full max-w-lg flex-col items-center text-center">
-          <TamkeenBrand inverse />
-          <p className="mt-5 text-[11px] font-black text-navy-foreground lg:text-xs" dir="ltr">TAMKEEN</p>
-          <h1 className="mt-3 text-2xl font-black leading-tight lg:text-4xl">
-            {clientName ? `مرحباً بك، ${clientName}` : <>مرحباً بك في نظام تمكين<br /><span>للحلول التقنية والهندسية</span></>}
+          <TamkeenBrand inverse className="start-brand" />
+          <div className="mt-7 flex w-full items-center gap-4" dir="ltr">
+            <span className="h-px flex-1 bg-gold/70" />
+            <p className="text-sm font-black tracking-[0.5em] text-gold">TAMKEEN</p>
+            <span className="h-px flex-1 bg-gold/70" />
+          </div>
+          <h1 className="mt-5 text-[1.9rem] font-black leading-snug lg:text-5xl">
+            {clientName ? `مرحباً بك، ${clientName}` : <>مرحباً بك في نظام تمكين<br /><span className="text-gold">للحلول التقنية والهندسية</span></>}
           </h1>
           <p className="mt-3 max-w-md text-sm leading-7 opacity-80 lg:text-base">
             صمّم منظومتك واحصل على عرض سعر رسمي ودراسة ومخطط معتمد.
           </p>
 
           <div className="start-screen-sectors mt-6 flex flex-wrap justify-center gap-2">
-            {START_SECTORS.map((sector) => (
-              <span key={sector} className="rounded-full border border-gold px-4 py-1.5 text-xs font-bold">
-                {sector}
+            {START_SECTORS.map(({ label, Icon }) => (
+              <span key={label} className="inline-flex items-center gap-2 rounded-full border border-gold bg-overlay/40 px-4 py-2 text-sm font-bold">
+                <Icon className="size-5 text-gold" /> {label}
               </span>
             ))}
           </div>
@@ -997,9 +1002,9 @@ function StartScreen({ clientName, onStart }: { clientName: string; onStart: () 
           <Button variant="presentation" size="presentation"
             type="button"
             onClick={onStart}
-            className="start-screen-cta mt-9 inline-flex h-16 w-full max-w-sm items-center justify-center gap-3 bg-brand text-xl font-black text-brand-foreground transition hover:opacity-90 active:scale-[0.99]"
+            className="start-screen-cta mt-9 inline-flex h-16 w-full max-w-sm items-center justify-center gap-4 rounded-full border-2 border-gold/60 bg-brand text-2xl font-black text-brand-foreground shadow-[0_0_32px_color-mix(in_oklab,var(--brand)_60%,transparent)] transition hover:opacity-90 active:scale-[0.99]"
           >
-            ابدأ
+            ابدأ <span className="grid size-9 place-items-center rounded-full border-2 border-brand-foreground"><ArrowRight className="size-5" /></span>
           </Button>
 
           <p className="mt-8 text-[11px] font-semibold opacity-70">تمكين للحلول التقنية والهندسية — جميع الحقوق محفوظة</p>
