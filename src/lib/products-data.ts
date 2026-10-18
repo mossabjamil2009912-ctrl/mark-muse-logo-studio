@@ -1055,7 +1055,7 @@ const STANDARD_CRITERIA: Record<ProductCategory, Criterion[]> = {
   storage: [
     { label: "النوع", keys: [], fixed: () => "All-in-One ESS" },
     { label: "السعة", keys: [/السعة|سعة/] },
-    { label: "الإنفرتر", keys: [/القدرة/], fixed: undefined },
+    { label: "الإنفرتر", keys: [/القدرة/] },
     { label: "التشغيل", keys: [/نمط|وضع التشغيل/], fixed: () => "On/Off-Grid" },
     { label: "الحماية", keys: [/IP|الحماية/] },
   ],
@@ -1068,7 +1068,7 @@ function findRow(p: Product, keys: RegExp[]) {
     const hit = rows.find(([k]) => re.test(k));
     if (hit) return String(hit[1]);
     const t = p.modelTable?.rows.find((r) => re.test(r.label));
-    if (t) { const v = [t.values[0], t.values[t.values.length - 1]]; return v[0] === v[1] ? v[0] : `${v[0]}–${v[1]}`; }
+    if (t) { const v = [t.values[0] ?? "", t.values[t.values.length - 1] ?? ""]; return v[0] === v[1] ? v[0] : `${v[0]}–${v[1]}`; }
   }
   return undefined;
 }
