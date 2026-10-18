@@ -22,7 +22,7 @@ export function TeamContact() {
     <div className="fixed inset-0 z-[80] grid place-items-center bg-overlay/60 p-4 backdrop-blur-[2px]" onClick={() => setOpen(false)}>
       <div dir="rtl" className="w-full max-w-sm rounded-2xl border border-brand/40 bg-card p-6 text-center shadow-2xl" onClick={(e) => e.stopPropagation()}>
         <button type="button" onClick={() => setOpen(false)} aria-label="إغلاق" className="float-left grid size-8 place-items-center rounded-full hover:bg-muted"><X className="size-4" /></button>
-        <MessageCircle className="mx-auto size-11 text-brand" />
+        <img src="/brand/whatsapp.jpg" alt="واتساب" className="mx-auto size-20 rounded-full object-contain mix-blend-multiply" />
         <p className="mt-3 text-base font-black">إدارة عرش الهندسة للحلول التقنية الذكية</p>
         <p className="mt-2 text-sm leading-6 text-muted-foreground">يسعدنا تواصلكم المباشر معنا عبر واتساب لطلب أي خدمة أو استشارة هندسية أو معاينة ميدانية.</p>
         <div className="mt-4 flex items-center justify-between gap-3 rounded-lg border border-border bg-muted/40 px-4 py-3">
@@ -32,7 +32,7 @@ export function TeamContact() {
           </button>
         </div>
         <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-md bg-brand px-6 py-3 text-sm font-black text-brand-foreground transition hover:opacity-90">
-          <MessageCircle className="size-4" /> تواصل عبر واتساب
+          <img src="/brand/whatsapp.jpg" alt="" className="size-6 rounded-full bg-card object-contain" /> تواصل عبر واتساب
         </a>
         <a href={`tel:+967${ADMIN_PHONE}`} className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-md border border-border px-6 py-2.5 text-sm font-bold hover:border-brand">
           <Phone className="size-4" /> اتصال مباشر
