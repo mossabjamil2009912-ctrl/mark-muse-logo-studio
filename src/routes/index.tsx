@@ -34,6 +34,7 @@ import {
   BatteryCharging,
   Bell,
   Building2,
+  Sprout,
   Check,
   ChevronDown,
   CircleDollarSign,
