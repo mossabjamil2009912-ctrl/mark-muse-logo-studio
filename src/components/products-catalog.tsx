@@ -264,14 +264,13 @@ function makerLogo(b: string) {
 }
 
 function BrandBadge({ brand, large = false }: { brand: string; large?: boolean }) {
-  const [lang] = useLang();
   const logo = makerLogo(brand);
   return (
     <span dir="ltr" className={`pointer-events-none flex w-full items-center justify-between gap-2 border-b border-border/70 bg-card ${large ? "h-14 px-3" : "h-7 px-2"}`}>
       <span className={`flex items-center font-black tracking-wide text-navy ${large ? "text-base" : "text-[10px]"}`}>
         {logo ? <img src={logo} alt={brandLabel(brand)} className={large ? "h-7 w-auto max-w-36" : "h-3.5 w-auto max-w-16"} /> : brandLabel(brand)}
       </span>
-      <img src={lang === "en" ? logoMarkEn : "/brand/actes-logo-full-white.png"} alt="TAMKEEN" className={large ? "h-10 w-auto" : "h-4 w-auto"} />
+      <img src={logoMarkEn} alt="TAMKEEN" className={large ? "h-10 w-auto" : "h-4 w-auto"} />
     </span>
   );
 }
