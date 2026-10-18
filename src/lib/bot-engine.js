@@ -3658,7 +3658,7 @@ export function runStateMachine(__session, __parsed, __itemPrices) {
   } else if (step === 'welcome_services') {
     if (text === 'quote_start' || text === '1') {
       step = 'menu_sys3';
-      response = W(' اختر نوع المنظومة\n' + SEP + '\n1 - منظومات المنازل والفلل\n2 - حلول المتاجر والشركات\n4 - محطات المصانع والمنشآت\n3 - طاقة الآبار والري الزراعي\n5 - تجهيز معدات فردية');
+      response = W(' اختر نوع المنظومة\n' + SEP + '\n1 - منظومات المنازل والفلل\n2 - حلول المتاجر والشركات\n4 - محطات المصانع والمنشآت\n3 - طاقة الآبار والري الزراعي\n5 - طلب معدات فردية');
     } else if (text === 'renewable_solutions') {
       lang = 'ar';
       menu_choice = '7'; main_loads = ''; city = ''; pvSave({ l: [], c: '', m: '' });
@@ -4657,7 +4657,7 @@ export function runStateMachine(__session, __parsed, __itemPrices) {
     { id: '2', title: 'حلول المتاجر والشركات' },
     { id: '4', title: 'محطات المصانع والمنشآت' },
     { id: '3', title: 'طاقة الآبار والري الزراعي' },
-    { id: '5', title: 'تجهيز معدات فردية' }
+    { id: '5', title: 'طلب معدات فردية' }
   ];
   var SUB_RES_COM_AR = [
     { id: '1', title: 'منظومات المنازل والفلل' },
@@ -4754,7 +4754,7 @@ export function runStateMachine(__session, __parsed, __itemPrices) {
     if (st === 'quote_menu') {
       return { kind: 'buttons', buttons: [
         { id: '1', title: 'منظومة متكاملة' },
-        { id: '2', title: 'تجهيز معدات فردية' }
+        { id: '2', title: 'طلب معدات فردية' }
       ] };
     }
     if (st === 'main_menu') {
