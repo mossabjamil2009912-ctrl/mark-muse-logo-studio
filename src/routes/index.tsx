@@ -2673,7 +2673,15 @@ function QuoteCard({ quote }: { quote: NonNullable<View["quote"]> }) {
               {quote.items.map((item, index) => (
                 <tr key={index} className="align-top">
                   <td className="border border-border p-1.5 text-center font-bold">{index + 1}</td>
-                  <td className="border border-border p-1.5 text-right"><p className="text-[12px] font-bold leading-5">{item.name}</p>{item.details.map((detail, detailIndex) => <p key={detailIndex} className="text-[10px] leading-4">{detail}</p>)}<QuoteItemSpecs text={[item.name, ...item.details].join(" ")} /></td>
+                  <td className="border border-border p-1.5 text-right">
+                    <div className="quote-item-content">
+                      <div className="min-w-0"><p className="text-[12px] font-bold leading-5">{item.name}</p>{item.details.map((detail, detailIndex) => <p key={detailIndex} className="text-[10px] leading-4">{detail}</p>)}<QuoteItemSpecs text={[item.name, ...item.details].join(" ")} /></div>
+                      {(() => {
+                        const product = productForQuoteItem([item.name, ...item.details].join(" "));
+                        return product ? <img className="quote-item-photo" src={product.image} alt={product.name} loading="lazy" /> : null;
+                      })()}
+                    </div>
+                  </td>
                   <td className="border border-border p-1.5 text-center font-bold">{item.unit}</td>
                   <td className="border border-border p-1.5 text-center font-bold">{item.qty}</td>
                   <td className="border border-border p-1.5 text-center font-bold">{money(Number(item.price) || 0)}</td>

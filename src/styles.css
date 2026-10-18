@@ -452,6 +452,9 @@ button:not(:disabled), a { touch-action: manipulation; }
 .quote-paper th { background:var(--primary); color:var(--primary-foreground); font-size:11px; padding:9px 6px; }
 .quote-paper td { border:1px solid var(--border); padding:10px 8px; }
 .quote-paper tbody tr:nth-child(even) { background:var(--muted); }
+.quote-item-content { display:grid; grid-template-columns:minmax(0,1fr) 90px; gap:12px; align-items:start; }
+.quote-item-photo { width:90px; height:130px; object-fit:contain; }
+.quote-item-content:not(:has(.quote-item-photo)) { grid-template-columns:minmax(0,1fr); }
 .quote-paper tfoot { background:var(--secondary); }
 .quote-catalog-link { border:1px solid var(--border); background:var(--muted); color:var(--navy); }
 @media (min-width:1024px) {
