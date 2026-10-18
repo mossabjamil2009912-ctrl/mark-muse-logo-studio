@@ -1490,7 +1490,7 @@ function HomeDashboard({ onService, onProducts }: { onService: (kind: "quote" | 
     <div className="app-home screen-enter flex min-h-0 w-full flex-col gap-2">
       <CorporateHero />
       <section className="home-welcome flex shrink-0 items-center justify-start gap-3 rounded-xl border border-border bg-card px-3 py-2 lg:hidden">
-        <img src={tamkeenMark} alt="" width={439} height={546} className="h-14 w-auto" />
+        <img src={logoMark} alt="" width={439} height={546} className="h-14 w-auto" />
         <div className="leading-tight">
           <p className="text-base font-black text-navy">تمكين</p>
           <p className="text-sm font-black text-brand">للحلول التقنية والهندسية</p>
