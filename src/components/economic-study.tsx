@@ -403,7 +403,7 @@ export default function EconomicStudy({ study, actions }: Props) {
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
           <button type="button" onClick={actions.onBuy}
             className="flex items-center justify-center gap-2 rounded-full border border-border bg-card text-foreground hover:border-energy px-4 py-3 text-sm font-black shadow-sm transition">
-            <ShoppingCart className="size-4 text-energy" /> متابعة الشراء
+            <ShoppingCart className="size-4 text-energy" /> طلب عرض سعر
           </button>
           <button type="button" onClick={actions.onSales}
             className="flex items-center justify-center gap-2 rounded-full border border-border bg-card px-4 py-3 text-sm font-black text-foreground shadow-sm transition hover:border-brand hover:text-brand">

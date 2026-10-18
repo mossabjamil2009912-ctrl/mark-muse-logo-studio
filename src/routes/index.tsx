@@ -1762,7 +1762,7 @@ function QuoteWorkspace({ view, session, step, draft, setDraft, onPick, onBack, 
                   onBuy: () => onPick("buy_invoice"),
                   onSales: () => onPick("sales_contact"),
                 }}
-              /><button type="button" onClick={() => onPick("buy_invoice")} className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-energy px-4 py-3 text-sm font-black text-energy-foreground shadow-sm transition hover:opacity-90">عرض سعر للمنظومة المناسبة</button></>
+              /></>
             ) : sldScreen ? (
               <><SldDiagram
                 params={sldParams}
@@ -1771,7 +1771,7 @@ function QuoteWorkspace({ view, session, step, draft, setDraft, onPick, onBack, 
                   onBuy: () => onPick("buy_invoice"),
                   onSales: () => onPick("sales_contact"),
                 }}
-              /><button type="button" onClick={() => onPick("buy_invoice")} className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-energy px-4 py-3 text-sm font-black text-energy-foreground shadow-sm transition hover:opacity-90">عرض سعر للمنظومة المناسبة</button></>
+              /></>
             ) : studyScreen ? (
               <><PvsystStudy
                 study={studyScreen}
@@ -1779,7 +1779,7 @@ function QuoteWorkspace({ view, session, step, draft, setDraft, onPick, onBack, 
                   onBuy: () => onPick("buy_invoice"),
                   onSales: () => onPick("sales_contact"),
                 }}
-              /><button type="button" onClick={() => onPick("buy_invoice")} className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-energy px-4 py-3 text-sm font-black text-energy-foreground shadow-sm transition hover:opacity-90">عرض سعر للمنظومة المناسبة</button></>
+              /></>
             ) : (
 
               <>
