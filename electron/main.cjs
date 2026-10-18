@@ -86,7 +86,7 @@ function createWindow() {
 }
 
 // Hybrid sync: live site when online (always latest), bundled local server when offline.
-const LIVE_URL = process.env.ARSH_LIVE_URL || "https://logo-crafted-art.lovable.app/";
+const LIVE_URL = process.env.ARSH_LIVE_URL || "https://mark-muse-logo-studio.lovable.app/";
 let localReady = null;
 
 function ensureLocal() {
