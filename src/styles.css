@@ -414,6 +414,7 @@ button:not(:disabled), a { touch-action: manipulation; }
 .start-screen h1 { font-size:30px; line-height:1.5; }
 .start-screen h1 span { color:var(--gold); font-size:32px; }
 .start-screen p { font-size:15px; }
+.start-screen-content p:last-child { font-size:11px; }
 .start-screen-sectors { padding-top:6px; }
 .start-screen-sectors span { border-color:var(--gold); border-radius:24px; padding:7px 14px; font-size:14px; }
 .start-screen-cta { border-radius:40px; border:2px solid var(--gold); height:62px; max-width:320px; margin-top:28px; font-size:26px !important; }
@@ -496,7 +497,9 @@ button:not(:disabled), a { touch-action: manipulation; }
  .start-screen .tamkeen-brand > img { height:120px; }
  .start-screen .tamkeen-brand-type strong { font-size:46px; }
  .start-screen .tamkeen-brand-type b { font-size:29px; }
- .start-screen-sectors span { padding:6px 10px; font-size:13px; }
+ .start-screen-sectors { flex-wrap:nowrap; gap:6px; }
+ .start-screen-sectors span { padding:5px 8px; font-size:12px; gap:4px; }
+ .start-screen-sectors svg { width:16px; height:16px; }
 }
 @media print { .app-bottom-nav,.app-sidebar,.app-topbar { display:none; } .quote-paper { overflow:visible; } }
 
