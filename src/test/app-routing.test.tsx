@@ -1,5 +1,5 @@
 import { QueryClient } from "@tanstack/react-query";
-import { createMemoryHistory, createRouter, RouterProvider } from "@tanstack/react-router";
+import { createMemoryHistory, createRouter, RouterProvider, type RootRouteOptions } from "@tanstack/react-router";
 import { cleanup, render, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -7,7 +7,8 @@ import { routeTree } from "@/routeTree.gen";
 
 function renderAt(path: string) {
   // Start's document shell renders <html>; component tests mount only its children.
-  routeTree.update({ shellComponent: ({ children }: { children: React.ReactNode }) => <>{children}</> });
+  const options: RootRouteOptions = routeTree.options;
+  options.shellComponent = ({ children }: { children: React.ReactNode }) => <>{children}</>;
   const queryClient = new QueryClient();
   const router = createRouter({
     routeTree,
