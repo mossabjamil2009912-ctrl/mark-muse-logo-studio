@@ -337,11 +337,11 @@ const CAT_EN: Record<ProductCategory, string> = {
 function Section({ icon, title, children, defaultOpen = false }: { icon: ReactNode; title: string; children: ReactNode; defaultOpen?: boolean }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
-      <Button variant="presentation" size="presentation" type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open} className="flex w-full items-center gap-2.5 px-3.5 py-3 text-right transition hover:bg-muted/60">
-        <span className="grid size-8 place-items-center rounded-full bg-navy-soft text-navy [&_svg]:size-4">{icon}</span>
-        <span className="flex-1 text-sm font-black text-navy lg:text-[15px]">{title}</span>
-        <ChevronDown className={`size-4 text-muted-foreground transition ${open ? "rotate-180" : ""}`} />
+    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+      <Button variant="presentation" size="presentation" type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open} className="flex w-full items-center gap-2.5 px-4 py-3.5 text-right transition hover:bg-muted/60">
+        <span className="grid size-10 shrink-0 place-items-center rounded-full bg-navy-soft text-navy [&_svg]:size-5">{icon}</span>
+        <span className="flex-1 text-[15px] font-black text-navy lg:text-[15px]">{title}</span>
+        <ChevronDown className={`size-5 text-navy transition ${open ? "rotate-180" : ""}`} />
       </Button>
       {open && <div className="border-t border-border/70 px-3.5 py-3 text-sm leading-7 text-foreground">{children}</div>}
     </div>
@@ -548,8 +548,8 @@ function ProductDetail({ product, onOpen, onBack, backLabel }: { product: Produc
         </section>
       )}
 
-      <section className="product-detail-band">
-        <h2 className="mb-2 flex items-center gap-2 text-base font-black text-navy"><Info className="size-5 text-skyline" /> عن المنتج</h2>
+      <section className="product-detail-band rounded-2xl">
+        <h2 className="mb-2 flex items-center gap-2 text-lg font-black text-navy"><span className="grid size-7 place-items-center rounded-full bg-brand text-brand-foreground"><Info className="size-4" /></span> عن المنتج</h2>
         <p className="text-sm leading-7 text-foreground">{product.about}</p>
       </section>
 
@@ -590,11 +590,11 @@ function ProductDetail({ product, onOpen, onBack, backLabel }: { product: Produc
             const ar = officialCatalogUrl(product, "ar");
             if (!en) return <p className="text-xs text-muted-foreground">لا يتوفر كتالوج رسمي لهذا المنتج حالياً.</p>;
             const row = (url: string, label: string, dir: "ltr" | "rtl", open: string, dl: string) => (
-              <div dir={dir} className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border px-3 py-2">
-                <span className="flex items-center gap-2 text-sm font-bold text-navy"><FileText className="size-4 text-brand" /> {label} <span className="text-xs font-normal text-muted-foreground">(PDF)</span></span>
+              <div dir={dir} className="flex flex-col gap-2.5 rounded-xl border border-border px-3 py-3">
+                <span className="flex items-center gap-2 text-sm font-black text-navy"><span className="grid size-9 place-items-center rounded-md bg-brand text-brand-foreground"><FileText className="size-5" /></span> {label} <span className="text-xs font-normal text-muted-foreground">(PDF)</span></span>
                 <span className="flex gap-1.5">
-                  <Button variant="presentation" size="presentation" type="button" onClick={() => setViewFile({ kind: "Datasheet", label, url })} className="inline-flex items-center gap-1 rounded-full bg-skyline px-3 py-1 text-xs font-bold text-skyline-foreground transition hover:opacity-90"><Eye className="size-3.5" /> {open}</Button>
-                  <Button variant="presentation" size="presentation" type="button" onClick={() => downloadFile({ kind: "Datasheet", label, url })} className="inline-flex items-center gap-1 rounded-full bg-navy-soft px-3 py-1 text-xs font-bold text-navy transition hover:opacity-90"><Download className="size-3.5" /> {dl}</Button>
+                  <Button variant="presentation" size="presentation" type="button" onClick={() => setViewFile({ kind: "Datasheet", label, url })} className="inline-flex items-center gap-1 rounded-full bg-brand px-6 py-1.5 text-xs font-bold text-brand-foreground transition hover:opacity-90"><Eye className="size-3.5" /> {open}</Button>
+                  <Button variant="presentation" size="presentation" type="button" onClick={() => downloadFile({ kind: "Datasheet", label, url })} className="inline-flex items-center gap-1 rounded-full bg-navy-soft px-5 py-1.5 text-xs font-bold text-navy transition hover:opacity-90"><Download className="size-3.5" /> {dl}</Button>
                 </span>
               </div>
             );
