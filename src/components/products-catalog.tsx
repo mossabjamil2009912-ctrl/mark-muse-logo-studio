@@ -16,7 +16,7 @@ import logoMarkEn from "@/assets/arsh-logo-mark-en.png";
 // خدمة معلوماتية فقط — لا تحتوي أي زر بيع أو ربط بمسارات عروض الأسعار.
 const CAT_TONE: Record<ProductCategory, string> = {
   panels: "bg-brand text-brand-foreground",
-  inverters: "bg-skyline text-skyline-foreground",
+  inverters: "bg-brand text-brand-foreground",
   batteries: "bg-energy text-energy-foreground",
   storage: "bg-navy text-navy-foreground",
 };
@@ -105,25 +105,25 @@ function CategoriesScreen({ onPick, onBack }: { onPick: (c: ProductCategory | "a
               key={cat.id}
               type="button"
               onClick={() => onPick(cat.id)}
-              className="catalog-category group flex flex-col overflow-hidden rounded-lg border border-border bg-card text-right shadow-sm transition hover:border-navy/40 hover:shadow-md"
+              className="catalog-category group flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-2.5 text-right shadow-sm transition hover:border-navy/40 hover:shadow-md"
             >
-              <span className="catalog-category-heading flex items-center gap-2.5 border-b border-border/70 px-3 py-2.5">
-                <span className={`grid size-8 shrink-0 place-items-center rounded-md [&_svg]:size-4 ${CAT_TONE[cat.id]}`}>{CAT_BIG_ICON[cat.id]}</span>
+              <span className="catalog-category-heading flex items-center gap-2.5 px-1 py-2">
+                <span className={`grid size-11 shrink-0 place-items-center rounded-xl [&_svg]:size-6 ${CAT_TONE[cat.id]}`}>{CAT_BIG_ICON[cat.id]}</span>
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-[13px] font-black leading-tight text-navy lg:text-sm">{cat.title}</span>
+                  <span className="block truncate text-base font-black leading-tight text-navy lg:text-lg">{cat.title}</span>
                   <span className="mt-0.5 block text-[10.5px] font-semibold text-muted-foreground">{`${items.length} موديل`}</span>
                 </span>
               </span>
-              <span className="grid grid-cols-3 gap-1 bg-muted/40 p-2">
+              <span className="mt-1 flex items-end justify-center gap-1 rounded-xl bg-muted p-2">
                 {preview.map((p) => (
-                  <span key={p.id} className="overflow-hidden rounded border border-border/60 bg-card">
-                    <img src={p.image} alt={p.name} loading="lazy" className="aspect-square w-full object-contain p-0.5" />
+                  <span key={p.id} className="min-w-0 flex-1">
+                    <img src={p.image} alt={p.name} loading="lazy" className="aspect-square w-full object-contain mix-blend-multiply" />
                   </span>
                 ))}
               </span>
-              <span className="flex items-center justify-between border-t border-border/70 px-3 py-2 text-[11px] font-bold text-navy">
+              <span className="mt-2 flex items-center justify-between rounded-full bg-muted px-4 py-2 text-[13px] font-bold text-navy">
                 استعراض القسم
-                <ArrowRight className="size-3.5 rotate-180 text-muted-foreground transition group-hover:text-navy" />
+                <ArrowRight className="size-4 rotate-180 text-navy" />
               </span>
             </Button>
           );

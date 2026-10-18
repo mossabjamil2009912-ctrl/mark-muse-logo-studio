@@ -439,7 +439,7 @@ button:not(:disabled), a { touch-action: manipulation; }
 .catalog-categories { gap:12px; }
 .catalog-category { border-radius:8px; }
 .catalog-category img { aspect-ratio:1; }
-.catalog-category-heading { padding:12px; }
+.catalog-category-heading { padding:6px 4px; }
 .catalog-category-heading > span:last-child { overflow:visible; }
 .catalog-category-heading span { white-space:normal; }
 .product-card { border:1px solid var(--border); border-radius:8px; background:var(--card); overflow:hidden; gap:0; }
