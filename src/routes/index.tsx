@@ -978,7 +978,7 @@ function StartScreen({ clientName, onStart }: { clientName: string; onStart: () 
       <div className="start-screen-content relative z-10 grid h-full place-items-center overflow-y-auto px-6 py-10">
         <div className="flex w-full max-w-lg flex-col items-center text-center">
           <TamkeenBrand inverse />
-          <p className="mt-5 text-[11px] font-black tracking-[0.34em] text-white lg:text-xs lg:tracking-[0.42em]" dir="ltr">TAMKEEN</p>
+          <p className="mt-5 text-[11px] font-black text-navy-foreground lg:text-xs" dir="ltr">TAMKEEN</p>
           <h1 className="mt-3 text-2xl font-black leading-tight lg:text-4xl">
             {clientName ? `مرحباً بك، ${clientName}` : <>مرحباً بك في نظام تمكين<br /><span>للحلول التقنية والهندسية</span></>}
           </h1>
@@ -988,7 +988,7 @@ function StartScreen({ clientName, onStart }: { clientName: string; onStart: () 
 
           <div className="start-screen-sectors mt-6 flex flex-wrap justify-center gap-2">
             {START_SECTORS.map((sector) => (
-              <span key={sector} className="rounded-full border border-white/30 px-4 py-1.5 text-xs font-bold">
+              <span key={sector} className="rounded-full border border-gold px-4 py-1.5 text-xs font-bold">
                 {sector}
               </span>
             ))}
