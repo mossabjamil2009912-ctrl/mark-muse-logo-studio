@@ -259,6 +259,8 @@ function brandLabel(b: string) {
 
 // شعارات المصنّعين مستخرجة من الكتالوجات الرسمية في public/catalogs.
 const MAKER_LOGOS: Record<string, string> = {
+  Jinko: "/brand/makers/jinko.png",
+  Felicity: "/brand/makers/felicity.png",
   Deye: "/brand/makers/deye.png",
   JinkoSolar: "/brand/makers/jinko.png",
   "Felicity Solar": "/brand/makers/felicity.png",
