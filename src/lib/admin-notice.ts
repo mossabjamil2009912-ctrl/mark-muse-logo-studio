@@ -30,8 +30,8 @@ export function buildAdminNotice(input: {
 }): { text: string; system: string } {
   const system = systemSummary(input.items);
   const text = [
-    "🔔 *عميل جديد عبر تطبيق ARSH ENGINEERING*",
-    "دخل العميل عبر تطبيق ARSH ENGINEERING وأرسل طلب شراء بانتظار تأكيدك.",
+    "🔔 *عميل جديد عبر تطبيق TAMKEEN*",
+    "دخل العميل عبر تطبيق TAMKEEN وأرسل طلب شراء بانتظار تأكيدك.",
     "",
     `👤 اسم العميل: ${input.customerName}`,
     input.clientPhone ? `📞 رقم العميل: ${input.clientPhone}` : "",

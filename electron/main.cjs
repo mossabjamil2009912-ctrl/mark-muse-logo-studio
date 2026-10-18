@@ -121,7 +121,7 @@ app.whenReady().then(async () => {
     if (!online) await ensureLocal();
   } catch (err) {
     console.error("failed to start local server", err);
-    dialog.showErrorBox("ARSH ENGINEERING", "تعذر تشغيل التطبيق المحلي. أغلق النسخ الأخرى ثم حاول مجددًا.");
+    dialog.showErrorBox("TAMKEEN", "تعذر تشغيل التطبيق المحلي. أغلق النسخ الأخرى ثم حاول مجددًا.");
     app.quit();
     return;
   }

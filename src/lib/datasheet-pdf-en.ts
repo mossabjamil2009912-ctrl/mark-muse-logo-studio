@@ -32,7 +32,7 @@ const categoryLabelEn = (product: Product) =>
 
 export function datasheetFileNameEn(product: Product): string {
   const model = modelCode(product).replace(/[^A-Za-z0-9.\-]+/g, "-").replace(/(^-|-$)/g, "");
-  return `ARSH-Datasheet-EN-${model}.pdf`;
+  return `TAMKEEN-Datasheet-EN-${model}.pdf`;
 }
 
 function specTablesEn(product: Product): string {
@@ -101,7 +101,7 @@ export function buildDatasheetHtmlEn(product: Product, autoPrint = false): strin
 
 <div class="sheet">
   <div class="hd">
-    <img src="${logo}" alt="ARSH ENGINEERING"/>
+    <img src="${logo}" alt="TAMKEEN"/>
     <div class="r">
       <div class="brand">${esc(product.brand)}</div>
       <div class="model">${esc(modelCode(product))}</div>
@@ -127,7 +127,7 @@ export function buildDatasheetHtmlEn(product: Product, autoPrint = false): strin
 
   <p class="note">All values above apply to model ${esc(modelCode(product))} rated ${esc(powerEn)} only, as published in the manufacturer's official datasheet. This document is for technical and informational purposes only.</p>
   <div class="ft">
-    <span><b>ARSH ENGINEERING Energy Systems &amp; Solutions</b> — Technical Support &amp; Engineering Consultancy</span>
+    <span><b>TAMKEEN Energy Systems &amp; Solutions</b> — Technical Support &amp; Engineering Consultancy</span>
     <span>${esc(today)}</span>
   </div>
 </div>

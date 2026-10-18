@@ -3,12 +3,12 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/downloads")({
   head: () => ({
     meta: [
-      { title: "تحميل تطبيق ARSH ENGINEERING لويندوز" },
+      { title: "تحميل تطبيق TAMKEEN لويندوز" },
       {
         name: "description",
-        content: "نسخة ARSH ENGINEERING لويندوز مع الصور والكتالوجات المحلية للاستخدام دون إنترنت.",
+        content: "نسخة TAMKEEN لويندوز مع الصور والكتالوجات المحلية للاستخدام دون إنترنت.",
       },
-      { property: "og:title", content: "تحميل تطبيق ARSH ENGINEERING لويندوز" },
+      { property: "og:title", content: "تحميل تطبيق TAMKEEN لويندوز" },
       {
         property: "og:description",
         content: "نسخة ويندوز بملفات محلية للاستخدام دون إنترنت؛ تم إيقاف النسخة القديمة المتصلة بالموقع.",
@@ -28,9 +28,9 @@ function DownloadsPage() {
     >
       <div className="w-full max-w-xl bg-card border border-border rounded-3xl p-8 sm:p-10 shadow-lg">
         <div className="flex items-center gap-4 mb-6">
-          <img src="/brand/app-icon.png" alt="ARSH ENGINEERING" className="w-16 h-16 rounded-2xl" />
+          <img src="/brand/app-icon.png" alt="TAMKEEN" className="w-16 h-16 rounded-2xl" />
           <div>
-            <h1 className="text-2xl font-bold">تطبيق ARSH ENGINEERING لويندوز</h1>
+            <h1 className="text-2xl font-bold">تطبيق TAMKEEN لويندوز</h1>
             <p className="text-sm text-muted-foreground mt-1">نسخة سطح المكتب — 64 بت</p>
           </div>
         </div>

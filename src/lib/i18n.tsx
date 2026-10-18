@@ -49,7 +49,7 @@ const EN_PATTERNS: [RegExp, string | ((...m: string[]) => string)][] = [
   [/^رقم\s*الحوالة\s*:\s*(.+)$/, (_, n) => `Transfer number: ${n}`],
   [/^رقم\s*مرجع\s*العملية\s*:\s*(.+)$/, (_, n) => `Transaction reference: ${n}`],
   [/^تم\s*تحديث\s*حالة\s*طلبك\s*إلى\s*:\s*(.+)$/, (_, n) => `Your order status is now: ${trLine(n, "en")}`],
-  [/^جميع\s*الحقوق\s*محفوظة\s*©\s*(\d+)\s*ARSH ENGINEERING$/, (_, y) => `All rights reserved © ${y} ARSH ENGINEERING`],
+  [/^جميع\s*الحقوق\s*محفوظة\s*©\s*(\d+)\s*TAMKEEN$/, (_, y) => `All rights reserved © ${y} TAMKEEN`],
   [/^من\s*(\d+)\s*[اإ]لى\s*(\d+)\s*(صباحا|مساء|AM|PM)?ً?$/, (_, a, b, p) => `${a}–${b}${p ? " " + (p === "صباحا" ? "AM" : p === "مساء" ? "PM" : p) : ""}`],
   [/^مدخل\s*MPPT\s*(\d+)$/, (_, n) => `MPPT input ${n}`],
   [/^مقطع\s*الكابل\s*(\S+)$/, (_, n) => `Cable size ${n}`],
@@ -90,7 +90,7 @@ const ZH_PATTERNS: typeof EN_PATTERNS = [
   [/^رقم\s*الحوالة\s*:\s*(.+)$/, (_, n) => `汇款编号：${n}`],
   [/^رقم\s*مرجع\s*العملية\s*:\s*(.+)$/, (_, n) => `交易参考号：${n}`],
   [/^تم\s*تحديث\s*حالة\s*طلبك\s*إلى\s*:\s*(.+)$/, (_, n) => `您的订单状态已更新为：${trLine(n, "zh")}`],
-  [/^جميع\s*الحقوق\s*محفوظة\s*©\s*(\d+)\s*ARSH ENGINEERING$/, (_, y) => `版权所有 © ${y} ARSH ENGINEERING`],
+  [/^جميع\s*الحقوق\s*محفوظة\s*©\s*(\d+)\s*TAMKEEN$/, (_, y) => `版权所有 © ${y} TAMKEEN`],
   [/^(\d+)\s*موديل$/, (_, n) => `${n} 个型号`],
   [/^(\d+)\s*من\s*(\d+)\s*موديل$/, (_, a, b) => `${a} / ${b} 个型号`],
   [/^(\d+)\s*شركات\s*مصنّعة\s*—\s*(\d+)\s*موديل$/, (_, a, b) => `${a} 家制造商 — ${b} 个型号`],
@@ -191,10 +191,10 @@ function trLine(line: string, lang: Exclude<Lang, "ar">): string {
 
 // الوضع الصيني: لا كتابة لاتينية لاسم الشركة أو أوصاف الشركاء الثابتة.
 const ZH_LATIN: [RegExp, string][] = [
-  [/ARSH ENGINEERING PRODUCTS/g, "阿尔什工程产品系列"],
-  [/ARSH ENGINEERING · ENERGY SYSTEMS/g, "阿尔什工程 · 能源系统"],
-  [/ARSH (ENGINEERING|SMART TECH)/gi, "阿尔什工程"],
-  [/Arsh Engineering/g, "阿尔什工程"],
+  [/TAMKEEN PRODUCTS/g, "阿尔什工程产品系列"],
+  [/TAMKEEN · ENERGY SYSTEMS/g, "阿尔什工程 · 能源系统"],
+  [/TAMKEEN (ENGINEERING|SMART TECH)/gi, "阿尔什工程"],
+  [/Tamkeen Engineering/g, "阿尔什工程"],
   [/^Inverters & ESS$/, "逆变器与储能系统"],
   [/^Solar Panels$/, "光伏组件"],
   [/^Inverters & Batteries$/, "逆变器与储能电池"],

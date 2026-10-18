@@ -12,7 +12,7 @@ function esc(value: unknown) {
 /** يبني صفحة عرض السعر ويفتح نافذة الطباعة لحفظها كملف PDF. */
 export function downloadQuotePdf(quote: Quote) {
   if (typeof window === "undefined") return;
-  const title = `عرض سعر ${quote.number || "ARSH ENGINEERING"}`;
+  const title = `عرض سعر ${quote.number || "TAMKEEN"}`;
   const rows = quote.items
     .map((item, index) => {
       const details = (item.details || []).map((detail) => `<p class="d">${esc(detail)}</p>`).join("");
@@ -68,7 +68,7 @@ export function downloadQuotePdf(quote: Quote) {
   <div class="box">
     <h3>${esc(CERTIFICATES_TITLE)}</h3>
     ${CERTIFICATES.map((name) => `<span class="cert">${esc(name)}</span>`).join("")}
-    <p class="note">جميع المكونات الموردة من ARSH ENGINEERING أصلية ومطابقة للمعايير الدولية أعلاه.</p>
+    <p class="note">جميع المكونات الموردة من TAMKEEN أصلية ومطابقة للمعايير الدولية أعلاه.</p>
   </div>
 </div>
 

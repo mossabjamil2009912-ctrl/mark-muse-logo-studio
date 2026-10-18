@@ -127,9 +127,9 @@ import { AdminDashboard } from "@/components/admin-dashboard";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ARSH ENGINEERING — حلول أنظمة الطاقة الشمسية" },
+      { title: "TAMKEEN — حلول أنظمة الطاقة الشمسية" },
       { name: "description", content: "منصة عرش الهندسة للحلول التقنية الذكية لتصميم منظومات الطاقة الشمسية وإعداد عروض الأسعار ودراسات الأداء والمخططات." },
-      { property: "og:title", content: "ARSH ENGINEERING — حلول أنظمة الطاقة الشمسية" },
+      { property: "og:title", content: "TAMKEEN — حلول أنظمة الطاقة الشمسية" },
       { property: "og:description", content: "صمّم منظومتك واحصل على عرض سعر ودراسة أداء ومخطط واضح." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -513,7 +513,7 @@ function ActesApp() {
       } catch {
         // نكمل الإشعار بدون رقم العميل عند تعذر قراءته
       }
-      const customerName = String(clientNameRef.current || result["customer_name"] || sessionRef.current["customer_name"] || "عميل ARSH ENGINEERING");
+      const customerName = String(clientNameRef.current || result["customer_name"] || sessionRef.current["customer_name"] || "عميل TAMKEEN");
       const quoteNumber = String(result["quote_number"] || sessionRef.current["quote_number"] || "");
       const lastQuote = lastQuoteRef.current;
       const total = Number(lastQuote?.total) || 0;
@@ -553,7 +553,7 @@ function ActesApp() {
 
       const lines = [
         `🔔 *${kindLabel}*`,
-        "طلب من عميل عبر تطبيق ARSH ENGINEERING — يرجى التواصل معه، ولا يحتاج تأكيد أو إلغاء فاتورة.",
+        "طلب من عميل عبر تطبيق TAMKEEN — يرجى التواصل معه، ولا يحتاج تأكيد أو إلغاء فاتورة.",
         "",
         `👤 اسم العميل: ${customerName}`,
         clientPhone ? `📞 رقم العميل: ${clientPhone}` : "",
@@ -576,7 +576,7 @@ function ActesApp() {
         // نرسل بقية بيانات الطلب إذا تعذرت قراءة رقم العميل.
       }
 
-      const customerName = String(clientNameRef.current || result["customer_name"] || sessionRef.current["customer_name"] || "عميل ARSH ENGINEERING");
+      const customerName = String(clientNameRef.current || result["customer_name"] || sessionRef.current["customer_name"] || "عميل TAMKEEN");
       const paymentMethod = String(result["service_needed"] || sessionRef.current["service_needed"] || "حوالة");
       const quoteNumber = String(result["quote_number"] || sessionRef.current["quote_number"] || "");
       const lastQuote = lastQuoteRef.current;
@@ -937,8 +937,8 @@ function AccountChoice({ onClient, onAdmin }: { onClient: () => void; onAdmin: (
       <div className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--sidebar)_90%,transparent)_0%,color-mix(in_oklab,var(--sidebar)_70%,transparent)_50%,color-mix(in_oklab,var(--sidebar)_94%,transparent)_100%)]" />
 
       <div className="relative z-10 w-full max-w-md rounded-2xl border border-border bg-card/95 p-7 text-center shadow-2xl backdrop-blur-sm sm:p-8">
-        <LangImg ar={actesLogoAr} en={actesLogoEn} zh={actesLogoZh} alt="ARSH ENGINEERING — عرش الهندسة للحلول التقنية الذكية" className="mx-auto h-16 w-auto object-contain sm:h-20" />
-        <p className="mt-4 text-[11px] font-black tracking-[0.3em] text-navy" dir="ltr">ARSH ENGINEERING</p>
+        <LangImg ar={actesLogoAr} en={actesLogoEn} zh={actesLogoZh} alt="TAMKEEN — عرش الهندسة للحلول التقنية الذكية" className="mx-auto h-16 w-auto object-contain sm:h-20" />
+        <p className="mt-4 text-[11px] font-black tracking-[0.3em] text-navy" dir="ltr">TAMKEEN</p>
         <h1 className="mt-2 text-xl font-black leading-8 text-foreground sm:text-2xl">عرش الهندسة للحلول التقنية الذكية</h1>
         <p className="mt-2 text-sm leading-6 text-muted-foreground">اختر طريقة الدخول للمتابعة</p>
 
@@ -972,8 +972,8 @@ function StartScreen({ clientName, onStart }: { clientName: string; onStart: () 
 
       <div className="relative z-10 grid h-full place-items-center overflow-y-auto px-6 py-10">
         <div className="flex w-full max-w-lg flex-col items-center text-center">
-          <img src={actesSplashLogo} alt="ARSH ENGINEERING — عرش الهندسة للحلول التقنية الذكية" className="h-36 w-auto object-contain lg:h-44" />
-          <p className="mt-5 text-[11px] font-black tracking-[0.34em] text-white lg:text-xs lg:tracking-[0.42em]" dir="ltr">ARSH ENGINEERING</p>
+          <img src={actesSplashLogo} alt="TAMKEEN — عرش الهندسة للحلول التقنية الذكية" className="h-36 w-auto object-contain lg:h-44" />
+          <p className="mt-5 text-[11px] font-black tracking-[0.34em] text-white lg:text-xs lg:tracking-[0.42em]" dir="ltr">TAMKEEN</p>
           <h1 className="mt-3 text-2xl font-black leading-tight lg:text-4xl">
             {clientName ? `مرحباً بك، ${clientName}` : "مرحباً بك في نظام عرش الهندسة للحلول التقنية الذكية"}
           </h1>
@@ -1023,7 +1023,7 @@ function SettingsPanel({ open, onClose, isAdmin, clientName = "", onRestart, onS
           </div>
           <div className="flex items-center justify-between rounded-md border border-border px-4 py-3 text-sm">
             <span className="font-bold">نوع الحساب</span>
-            <span className="font-semibold text-muted-foreground">{isAdmin ? "إدارة ARSH ENGINEERING" : clientName ? `عميل — ${clientName}` : "عميل"}</span>
+            <span className="font-semibold text-muted-foreground">{isAdmin ? "إدارة TAMKEEN" : clientName ? `عميل — ${clientName}` : "عميل"}</span>
           </div>
           <button type="button" onClick={onRestart} className="flex w-full items-center gap-3 rounded-md border border-border px-4 py-3 text-sm font-bold transition hover:bg-muted">
             <RotateCcw className="size-4" /> بدء محادثة جديدة من البداية
@@ -1268,7 +1268,7 @@ const CORPORATE_STATS = [
 function CorporateHero() {
   return (
     <section className="corporate-only corporate-grid shrink-0 overflow-hidden rounded-lg border border-border bg-sidebar p-3 text-sidebar-foreground">
-      <p className="text-[10px] font-bold tracking-widest text-brand" dir="ltr">ARSH ENGINEERING · ENERGY SYSTEMS</p>
+      <p className="text-[10px] font-bold tracking-widest text-brand" dir="ltr">TAMKEEN · ENERGY SYSTEMS</p>
       <h2 className="mt-0.5 text-base font-black">عرش الهندسة للحلول التقنية الذكية</h2>
       <p className="text-[10px] opacity-75">حلول هندسية متكاملة للطاقة الشمسية — سكني، تجاري، صناعي، زراعي.</p>
       <div className="mt-2 grid grid-cols-2 gap-2 md:grid-cols-4">
@@ -1301,9 +1301,9 @@ function CorporateWelcome({ onClient, onAdmin }: { onClient: () => void; onAdmin
 
 function BrandLockup() {
   return (
-    <div className="flex flex-col items-center gap-1 text-center" aria-label="ARSH ENGINEERING — عرش الهندسة للحلول التقنية الذكية">
+    <div className="flex flex-col items-center gap-1 text-center" aria-label="TAMKEEN — عرش الهندسة للحلول التقنية الذكية">
       <img src={actesMark} alt="" className="h-11 w-auto" />
-      <p className="text-[17px] font-black leading-none tracking-wide text-skyline-foreground" dir="ltr">ARSH ENGINEERING</p>
+      <p className="text-[17px] font-black leading-none tracking-wide text-skyline-foreground" dir="ltr">TAMKEEN</p>
       <p className="text-[10px] font-bold leading-3 text-skyline-foreground/90">عرش الهندسة للحلول التقنية الذكية</p>
     </div>
   );
@@ -1311,8 +1311,8 @@ function BrandLockup() {
 
 function BrandMark({ compact = false, className, white = false }: { inverse?: boolean; compact?: boolean; className?: string; white?: boolean }) {
   return (
-    <div className="flex items-center" aria-label="ARSH ENGINEERING">
-      <LangImg ar={white ? actesLogoWhite : actesLogoAr} en={white ? actesLogoWhite : actesLogoEn} zh={white ? actesLogoWhite : actesLogoZh} alt="ARSH ENGINEERING — عرش الهندسة للحلول التقنية الذكية" className={className ?? (compact ? "h-12 w-auto" : "h-16 w-auto")} />
+    <div className="flex items-center" aria-label="TAMKEEN">
+      <LangImg ar={white ? actesLogoWhite : actesLogoAr} en={white ? actesLogoWhite : actesLogoEn} zh={white ? actesLogoWhite : actesLogoZh} alt="TAMKEEN — عرش الهندسة للحلول التقنية الذكية" className={className ?? (compact ? "h-12 w-auto" : "h-16 w-auto")} />
     </div>
   );
 }
@@ -1323,7 +1323,7 @@ function TopBar({ isAdmin, clientName = "", onExitAdmin, onSettings, onExit }: {
     <header className="relative grid h-[52px] shrink-0 grid-cols-[minmax(0,1fr)_auto] items-center border-b border-border bg-background px-2 text-navy shadow-[var(--shadow-soft)] sm:h-[62px] sm:px-4 [&_button]:!text-navy [&_svg]:!text-navy">
       <span aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-l from-navy via-primary to-navy" />
       <div className="flex min-w-0 items-center gap-2">
-        <LangImg ar={logoMark} en={logoMarkEn} zh={logoMarkZh} alt="ARSH ENGINEERING" className="h-[34px] w-auto shrink-0 object-contain drop-shadow-md sm:h-[42px]" />
+        <LangImg ar={logoMark} en={logoMarkEn} zh={logoMarkZh} alt="TAMKEEN" className="h-[34px] w-auto shrink-0 object-contain drop-shadow-md sm:h-[42px]" />
         <div className="min-w-0 leading-tight">
           <p className="whitespace-nowrap text-[15px] font-black text-navy sm:text-[17px]">عرش الهندسة</p>
           <p className="whitespace-nowrap text-[10px] font-black text-primary sm:text-[11px]">للحلول التقنية الذكية</p>
@@ -1473,7 +1473,7 @@ function AppFooter() {
           <span key={i} className="grid size-6 place-items-center rounded-full bg-skyline-foreground/15"><Icon className="size-3" /></span>
         ))}
       </span>
-      <span className="flex items-center gap-2">جميع الحقوق محفوظة © 2026 <span className="text-[13px] font-black">ARSH ENGINEERING</span> <Sun className="size-4" /></span>
+      <span className="flex items-center gap-2">جميع الحقوق محفوظة © 2026 <span className="text-[13px] font-black">TAMKEEN</span> <Sun className="size-4" /></span>
     </footer>
   );
 }
@@ -1499,12 +1499,12 @@ function HomeDashboard({ onService, onProducts }: { onService: (kind: "quote" | 
         <ServiceCard image={refCardQuote} icon={<FileText />} title="صمّم منظومتك" description="احصل على أفضل العروض والأسعار المناسبة لمشروعك." action="انطلق للتكوين" tone="brand" onClick={() => onService("quote")} />
         <ServiceCard image={refCardEnergy} icon={<Sun />} title="الدراسات الهندسية" description="اكتشف حلولنا المتكاملة لأنظمة الشمسية للمنازل والمنشآت." action="حلول الطاقة" tone="energy" onClick={() => onService("energy")} />
         <ServiceCard image={refCardSupport} icon={<Headphones />} title="خدماتنا واستشاراتنا" description="فريقنا المتخصص جاهز لمساعدتك في أي استفسار أو مشكلة فنية." action="تواصل معنا" tone="skyline" onClick={() => onService("support")} />
-        <ServiceCard image={refCardProducts} icon={<Package />} title="الأجهزة والمنتجات" description="اكتشف منتجات ARSH ENGINEERING، وتعرّف على مواصفاتها واستخداماتها واطلع على الكتالوجات والأدلة." action="استكشف المنتجات" tone="navy" onClick={onProducts} />
+        <ServiceCard image={refCardProducts} icon={<Package />} title="الأجهزة والمنتجات" description="اكتشف منتجات TAMKEEN، وتعرّف على مواصفاتها واستخداماتها واطلع على الكتالوجات والأدلة." action="استكشف المنتجات" tone="navy" onClick={onProducts} />
       </section>
 
       <footer className="shrink-0 rounded-xl bg-navy px-3 py-2.5 text-center text-[11px] font-bold text-skyline-foreground lg:hidden">
         <p className="flex items-center justify-center gap-1.5"><Leaf className="size-4 text-energy" /> معاً نحو طاقة مستدامة</p>
-        <p className="mt-1 opacity-80">جميع الحقوق محفوظة © 2026 ARSH ENGINEERING</p>
+        <p className="mt-1 opacity-80">جميع الحقوق محفوظة © 2026 TAMKEEN</p>
       </footer>
     </div>
   );
@@ -1519,7 +1519,7 @@ const PARTNER_LINKS = [
 function PartnersStrip() {
   return (
     <section
-      aria-label="وكلاء وشركاء ARSH ENGINEERING"
+      aria-label="وكلاء وشركاء TAMKEEN"
       className="shrink-0 overflow-hidden rounded-2xl border border-border bg-card shadow-sm"
     >
       <div className="grid grid-cols-3 divide-x divide-border" dir="ltr">
@@ -1680,7 +1680,7 @@ function QuoteWorkspace({ view, session, step, draft, setDraft, onPick, onBack, 
   useEffect(() => { setVariantId("rec"); }, [view.quote?.number]);
   const variants = useMemo(() => {
     // طلب صنف محدد: العميل اختار الأصناف بنفسه، فلا تُعرض بدائل (اقتصادي/موصى به/أقصى استقلالية)
-    if (view.quote?.number?.startsWith("ARSH-Q")) return null;
+    if (view.quote?.number?.startsWith("TAMKEEN-Q")) return null;
     const fromStudy = (view.study?.params?.["quote_items"] as QuoteItem[] | undefined) || [];
     const items = view.quote?.items?.length ? view.quote.items : fromStudy;
     const perString = Number((rawSldParams?.["perStr"] as number | undefined) || 0);
@@ -2503,7 +2503,7 @@ function HourlyLoadEntry({ onSubmit }: { onSubmit: (value: string) => void }) {
 }
 
 function MediaGallery({ images }: { images: View["images"] }) {
-  return <div className={`mb-4 grid gap-2 ${images.length > 1 ? "md:grid-cols-2" : ""}`}>{images.map((image, index) => <figure data-photo-section key={index} className="overflow-hidden rounded-lg border border-border bg-muted/35"><div className="flex min-h-24 items-center justify-center p-2"><img src={image.url} alt={image.caption || "صورة من منتجات ARSH ENGINEERING"} className="max-h-[210px] w-auto max-w-full object-contain" /></div>{image.caption && <figcaption className="border-t border-border bg-card px-3 py-2 text-[11px] leading-5 text-muted-foreground">{image.caption}</figcaption>}</figure>)}</div>;
+  return <div className={`mb-4 grid gap-2 ${images.length > 1 ? "md:grid-cols-2" : ""}`}>{images.map((image, index) => <figure data-photo-section key={index} className="overflow-hidden rounded-lg border border-border bg-muted/35"><div className="flex min-h-24 items-center justify-center p-2"><img src={image.url} alt={image.caption || "صورة من منتجات TAMKEEN"} className="max-h-[210px] w-auto max-w-full object-contain" /></div>{image.caption && <figcaption className="border-t border-border bg-card px-3 py-2 text-[11px] leading-5 text-muted-foreground">{image.caption}</figcaption>}</figure>)}</div>;
 }
 
 const SPEC_ICONS = [Sun, Zap, BatteryCharging, Network, Settings];
@@ -2700,7 +2700,7 @@ function QuoteCard({ quote }: { quote: NonNullable<View["quote"]> }) {
               <span key={name} dir="ltr" className="rounded-full border border-energy/40 bg-energy/10 px-3 py-1 text-[11px] font-bold text-energy">{name}</span>
             ))}
           </div>
-          <p className="mt-2 text-[10px] leading-5 text-muted-foreground">جميع المكونات الموردة من ARSH ENGINEERING أصلية ومطابقة للمعايير الدولية أعلاه.</p>
+          <p className="mt-2 text-[10px] leading-5 text-muted-foreground">جميع المكونات الموردة من TAMKEEN أصلية ومطابقة للمعايير الدولية أعلاه.</p>
         </div>
       </div>
 
