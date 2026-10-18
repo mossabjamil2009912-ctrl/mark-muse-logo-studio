@@ -932,9 +932,9 @@ function AccountChoice({ onClient, onAdmin }: { onClient: () => void; onAdmin: (
   if (corporate) return <CorporateWelcome onClient={onClient} onAdmin={onAdmin} />;
   return (
     <main className="relative grid h-dvh w-full place-items-center overflow-hidden bg-sidebar px-5 py-8 text-sidebar-foreground" dir="rtl">
-      <img src={startBgMobile} alt="" width={896} height={1600} className="absolute inset-0 size-full object-cover opacity-60 lg:hidden" />
-      <img src={startBgDesktop} alt="" width={1920} height={1088} className="absolute inset-0 hidden size-full object-cover opacity-60 lg:block" />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--sidebar)_90%,transparent)_0%,color-mix(in_oklab,var(--sidebar)_70%,transparent)_50%,color-mix(in_oklab,var(--sidebar)_94%,transparent)_100%)]" />
+      <img src={startBgMobile} alt="" width={896} height={1600} className="absolute inset-0 size-full object-cover lg:hidden" />
+      <img src={startBgDesktop} alt="" width={1920} height={1088} className="absolute inset-0 hidden size-full object-cover lg:block" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--overlay)_70%,transparent)_0%,color-mix(in_oklab,var(--overlay)_35%,transparent)_50%,color-mix(in_oklab,var(--overlay)_85%,transparent)_100%)]" />
 
       <div className="relative z-10 w-full max-w-md rounded-2xl border border-border bg-card/95 p-7 text-center shadow-2xl backdrop-blur-sm sm:p-8">
         <LangImg ar={actesLogoAr} en={actesLogoEn} zh={actesLogoZh} alt="TAMKEEN — تمكين للحلول التقنية الذكية" className="mx-auto h-16 w-auto object-contain sm:h-20" />
@@ -965,10 +965,10 @@ function AccountChoice({ onClient, onAdmin }: { onClient: () => void; onAdmin: (
 // شاشة «ابدأ» للمسجل سابقاً: زر واحد فقط
 function StartScreen({ clientName, onStart }: { clientName: string; onStart: () => void }) {
   return (
-    <main className="relative h-dvh w-full overflow-hidden bg-sidebar text-sidebar-foreground" dir="rtl">
-      <img src={startBgMobile} alt="" width={896} height={1600} className="absolute inset-0 size-full object-cover opacity-70 lg:hidden" />
-      <img src={startBgDesktop} alt="" width={1920} height={1088} className="absolute inset-0 hidden size-full object-cover opacity-70 lg:block" />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--sidebar)_88%,transparent)_0%,color-mix(in_oklab,var(--sidebar)_55%,transparent)_45%,color-mix(in_oklab,var(--sidebar)_94%,transparent)_100%)]" />
+    <main className="relative h-dvh w-full overflow-hidden bg-overlay text-white" dir="rtl">
+      <img src={startBgMobile} alt="" width={896} height={1600} className="absolute inset-0 size-full object-cover lg:hidden" />
+      <img src={startBgDesktop} alt="" width={1920} height={1088} className="absolute inset-0 hidden size-full object-cover lg:block" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--overlay)_70%,transparent)_0%,color-mix(in_oklab,var(--overlay)_30%,transparent)_45%,color-mix(in_oklab,var(--overlay)_88%,transparent)_100%)]" />
 
       <div className="relative z-10 grid h-full place-items-center overflow-y-auto px-6 py-10">
         <div className="flex w-full max-w-lg flex-col items-center text-center">
@@ -983,7 +983,7 @@ function StartScreen({ clientName, onStart }: { clientName: string; onStart: () 
 
           <div className="mt-6 flex flex-wrap justify-center gap-2">
             {START_SECTORS.map((sector) => (
-              <span key={sector} className="rounded-full border border-sidebar-foreground/25 px-4 py-1.5 text-xs font-bold">
+              <span key={sector} className="rounded-full border border-white/30 px-4 py-1.5 text-xs font-bold">
                 {sector}
               </span>
             ))}
