@@ -6,7 +6,7 @@ import { execFileSync } from "node:child_process";
 import { PHRASES, STEP_INTROS, voiceTextFor, composeScreenSpeech } from "../../src/lib/voice-guide";
 import { SCRIPTS, WELCOME } from "../../src/lib/voice-scripts";
 import { translateText, type Lang } from "../../src/lib/i18n";
-import { PRODUCTS } from "../../src/lib/products-data";
+import { PRODUCTS, CATEGORIES, productsByCategory } from "../../src/lib/products-data";
 import { productBenefitNarration } from "../../src/lib/product-narration";
 
 const instructions: Record<Lang, string> = {
@@ -29,6 +29,18 @@ for (const lang of ["ar", "en", "zh"] as const) {
     const texts = [`${product.name}. ${after.split(".")[0]}.`];
     sources.push(...texts.map((text) => translateText(text, lang)));
   }
+  const catalogTexts = [
+    "قسم منتجات عرش الهندسة للحلول التقنية الذكية. اختر الفئة التي تريد استعراضها: الألواح الشمسية، أو الإنفرترات، أو بطاريات الليثيوم، أو أنظمة التخزين.",
+    "كل المنتجات. ابحث باسم المنتج أو الموديل، أو اختر الشركة المصنّعة.",
+  ];
+  for (const cat of CATEGORIES) {
+    const items = productsByCategory(cat.id);
+    catalogTexts.push(`${cat.title}. اختر الشركة المصنّعة لعرض موديلاتها.`);
+    for (const b of new Set(items.map((p) => (/hithium/i.test(p.brand) ? "HiTHIUM" : p.brand)))) {
+      catalogTexts.push(`${cat.title} من ${b}. يتوفر ${items.filter((p) => (/hithium/i.test(p.brand) ? "HiTHIUM" : p.brand) === b).length} موديل.`);
+    }
+  }
+  sources.push(...catalogTexts.map((text) => translateText(text, lang)));
   for (const source of sources) {
     const { text, key } = voiceTextFor(source, lang);
     if (text) jobs.set(key, { text, key, lang });

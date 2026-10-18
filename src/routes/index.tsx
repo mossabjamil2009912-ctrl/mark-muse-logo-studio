@@ -1040,11 +1040,46 @@ function SettingsPanel({ open, onClose, isAdmin, clientName = "", onRestart, onS
               <ShieldCheck className="size-4" /> التبديل إلى وضع المشرف
             </button>
           )}
+          <UpdateButton />
         </div>
         <button type="button" onClick={onClose} className="mt-5 w-full rounded-md bg-brand px-4 py-3 text-sm font-black text-brand-foreground transition hover:opacity-90">
           إغلاق
         </button>
       </div>
+    </div>
+  );
+}
+
+const LIVE_APP_URL = "https://mark-muse-logo-studio.lovable.app/";
+
+/** فحص التحديثات: عند توفر الإنترنت يفتح أحدث نسخة منشورة، وإلا يبقى على النسخة المحلية. */
+function UpdateButton() {
+  const [state, setState] = useState<"idle" | "checking" | "offline" | "latest">("idle");
+  const check = async () => {
+    setState("checking");
+    try {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 5000);
+      await fetch(`${LIVE_APP_URL}?check=${Date.now()}`, { mode: "no-cors", cache: "no-store", signal: ctrl.signal });
+      clearTimeout(t);
+    } catch {
+      setState("offline");
+      return;
+    }
+    if (window.location.origin === new URL(LIVE_APP_URL).origin) {
+      setState("latest");
+      window.location.reload();
+      return;
+    }
+    window.location.href = LIVE_APP_URL;
+  };
+  const note = state === "checking" ? "جارٍ البحث عن تحديث…" : state === "offline" ? "لا يوجد اتصال بالإنترنت — تعمل النسخة المحلية" : state === "latest" ? "أنت على أحدث نسخة" : "";
+  return (
+    <div>
+      <button type="button" onClick={check} disabled={state === "checking"} className="flex w-full items-center gap-3 rounded-md border border-border px-4 py-3 text-sm font-bold transition hover:bg-muted disabled:opacity-60">
+        <RotateCcw className="size-4" /> تحديث التطبيق (عند توفر الإنترنت)
+      </button>
+      {note ? <p className="mt-1 px-1 text-xs font-semibold text-muted-foreground">{note}</p> : null}
     </div>
   );
 }
