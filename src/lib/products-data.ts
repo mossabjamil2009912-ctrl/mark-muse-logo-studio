@@ -1032,7 +1032,7 @@ export function findCatalogProductForSpec(text: string, category: ProductCategor
 type Criterion = { label: string; keys: RegExp[]; fixed?: (p: Product) => string | undefined };
 const STANDARD_CRITERIA: Record<ProductCategory, Criterion[]> = {
   panels: [
-    { label: "التقنية", keys: [/نوع الخلية/], fixed: (p) => (/BDV|ثنائي|Bifacial/i.test(p.model + p.name + p.description) ? "N-Type Bifacial" : "N-Type Mono") },
+    { label: "التقنية", keys: [], fixed: (p) => (/BDV|ثنائي|Bifacial/i.test(p.model + p.name + p.description) ? "N-Type Bifacial" : "N-Type Mono") },
     { label: "القدرة", keys: [/Pmax|نطاق القدرة/], fixed: (p) => p.power },
     { label: "الكفاءة", keys: [/كفاءة|الكفاءة/] },
     { label: "Vmp", keys: [/Vmp/] },
@@ -1042,12 +1042,12 @@ const STANDARD_CRITERIA: Record<ProductCategory, Criterion[]> = {
     { label: "النوع", keys: [], fixed: () => "Hybrid Inverter" },
     { label: "القدرة", keys: [], fixed: (p) => p.power },
     { label: "الأوجه", keys: [], fixed: (p) => (/LP3|HP3|three|ثلاثي|3P|EU3/i.test(p.model + p.name + specText(p)) ? "Three Phase" : "Single Phase") },
-    { label: "MPPT", keys: [/MPPT/] },
+    { label: "MPPT", keys: [/عدد\s*MPPT/, /^MPPT/] },
     { label: "البطارية", keys: [], fixed: (p) => (/HP|HV|160|جهد عال/i.test(p.model) || /160[–-]|200[–-]|800 ?V/.test(batteryText(p)) ? "HV Battery" : "LV Battery 48V") },
   ],
   batteries: [
     { label: "الكيمياء", keys: [], fixed: () => "LiFePO4" },
-    { label: "السعة", keys: [/السعة|سعة/] },
+    { label: "السعة", keys: [/^السعة/, /سعة الوحدة/, /سعة/] },
     { label: "الجهد", keys: [/الجهد الاسمي|جهد التشغيل|جهد الوحدة|الجهد|جهد/] },
     { label: "الشحن/التفريغ", keys: [/تيار (الشحن|التفريغ)|شحن\/تفريغ|تيار/] },
     { label: "الدورات", keys: [/دورات|Cycle/i] },
@@ -1056,7 +1056,7 @@ const STANDARD_CRITERIA: Record<ProductCategory, Criterion[]> = {
     { label: "النوع", keys: [], fixed: () => "All-in-One ESS" },
     { label: "السعة", keys: [/السعة|سعة/] },
     { label: "الإنفرتر", keys: [/القدرة/], fixed: undefined },
-    { label: "التشغيل", keys: [/نمط|وضع التشغيل|التشغيل/] },
+    { label: "التشغيل", keys: [/نمط|وضع التشغيل/], fixed: () => "On/Off-Grid" },
     { label: "الحماية", keys: [/IP|الحماية/] },
   ],
 };
@@ -1074,7 +1074,9 @@ function findRow(p: Product, keys: RegExp[]) {
 }
 export function standardSpecs(product: Product): [string, string][] {
   return STANDARD_CRITERIA[product.category].map((c) => {
-    const v = (c.keys.length ? findRow(product, c.keys) : undefined) ?? c.fixed?.(product) ?? "—";
+    let v = c.keys.length ? findRow(product, c.keys) : undefined;
+    if (v && c.label === "MPPT" && /V\b/.test(v)) v = undefined;
+    v = v ?? c.fixed?.(product) ?? "—";
     return [c.label, v.split(/[—(]/)[0].trim() || v];
   });
 }
