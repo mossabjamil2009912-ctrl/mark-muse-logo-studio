@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect, useMemo, useState, type ReactNode } from "re
 const PdfPages = lazy(() => import("@/components/pdf-pages"));
 import { ArrowRight, Search, BatteryCharging, Check, ChevronDown, Container, Copy, Download, Eye, FileText, Gauge, Info, Layers, Link2, ListChecks, MessageCircle, Share2, Sparkles, Sun, Users, Wrench, X, Zap } from "lucide-react";
 import { createPortal } from "react-dom";
-import { CATEGORIES, findProduct, matchCompatibleProducts, productsByCategory, quickSpecs, type Product, type ProductCategory, type ProductFile } from "@/lib/products-data";
+import { CATEGORIES, findProduct, matchCompatibleProducts, productsByCategory, quickSpecs, standardSpecs, type Product, type ProductCategory, type ProductFile } from "@/lib/products-data";
 import { isVoiceOn, isVoicePlatform, prepareSpeech, silenceNextScreen, speakScreen, speakScreenAfterCurrent, stopSpeaking } from "@/lib/voice-guide";
 import { productBenefitNarration } from "@/lib/product-narration";
 import { officialCatalogUrl } from "@/lib/official-catalogs";
@@ -284,7 +284,7 @@ function ProductCard({ product, onOpen }: { product: Product; onOpen: () => void
   const arCatalog = officialCatalogUrl(product, "ar");
   const [viewAr, setViewAr] = useState(false);
   const color = brandColor(product.brand);
-  const specs = quickSpecs(product, 12).map(([, v]) => String(v)).filter((v) => /[A-Za-z\u0600-\u06FF]/.test(v) && v.length < 28 && v !== product.power).slice(0, 3);
+  const specs = standardSpecs(product);
   return (
     <article
       onPointerEnter={warm}
@@ -300,8 +300,8 @@ function ProductCard({ product, onOpen }: { product: Product; onOpen: () => void
           <span className="flex min-w-0 flex-1 flex-col items-stretch rounded-md bg-card/95 p-1.5 text-center shadow-sm ring-1 ring-border/50">
             <span className="text-[10px] font-black leading-tight text-navy lg:text-xs">{CAT_EN[product.category]}</span>
             <span className="my-1 truncate rounded px-1 py-1 text-[11px] font-black lg:text-sm" style={product.category === "panels" ? { background: "#C0392B", color: "#fff" } : color === "#1f2937" ? { background: "#F5F1E8", color: "#1f2937", boxShadow: "inset 0 0 0 1px #e5e0d5" } : { background: color, color: "#fff" }}>{product.power}</span>
-            {specs.map((s, i) => (
-              <span key={i} className="truncate border-b border-border/60 py-0.5 text-[8.5px] font-semibold text-muted-foreground last:border-0 lg:text-[10px]">{s}</span>
+            {specs.map(([k, s], i) => (
+              <span key={i} className="flex justify-between gap-1 truncate border-b border-border/60 py-0.5 text-[8.5px] font-semibold text-muted-foreground last:border-0 lg:text-[10px]" dir="rtl"><span className="shrink-0 text-navy">{k}</span><span dir="ltr" className="truncate">{s}</span></span>
             ))}
           </span>
         </button>

@@ -1027,3 +1027,58 @@ export function findCatalogProductForSpec(text: string, category: ProductCategor
 
   return byModel;
 }
+
+/** معايير موحدة لكل فئة: نفس الحقول بنفس الترتيب على كل بطاقة، والقيمة من بيانات الكتالوج فقط. */
+type Criterion = { label: string; keys: RegExp[]; fixed?: (p: Product) => string | undefined };
+const STANDARD_CRITERIA: Record<ProductCategory, Criterion[]> = {
+  panels: [
+    { label: "التقنية", keys: [], fixed: (p) => (/BDV|ثنائي|Bifacial/i.test(p.model + p.name + p.description) ? "N-Type Bifacial" : "N-Type Mono") },
+    { label: "القدرة", keys: [/Pmax|نطاق القدرة/], fixed: (p) => p.power },
+    { label: "الكفاءة", keys: [/كفاءة|الكفاءة/] },
+    { label: "Vmp", keys: [/Vmp/] },
+    { label: "Imp", keys: [/Imp/] },
+  ],
+  inverters: [
+    { label: "النوع", keys: [], fixed: () => "Hybrid Inverter" },
+    { label: "القدرة", keys: [], fixed: (p) => p.power },
+    { label: "الأوجه", keys: [], fixed: (p) => (/LP3|HP3|three|ثلاثي|3P|EU3/i.test(p.model + p.name + specText(p)) ? "Three Phase" : "Single Phase") },
+    { label: "MPPT", keys: [/عدد\s*MPPT/, /^MPPT/] },
+    { label: "البطارية", keys: [], fixed: (p) => (/HP|HV|160|جهد عال/i.test(p.model) || /160[–-]|200[–-]|800 ?V/.test(batteryText(p)) ? "HV Battery" : "LV Battery 48V") },
+  ],
+  batteries: [
+    { label: "الكيمياء", keys: [], fixed: () => "LiFePO4" },
+    { label: "السعة", keys: [/^السعة/, /سعة الوحدة/, /سعة/] },
+    { label: "الجهد", keys: [/الجهد الاسمي|جهد التشغيل|جهد الوحدة|الجهد|جهد/] },
+    { label: "الشحن/التفريغ", keys: [/تيار (الشحن|التفريغ)|شحن\/تفريغ|تيار/] },
+    { label: "الدورات", keys: [/دورات|Cycle/i] },
+  ],
+  storage: [
+    { label: "النوع", keys: [], fixed: () => "All-in-One ESS" },
+    { label: "السعة", keys: [/السعة|سعة/] },
+    { label: "الإنفرتر", keys: [/القدرة/] },
+    { label: "التشغيل", keys: [/نمط|وضع التشغيل/], fixed: () => "On/Off-Grid" },
+    { label: "الحماية", keys: [/IP|الحماية/] },
+  ],
+};
+function specText(p: Product) { return p.specs.flatMap((g) => g.rows.map((r) => r.join(" "))).join(" "); }
+function batteryText(p: Product) { return p.specs.flatMap((g) => g.rows).filter(([k]) => /بطارية|البطارية/.test(k)).map((r) => r[1]).join(" "); }
+function findRow(p: Product, keys: RegExp[]) {
+  const rows = p.specs.flatMap((g) => g.rows);
+  for (const re of keys) {
+    const hit = rows.find(([k]) => re.test(k));
+    if (hit) return String(hit[1]);
+    const t = p.modelTable?.rows.find((r) => re.test(r.label));
+    if (t) { const v = [t.values[0] ?? "", t.values[t.values.length - 1] ?? ""]; return v[0] === v[1] ? v[0] : `${v[0]}–${v[1]}`; }
+  }
+  return undefined;
+}
+export function standardSpecs(product: Product): [string, string][] {
+  return STANDARD_CRITERIA[product.category].map((c) => {
+    let v = c.keys.length ? findRow(product, c.keys) : undefined;
+    if (v && c.label === "MPPT" && /V\b/.test(v)) v = undefined;
+    if (v && c.label === "MPPT") v = v.split("/")[0];
+    if (v && /توازي/.test(v)) v = undefined;
+    v = v ?? c.fixed?.(product) ?? "—";
+    return [c.label, (v.split(/[—(]/)[0] ?? "").trim() || v];
+  });
+}
