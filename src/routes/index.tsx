@@ -2087,15 +2087,17 @@ function OptionGrid({ options, selected, projectCards = false, energyCards = fal
           const Icon = visual.icon;
           const inactive = /قريباً/.test(option.title);
           return (
-            <Button variant="presentation" size="presentation" key={`${option.id}-${index}`} type="button" onClick={() => onSelect(option.id)} className="project-option group overflow-hidden rounded-lg border border-border bg-card text-right shadow-sm transition hover:shadow-md">
-              <span data-photo-frame className="project-option-photo relative block aspect-[2/1] w-full overflow-hidden border-b border-border bg-muted">
-                <img data-photo src={visual.image} alt="" loading="eager" decoding="async" fetchPriority="high" className={`size-full object-cover transition duration-500 group-hover:scale-[1.03] ${inactive ? "opacity-65" : ""}`} />
+            <Button variant="presentation" size="presentation" key={`${option.id}-${index}`} type="button" onClick={() => onSelect(option.id)} data-selected={selected === option.id || undefined} className={`project-option group flex flex-col overflow-hidden rounded-xl border-2 bg-card text-center shadow-sm transition hover:shadow-md ${selected === option.id ? "border-brand" : "border-transparent"}`}>
+              <span data-photo-frame className="project-option-photo relative block aspect-[16/9] w-full shrink-0 overflow-visible bg-muted">
+                <span className="block size-full overflow-hidden"><img data-photo src={visual.image} alt="" loading="eager" decoding="async" fetchPriority="high" className={`size-full object-cover transition duration-500 group-hover:scale-[1.03] ${inactive ? "opacity-65" : ""}`} /></span>
                 {inactive && <span className="absolute right-2 top-2 rounded-full bg-overlay/55 px-2 py-0.5 text-[10px] font-bold text-brand-foreground">قريباً</span>}
-                <span className={`project-option-icon absolute -bottom-3.5 right-2.5 grid size-8 place-items-center rounded-full border-2 border-card ${index === 1 ? "bg-brand text-brand-foreground" : "bg-secondary text-skyline"}`}><Icon className="size-3.5" /></span>
+                {selected === option.id && <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-brand px-2 py-0.5 text-[10px] font-bold text-brand-foreground">محدد <Check className="size-3" /></span>}
+                <span className="project-option-icon absolute -bottom-5 right-1/2 grid size-10 translate-x-1/2 place-items-center rounded-full border-2 border-card bg-brand text-brand-foreground shadow-md"><Icon className="size-5" /></span>
               </span>
-              <span className="project-option-content flex flex-col px-2.5 pb-2 pt-5">
-                <strong className="text-[13px] font-black">{option.title}</strong>
-                <small className="mt-0.5 text-[10.5px] font-semibold text-muted-foreground">{visual.subtitle}</small>
+              <span className="project-option-content flex flex-1 flex-col items-center px-2.5 pb-2.5 pt-7">
+                <strong className="text-[15px] font-black leading-6 text-navy">{option.title}</strong>
+                <small className="mt-1 text-[11px] font-semibold text-muted-foreground">{visual.subtitle}</small>
+                <span className={`mt-auto grid h-6 w-10 place-items-center self-end rounded-full pt-0 ${selected === option.id ? "bg-brand text-brand-foreground" : "bg-muted text-navy"}`} style={{ marginTop: 10 }}><ChevronLeft className="size-4" /></span>
               </span>
             </Button>
           );
