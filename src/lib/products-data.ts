@@ -1079,6 +1079,6 @@ export function standardSpecs(product: Product): [string, string][] {
     if (v && c.label === "MPPT") v = v.split("/")[0];
     if (v && /توازي/.test(v)) v = undefined;
     v = v ?? c.fixed?.(product) ?? "—";
-    return [c.label, v.split(/[—(]/)[0].trim() || v];
+    return [c.label, (v.split(/[—(]/)[0] ?? "").trim() || v];
   });
 }
