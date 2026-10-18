@@ -965,7 +965,7 @@ function AccountChoice({ onClient, onAdmin }: { onClient: () => void; onAdmin: (
 // شاشة «ابدأ» للمسجل سابقاً: زر واحد فقط
 function StartScreen({ clientName, onStart }: { clientName: string; onStart: () => void }) {
   return (
-    <main className="relative h-dvh w-full overflow-hidden bg-sidebar text-sidebar-foreground" dir="rtl">
+    <main className="relative h-dvh w-full overflow-hidden bg-overlay text-white" dir="rtl">
       <img src={startBgMobile} alt="" width={896} height={1600} className="absolute inset-0 size-full object-cover lg:hidden" />
       <img src={startBgDesktop} alt="" width={1920} height={1088} className="absolute inset-0 hidden size-full object-cover lg:block" />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--overlay)_70%,transparent)_0%,color-mix(in_oklab,var(--overlay)_30%,transparent)_45%,color-mix(in_oklab,var(--overlay)_88%,transparent)_100%)]" />
@@ -983,7 +983,7 @@ function StartScreen({ clientName, onStart }: { clientName: string; onStart: () 
 
           <div className="mt-6 flex flex-wrap justify-center gap-2">
             {START_SECTORS.map((sector) => (
-              <span key={sector} className="rounded-full border border-sidebar-foreground/25 px-4 py-1.5 text-xs font-bold">
+              <span key={sector} className="rounded-full border border-white/30 px-4 py-1.5 text-xs font-bold">
                 {sector}
               </span>
             ))}
