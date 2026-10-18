@@ -10,6 +10,7 @@ function renderAt(path: string) {
   const router = createRouter({
     routeTree,
     context: { queryClient },
+    isServer: false,
     history: createMemoryHistory({ initialEntries: [path] }),
   });
   return render(<RouterProvider router={router} />);
