@@ -2267,26 +2267,33 @@ export default function SldDiagram({ params, number, actions }: Props) {
     );
   }
 
+  const mainCable = calcs[0];
   return (
-    <section className="mt-3 rounded-lg border border-border bg-card p-3">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <span className="grid size-8 place-items-center rounded-md bg-secondary text-skyline">
-            <Network className="size-4" />
-          </span>
-          <div>
-            <h3 className="text-sm font-black">المخطط الكهربائي أحادي الخط (SLD)</h3>
-            <p className="text-[10px] text-muted-foreground">
-              {model.title.system}
-              {number || model.title.ref ? ` — رقم المخطط: ${number || model.title.ref}` : ""}
-            </p>
-          </div>
+    <section className="report-modern mt-3 rounded-lg border border-border bg-card p-3" dir="rtl">
+      <div className="report-banner">
+        <div className="min-w-0">
+          <p className="report-banner-kicker" dir="ltr">TAMKEEN — Single Line Diagram</p>
+          <h2 className="report-banner-title">المخطط الكهربائي أحادي الخط (SLD)</h2>
+          <p className="report-banner-sub">
+            {model.title.system}
+            {number || model.title.ref ? ` — رقم المخطط: ${number || model.title.ref}` : ""}
+            {model.title.date ? ` — ${model.title.date}` : ""}
+          </p>
         </div>
-        {controls}
       </div>
 
-      <div className="mt-3">{flowBar}</div>
-      <div className="mt-2">{canvas}</div>
+      <div className="report-kpis">
+        <div className="report-kpi"><Network className="size-6 text-gold" /><span>مصفوفة الألواح</span><b dir="ltr">{model.pv ? `${model.pv.kwp.toFixed(2)} kWp` : "—"}</b><small dir="ltr">{model.pv ? `${model.pv.strings} × ${model.pv.perString} modules` : ""}</small></div>
+        <div className="report-kpi"><Boxes className="size-6 text-primary" /><span>الإنفرتر</span><b dir="ltr">{model.inverter ? `${model.inverter.qty} × ${model.inverter.kw} kW` : "—"}</b><small>{model.inverter ? (model.inverter.phase3 ? "ثلاثي الفاز 400V" : "أحادي الفاز 230V") : ""}</small></div>
+        <div className="report-kpi"><TriangleAlert className="size-6 text-energy" /><span>جهد وتيار السلسلة</span><b dir="ltr">{model.pv?.strVoc ? `Voc ${Math.round(model.pv.strVoc)} V` : "—"}</b><small dir="ltr">{model.pv?.isc ? `Isc ${model.pv.isc} A` : ""}</small></div>
+        <div className="report-kpi"><Ruler className="size-6 text-navy" /><span>الحماية والكابلات</span><b dir="ltr">{model.acBox ? `AC ${model.acBox.breakerA} A` : "—"}</b><small dir="ltr">{mainCable?.area ? `${mainCable.tag} — ${mainCable.area} mm²` : ""}</small></div>
+      </div>
+
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-lg bg-navy/5 p-2">
+        {flowBar}
+        {controls}
+      </div>
+      <div className="mt-2 overflow-hidden rounded-lg border-2 border-navy/40 shadow-lg">{canvas}</div>
       <p className="mt-1.5 flex items-center gap-1 text-[10px] text-muted-foreground">
         <Move className="size-3" /> اسحب المخطط للتحريك، و + و − للتكبير، واضغط أي مكوّن لعرض
         مواصفاته، وزر الموجة لتشغيل/إيقاف حركة تدفق الطاقة، وزر الملف لتصدير DXF لأوتوكاد.
