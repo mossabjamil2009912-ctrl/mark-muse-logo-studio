@@ -47,9 +47,9 @@ function useScreenVoice(key: string, text: string, continueAfter = false) {
   }, [key, text, continueAfter]);
 }
 
-export default function ProductsCatalog({ productId, onOpen, onBack, returnTo }: { productId: string | null; onOpen: (id: string | null) => void; onBack: () => void; returnTo?: { label: string; onReturn: () => void } | null }) {
+export default function ProductsCatalog({ productId, onOpen, onBack, returnTo, initialCategory = null }: { productId: string | null; onOpen: (id: string | null) => void; onBack: () => void; returnTo?: { label: string; onReturn: () => void } | null; initialCategory?: ProductCategory | "all" | null }) {
   const product = productId ? findProduct(productId) : undefined;
-  const [category, setCategory] = useState<ProductCategory | "all" | null>(product ? product.category : null);
+  const [category, setCategory] = useState<ProductCategory | "all" | null>(product ? product.category : initialCategory);
 
   if (product) {
     return (
