@@ -297,8 +297,26 @@ export default function PvsystStudy({ study, actions }: Props) {
 
   const liveTilt = s.tilt ?? s.baseTilt ?? 15;
 
+  const avgPr = hasMonths ? months.reduce((a, m) => a + m.pr, 0) / 12 : null;
   return (
-    <section className="engineering-report pvsyst-report">
+    <section className="engineering-report pvsyst-report report-modern">
+      {/* بانر تنفيذي بهوية تمكين */}
+      <div className="report-banner">
+        <div className="min-w-0">
+          <p className="report-banner-kicker">PVsyst V8.1.2 — Simulation report</p>
+          <h2 className="report-banner-title">دراسة المحاكاة الكهروضوئية</h2>
+          <p className="report-banner-sub">{project} — {result.city || "—"} — {sysTitle}</p>
+        </div>
+        <Button variant="presentation" size="presentation" type="button" onClick={() => downloadPvsystReport(result, eco)} className="report-banner-cta">
+          <Download className="size-4" /> تحميل تقرير PDF الرسمي
+        </Button>
+      </div>
+      <div className="report-kpis">
+        <div className="report-kpi"><Sun className="size-6 text-gold" /><span>القدرة الكلية</span><b dir="ltr">{s.kwp ? `${nf(s.kwp, 2)} kWp` : "—"}</b></div>
+        <div className="report-kpi"><Zap className="size-6 text-primary" /><span>الإنتاج السنوي</span><b dir="ltr">{result.annualEnergy ? `${nf(result.annualEnergy)} kWh` : "—"}</b></div>
+        <div className="report-kpi"><Thermometer className="size-6 text-energy" /><span>نسبة الأداء PR</span><b dir="ltr">{avgPr ? `${nf(avgPr * (avgPr <= 1 ? 100 : 1), 1)} %` : "—"}</b></div>
+        <div className="report-kpi"><CloudSun className="size-6 text-navy" /><span>ساعات الذروة</span><b dir="ltr">{psh ? `${nf(psh, 2)} h/day` : "—"}</b></div>
+      </div>
       {/* ترويسة تقرير PVsyst الرسمية */}
       <div className="overflow-hidden rounded-md border" style={{ borderColor: C.grid }}>
         <div className="flex items-center gap-3 px-3 py-2" dir="ltr" style={{ background: C.head }}>

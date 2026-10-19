@@ -145,13 +145,19 @@ export default function EconomicStudy({ study, actions }: Props) {
   );
 
   return (
-    <section className="engineering-report flex flex-col" dir="rtl">
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-md px-3 py-2 text-navy-foreground" style={{ background: C.green }}>
-        <span className="inline-flex items-center gap-2 text-[13px] font-black">
-          <BadgeDollarSign className="size-4" />
-          دراسة الجدوى الاقتصادية والوفر البيئي
-        </span>
-        <span className="text-[10.5px] font-bold opacity-90">مرجع {study.number} — {study.customer || "عميل"} / {study.city || "—"}</span>
+    <section className="engineering-report report-modern flex flex-col" dir="rtl">
+      <div className="report-banner">
+        <div className="min-w-0">
+          <p className="report-banner-kicker">مرجع {study.number}</p>
+          <h2 className="report-banner-title inline-flex items-center gap-2"><BadgeDollarSign className="size-7 text-gold" /> دراسة الجدوى الاقتصادية والوفر البيئي</h2>
+          <p className="report-banner-sub">{study.customer || "عميل"} — {study.city || "—"}</p>
+        </div>
+      </div>
+      <div className="report-kpis">
+        <div className="report-kpi"><LineChart className="size-6 text-energy" /><span>فترة الاسترداد</span><b>{eco.paybackYears ? `${nf(eco.paybackYears, 1)} سنة` : "—"}</b></div>
+        <div className="report-kpi"><BadgeDollarSign className="size-6 text-gold" /><span>الوفر السنوي</span><b dir="ltr">{nf(eco.annualSaving)} $</b></div>
+        <div className="report-kpi"><Network className="size-6 text-primary" /><span>تكلفة الكيلوواط LCOE</span><b dir="ltr">{eco.lcoe ? `${nf(eco.lcoe, 3)} $/kWh` : "—"}</b></div>
+        <div className="report-kpi"><Leaf className="size-6 text-energy" /><span>العائد ROI</span><b dir="ltr">{eco.roi !== null && capex ? `${nf(eco.roi)} %` : "—"}</b></div>
       </div>
 
       {/* ==== مدخلات تفاعلية ==== */}
