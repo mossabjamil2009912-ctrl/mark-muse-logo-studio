@@ -1340,26 +1340,28 @@ function BrandMark({ compact = false, className, white = false }: { inverse?: bo
 
 function TopBar({ isAdmin, clientName = "", onExitAdmin, onSettings, onExit, onToggleSidebar, sidebarCollapsed }: { isAdmin: boolean; clientName?: string; onExitAdmin: () => void; onSettings: () => void; onExit: () => void; onToggleSidebar: () => void; sidebarCollapsed: boolean }) {
   return (
-    <header className="app-topbar relative grid h-[52px] shrink-0 grid-cols-[minmax(0,1fr)_auto] items-center border-b border-border bg-background px-2 text-navy shadow-[var(--shadow-soft)] sm:h-[62px] sm:px-4 lg:h-[76px] [&_button]:!text-navy [&_svg]:!text-navy">
-      <span aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-l from-navy via-primary to-navy" />
-      <div className="flex min-w-0 items-center gap-2">
-        <Button variant="presentation" size="presentation" onClick={onToggleSidebar} aria-label={sidebarCollapsed ? "إظهار القائمة" : "تصغير القائمة"} title={sidebarCollapsed ? "إظهار القائمة" : "تصغير القائمة"} className="hidden size-8 place-items-center rounded-md text-navy lg:grid">
-          {sidebarCollapsed ? <PanelRightOpen className="size-5" /> : <PanelRightClose className="size-5" />}
-        </Button>
+    <header className="app-topbar relative grid h-[52px] shrink-0 grid-cols-[minmax(0,1fr)_auto] items-center border-b border-border bg-background px-2 text-navy shadow-[var(--shadow-soft)] sm:h-[62px] sm:px-4 lg:h-[84px] lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-4 lg:px-6 [&_button]:!text-navy [&_svg]:!text-navy">
+      {/* يمين: المستخدم والإشعارات وهوية تمكين */}
+      <div className="flex min-w-0 items-center gap-2 lg:gap-4">
         <span className="lg:hidden"><TamkeenBrand compact /></span>
-        <p className="hidden border-s-2 border-gold ps-3 text-[13px] font-black leading-5 text-navy lg:block">حلول الطاقة لمستقبل أفضل<br /><span className="text-[11px] font-bold text-muted-foreground">طاقة مستدامة .. لحياة أكثر ازدهاراً</span></p>
-        <p className="hidden border-s border-border ps-3 text-xs text-muted-foreground xl:block">مرحباً، {isAdmin ? "الإدارة" : clientName || "عميل"}</p>
+        <div className="hidden shrink-0 items-center gap-2 lg:flex">
+          <span className="grid size-11 place-items-center rounded-full bg-navy"><UserCircle className="size-7 !text-navy-foreground" /></span>
+          <p className="text-[13px] font-black leading-5 text-navy">أهلاً وسهلاً<br /><span className="text-[12px] font-bold text-navy">{isAdmin ? "الإدارة" : clientName || "مستخدم تجريبي"}</span></p>
+          <ChevronDown className="size-4" />
+        </div>
+        <span className="hidden shrink-0 lg:inline-flex [&_svg]:size-6"><NotificationsBell isAdmin={isAdmin} /></span>
+        <span aria-hidden className="hidden h-10 w-px bg-border lg:block" />
+        <p className="hidden min-w-0 text-[14px] font-black leading-5 text-navy xl:block">تمكين<br /><span className="text-brand">للحلول التقنية والهندسية</span><br />مرحباً {isAdmin ? "الإدارة" : "عميلنا"}</p>
         {isAdmin && (
           <span className="ms-2 hidden shrink-0 items-center gap-1 rounded-full bg-brand px-3 py-1 text-[11px] font-black text-brand-foreground sm:inline-flex" dir="ltr">
             <ShieldCheck className="size-3.5" /> Admin Mode
           </span>
         )}
       </div>
-      <div className="flex shrink-0 items-center gap-0.5 sm:gap-3 [&_button]:!bg-transparent">
-        <div className="hidden items-center gap-2 lg:flex">
-          <span className="grid size-9 place-items-center rounded-full bg-navy text-navy-foreground"><UserCircle className="size-5 !text-navy-foreground" /></span>
-          <p className="text-[12px] font-black leading-4 text-navy">أهلاً وسهلاً<br /><span className="text-[11px] font-bold text-muted-foreground">{isAdmin ? "الإدارة" : clientName || "مستخدم تجريبي"}</span></p>
-        </div>
+      {/* الوسط: شعار تمكين */}
+      <div className="hidden justify-center lg:flex"><TamkeenBrand compact /></div>
+      {/* يسار: الشعار النصي وأدوات الشاشة وزر القائمة */}
+      <div className="flex shrink-0 items-center justify-end gap-0.5 sm:gap-3 lg:min-w-0 [&_button]:!bg-transparent">
         <Button variant="presentation" size="presentation" type="button" onClick={onSettings} aria-label="الإعدادات" title="الإعدادات" className="grid size-8 place-items-center rounded-full transition hover:bg-muted lg:hidden"><Settings className="size-5" /></Button>
         {isAdmin && (
           <Button variant="presentation" size="presentation" type="button" onClick={onExitAdmin} className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-xs font-bold text-foreground transition hover:bg-muted" dir="ltr">
@@ -1367,12 +1369,15 @@ function TopBar({ isAdmin, clientName = "", onExitAdmin, onSettings, onExit, onT
           </Button>
         )}
         <ReplayVoiceButton />
-        <span className="hidden lg:inline-flex"><CorporateToggle /></span>
+        <span className="hidden lg:inline-flex [&_span]:hidden"><CorporateToggle /></span>
         <span className="[&_svg]:size-5"><OrderCenterButton isAdmin={isAdmin} /></span>
-        <span className="[&_svg]:size-5"><NotificationsBell isAdmin={isAdmin} /></span>
+        <span className="lg:hidden [&_svg]:size-5"><NotificationsBell isAdmin={isAdmin} /></span>
         <Button variant="presentation" size="presentation" type="button" onClick={onExit} aria-label="خروج" title="خروج" className="grid size-8 place-items-center rounded-md transition hover:bg-muted lg:hidden"><LogOut className="size-5" /></Button>
         <LangSwitch />
-
+        <p className="hidden shrink-0 border-x-2 border-gold px-4 text-center text-[19px] font-black leading-7 text-navy 2xl:block">حلول الطاقة لمستقبل أفضل<br /><span className="text-[14px] font-bold text-navy/80">طاقة مستدامة .. لحياة أكثر ازدهاراً</span></p>
+        <Button variant="presentation" size="presentation" onClick={onToggleSidebar} aria-label={sidebarCollapsed ? "إظهار القائمة" : "تصغير القائمة"} title={sidebarCollapsed ? "إظهار القائمة" : "تصغير القائمة"} className="hidden size-10 place-items-center rounded-md text-navy lg:grid">
+          <Menu className="size-7" />
+        </Button>
       </div>
     </header>
   );
