@@ -83,7 +83,6 @@ import {
   PanelRightOpen,
   Tag,
   Folder,
-  Sprout,
 } from "lucide-react";
 import residentialImage from "@/assets/arsh-residential.webp";
 import commercialImage from "@/assets/arsh-commercial.webp";
