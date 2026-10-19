@@ -605,9 +605,8 @@ button:not(:disabled), a { touch-action: manipulation; }
  .topbar-banner-side > span { width:4px; align-self:stretch; margin-block:28px; background:var(--gold); }
  .topbar-banner-photo { position:absolute; inset-block:0; right:22%; width:46%; height:100%; object-fit:cover; clip-path:polygon(0 0,100% 0,100% 100%,13% 100%); border-left:0; }
  .topbar-banner::after { content:""; position:absolute; top:0; bottom:0; left:calc(32% - 6px); width:6px; transform:skewX(-34deg); transform-origin:top; background:var(--gold); z-index:1; }
- .topbar-banner-pill { position:absolute; right:56%; top:40px; z-index:3; background:var(--brand); color:var(--brand-foreground); border-radius:999px; padding:8px 22px; font-size:17px; font-weight:800; white-space:nowrap; }
- .topbar-banner-brand { position:absolute; left:150px; top:50%; transform:translateY(-50%); z-index:3; }
+ .topbar-banner-pill { position:absolute; right:56%; top:22px; z-index:3; background:var(--brand); color:var(--brand-foreground); border-radius:999px; padding:8px 22px; font-size:17px; font-weight:800; white-space:nowrap; }
+ .topbar-banner-brand { position:absolute; left:28px; top:50%; transform:translateY(-50%); z-index:3; }
  .topbar-banner-brand .tamkeen-brand > img { height:86px; }
- .topbar-banner-tools { position:absolute; left:12px; top:50%; transform:translateY(-50%); z-index:3; display:grid; grid-template-columns:repeat(2,auto); gap:4px 6px; align-items:center; justify-items:center; width:120px; }
- .topbar-banner-tools > :nth-child(4) { grid-column:1 / -1; }
+ .topbar-banner-tools { position:absolute; left:250px; top:74px; z-index:3; display:flex; flex-direction:row-reverse; gap:6px; align-items:center; }
 }
