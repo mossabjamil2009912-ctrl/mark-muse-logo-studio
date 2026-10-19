@@ -1598,7 +1598,7 @@ function ServiceCard({ image, icon, title, description, action, tone, onClick }:
   return (
     <Button variant="presentation" size="presentation" type="button" onClick={onClick} aria-label={title} className="home-service group flex flex-col overflow-hidden rounded-xl border border-border bg-card text-right shadow-sm transition hover:shadow-md lg:flex-row-reverse lg:items-stretch">
       <span data-photo-frame className="home-service-photo block aspect-[16/9] w-full overflow-hidden bg-muted lg:aspect-auto lg:w-[52%] lg:shrink-0"><img data-photo src={image} alt={title} loading="eager" decoding="async" width={1280} height={720} className="size-full object-cover transition duration-500 group-hover:scale-[1.03]" /></span>
-      <span className="home-service-body relative flex flex-1 flex-col px-2 pb-2 pt-7 text-center lg:items-start lg:py-4 lg:pl-4 lg:pr-[76px] lg:text-right">
+      <span className="home-service-body relative flex flex-1 flex-col px-2 pb-2 pt-7 text-center lg:items-start lg:py-4 lg:!ps-[80px] lg:!pe-4 lg:text-right">
         <span className={`absolute -top-5 right-1/2 grid size-10 translate-x-1/2 place-items-center rounded-full border-2 border-card shadow-md lg:right-4 lg:top-4 lg:size-12 lg:translate-x-0 ${circle} [&_svg]:size-5 lg:[&_svg]:size-6`}>{icon}</span>
         <span className="home-service-title font-black text-navy lg:text-xl">{title}</span>
         <span className="home-service-description mx-auto line-clamp-2 max-w-xs text-muted-foreground lg:mx-0 lg:max-w-none">{description}</span>
