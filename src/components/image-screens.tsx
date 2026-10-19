@@ -97,12 +97,12 @@ export function ImageScreen({ kind, onAction, userName, isAdmin = false }: { kin
           />
         ))}
         {BELL[kind] && (
-          <div className="absolute z-10 grid place-items-center bg-card [&_svg]:size-7 [&_svg]:stroke-[2.4]" style={pos(BELL[kind]!)}>
+          <div className="absolute z-10 grid place-items-center [&_svg]:size-7 [&_svg]:stroke-[2.4]" style={{ ...pos(BELL[kind]!), background: "rgb(254 254 254)" }}>
             <NotificationsBell isAdmin={isAdmin} />
           </div>
         )}
         {NAME[kind] && (
-          <div dir="rtl" className="absolute z-10 flex flex-col justify-center bg-card text-right font-bold leading-tight text-navy" style={{ ...pos(NAME[kind]!), fontSize: "min(0.9vw, 1.6dvh)" }}>
+          <div dir="rtl" className="absolute z-10 flex flex-col justify-center text-right font-bold leading-tight text-navy" style={{ ...pos(NAME[kind]!), background: "rgb(254 254 254)", fontSize: "min(0.9vw, 1.6dvh)" }}>
             <span>أهلاً وسهلاً</span>
             <span className="truncate">{userName || "مستخدم تجريبي"}</span>
           </div>
