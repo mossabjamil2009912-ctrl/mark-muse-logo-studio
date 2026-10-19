@@ -869,7 +869,7 @@ function ActesApp() {
       ) : (
 
       <div className="flex h-dvh w-full items-stretch justify-center overflow-hidden bg-background p-0">
-       <div className={`flex h-full w-full max-w-full flex-col overflow-hidden border-border bg-background lg:grid lg:grid-rows-[minmax(0,1fr)_auto] ${sidebarCollapsed ? "lg:grid-cols-[minmax(0,1fr)_64px]" : "lg:grid-cols-[minmax(0,1fr)_220px]"}`}>
+       <div className={`flex h-full w-full max-w-full flex-col overflow-hidden border-border bg-background lg:grid lg:grid-rows-[minmax(0,1fr)_auto] ${sidebarCollapsed ? "lg:grid-cols-[minmax(0,1fr)_64px]" : "lg:grid-cols-[minmax(0,1fr)_248px]"}`}>
 
       <AppSidebar collapsed={sidebarCollapsed} active={catalog ? "products" : isHome ? "home" : step.startsWith("sup_") ? "support" : step.startsWith("eco_") || step.startsWith("pv_") || step === "energy_menu" || step === "sld_custom" ? "energy" : "quote"} onNavigate={navFromMenu} onProducts={() => { setCatalog({ productId: null }); mainRef.current?.scrollTo({ top: 0 }); }} onSettings={() => setSettingsOpen(true)} onExit={leaveApp} />
       <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden lg:col-start-1 lg:row-start-1">
@@ -1327,7 +1327,7 @@ function CorporateWelcome({ onClient, onAdmin }: { onClient: () => void; onAdmin
 }
 
 function BrandLockup() {
-  return <TamkeenBrand inverse className="flex-col" />;
+  return <TamkeenBrand inverse />;
 }
 
 function BrandMark({ compact = false, className, white = false }: { inverse?: boolean; compact?: boolean; className?: string; white?: boolean }) {
@@ -1430,7 +1430,7 @@ function ReplayVoiceButton() {
 
 
 function AppSidebar({ active, onNavigate, onProducts, onSettings, onExit, collapsed }: { collapsed: boolean; active: string; onNavigate: (action: (typeof NAV_ITEMS)[number]["action"]) => void; onProducts: () => void; onSettings: () => void; onExit: () => void }) {
-  const row = "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-right text-[13.5px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10";
+  const row = "flex w-full flex-row-reverse items-center justify-end gap-3 rounded-lg px-4 py-3 text-left text-[16px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10";
   return (
     <aside data-collapsed={collapsed} className="app-sidebar relative order-2 hidden h-full flex-col overflow-hidden bg-navy text-skyline-foreground lg:flex lg:col-start-2 lg:row-start-1">
       <div className="pointer-events-none relative z-10 px-4 pb-3 pt-4">
@@ -1447,20 +1447,20 @@ function AppSidebar({ active, onNavigate, onProducts, onSettings, onExit, collap
               type="button"
               onClick={() => (item.action === "products" ? onProducts() : onNavigate(item.action))}
               aria-current={selected ? "page" : undefined}
-              className={selected ? "flex w-full items-center gap-3 rounded-lg bg-brand px-3 py-2.5 text-[13.5px] font-bold text-brand-foreground shadow-md" : row}
+              className={selected ? "flex w-full flex-row-reverse items-center justify-end gap-3 rounded-lg bg-brand px-4 py-3 text-left text-[16px] font-bold text-brand-foreground shadow-md" : row}
             >
-              <Icon className="size-5 shrink-0" /> <span className="flex-1 whitespace-nowrap">{item.label}</span>
+              <Icon className="size-6 shrink-0" /> <span className="whitespace-nowrap">{item.label}</span>
             </Button>
           );
         })}
-        <Button variant="presentation" size="presentation" type="button" onClick={onSettings} className={row}><Settings className="size-5 shrink-0" /> <span className="flex-1">الإعدادات</span></Button>
+        <Button variant="presentation" size="presentation" type="button" onClick={onSettings} className={row}><Settings className="size-6 shrink-0" /> <span>الإعدادات</span></Button>
       </nav>
       <svg aria-hidden viewBox="0 0 200 160" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-40 w-full text-skyline">
         <path d="M0 110 C60 60 120 20 200 10 L200 160 L0 160 Z" fill="currentColor" opacity="0.55" />
         <path d="M0 140 C70 100 130 70 200 60 L200 160 L0 160 Z" fill="currentColor" opacity="0.35" />
       </svg>
       <div className="relative z-10 mt-auto px-3 pb-4 pt-2">
-        <Button variant="presentation" size="presentation" type="button" onClick={onExit} className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-[13.5px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10"><LogOut className="size-5 shrink-0" /> تسجيل الخروج</Button>
+        <Button variant="presentation" size="presentation" type="button" onClick={onExit} className="flex w-full flex-row-reverse items-center justify-end gap-3 rounded-lg px-4 py-3 text-[16px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10"><LogOut className="size-6 shrink-0" /> <span>تسجيل الخروج</span></Button>
       </div>
     </aside>
   );
@@ -1525,6 +1525,7 @@ function HomeDashboard({ onService, onProducts }: { onService: (kind: "quote" | 
       </section>
       <section data-photo-section className="home-cover relative shrink-0 overflow-hidden border border-border bg-navy">
         <LangImg ar={homeHeroAr} en={homeHeroEn} zh={homeHeroZh} alt="تمكين للحلول التقنية والهندسية" loading="eager" fetchPriority="high" />
+        <p className="home-cover-tagline absolute right-8 top-1/2 hidden -translate-y-1/2 border-l-4 border-gold pl-4 text-right text-2xl font-black leading-snug text-navy-foreground lg:block">نقدم حلولاً متكاملة<br />للطاقة الشمسية<br />والحلول الهندسية</p>
       </section>
 
 
@@ -1595,13 +1596,13 @@ function ServiceCard({ image, icon, title, description, action, tone, onClick }:
   const btn = "bg-brand text-brand-foreground";
 
   return (
-    <Button variant="presentation" size="presentation" type="button" onClick={onClick} aria-label={title} className="home-service group flex flex-col overflow-hidden rounded-xl border border-border bg-card text-right shadow-sm transition hover:shadow-md lg:flex-row lg:items-stretch">
-      <span data-photo-frame className="home-service-photo block aspect-[16/9] w-full overflow-hidden bg-muted lg:aspect-auto lg:w-[42%] lg:shrink-0"><img data-photo src={image} alt={title} loading="eager" decoding="async" width={1280} height={720} className="size-full object-cover transition duration-500 group-hover:scale-[1.03]" /></span>
+    <Button variant="presentation" size="presentation" type="button" onClick={onClick} aria-label={title} className="home-service group flex flex-col overflow-hidden rounded-xl border border-border bg-card text-right shadow-sm transition hover:shadow-md lg:flex-row-reverse lg:items-stretch">
+      <span data-photo-frame className="home-service-photo block aspect-[16/9] w-full overflow-hidden bg-muted lg:aspect-auto lg:w-[52%] lg:shrink-0"><img data-photo src={image} alt={title} loading="eager" decoding="async" width={1280} height={720} className="size-full object-cover transition duration-500 group-hover:scale-[1.03]" /></span>
       <span className="home-service-body relative flex flex-1 flex-col px-2 pb-2 pt-7 text-center lg:items-start lg:px-4 lg:py-4 lg:text-right">
-        <span className={`absolute -top-5 right-1/2 grid size-10 translate-x-1/2 place-items-center rounded-full border-2 border-card shadow-md lg:static lg:mb-2 lg:size-11 lg:translate-x-0 ${circle} [&_svg]:size-5 lg:[&_svg]:size-6`}>{icon}</span>
-        <span className="home-service-title font-black text-navy lg:text-lg">{title}</span>
+        <span className={`absolute -top-5 right-1/2 grid size-10 translate-x-1/2 place-items-center rounded-full border-2 border-card shadow-md lg:right-4 lg:top-4 lg:size-12 lg:translate-x-0 ${circle} [&_svg]:size-5 lg:[&_svg]:size-6`}>{icon}</span>
+        <span className="home-service-title font-black text-navy lg:text-xl">{title}</span>
         <span className="home-service-description mx-auto line-clamp-2 max-w-xs text-muted-foreground lg:mx-0 lg:max-w-none">{description}</span>
-        <span className={`home-service-cta mx-auto mb-0 mt-auto inline-flex w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold shadow-sm transition group-hover:opacity-90 lg:mx-0 lg:w-auto lg:gap-1.5 lg:px-5 lg:py-2 lg:text-[13px] ${btn}`}>
+        <span className={`home-service-cta mx-auto mb-0 mt-auto inline-flex w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold shadow-sm transition group-hover:opacity-90 lg:mx-0 lg:w-full lg:gap-1.5 lg:px-5 lg:py-2 lg:text-[15px] ${btn}`}>
           <ArrowLeft className="size-3 lg:size-4" />{action}
         </span>
 
