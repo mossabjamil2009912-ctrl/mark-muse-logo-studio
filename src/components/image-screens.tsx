@@ -97,7 +97,7 @@ export function ImageScreen({ kind, onAction, userName, isAdmin = false }: { kin
           />
         ))}
         {BELL[kind] && (
-          <div className="absolute z-10 grid place-items-center bg-card" style={pos(BELL[kind]!)}>
+          <div className="absolute z-10 grid place-items-center bg-card [&_svg]:size-7 [&_svg]:stroke-[2.4]" style={pos(BELL[kind]!)}>
             <NotificationsBell isAdmin={isAdmin} />
           </div>
         )}
