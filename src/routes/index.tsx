@@ -1537,9 +1537,11 @@ function HomeDashboard({ onService, onProducts }: { onService: (kind: "quote" | 
         <ServiceCard image={refCardProducts} icon={<Package />} title="الأجهزة والمنتجات" description="مجموعة متكاملة من أفضل الأجهزة والمنتجات الطاقة الشمسية المعتمدة عالمياً." action="استكشف المنتجات" tone="navy" onClick={onProducts} />
       </section>
 
-      <footer className="shrink-0 rounded-xl bg-navy px-3 py-2.5 text-center text-navy-foreground lg:hidden">
-        <p className="flex items-center justify-center gap-2 text-base font-black"><span className="h-px w-8 bg-gold" /><span className="grid size-8 place-items-center rounded-full border-2 border-gold"><Leaf className="size-4 text-gold" /></span> معاً نحو طاقة مستدامة<span className="h-px w-8 bg-gold" /></p>
-        <p className="mt-1 text-[11px] opacity-80">حلول مبتكرة ... لمستقبل أنظف</p>
+      <footer className="relative shrink-0 overflow-hidden rounded-xl bg-navy px-3 py-2.5 text-center text-navy-foreground lg:py-4">
+        <img src={agricultureImage} alt="" aria-hidden className="absolute inset-0 size-full object-cover opacity-45" />
+        <span aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--navy)_55%,transparent),color-mix(in_oklab,var(--navy)_75%,transparent))]" />
+        <p className="relative flex items-center justify-center gap-2 text-base font-black lg:text-xl"><span className="h-px w-8 bg-gold lg:w-14" /><span className="grid size-8 place-items-center rounded-full border-2 border-gold lg:size-10"><Leaf className="size-4 text-gold lg:size-5" /></span> معاً نحو طاقة مستدامة<span className="h-px w-8 bg-gold lg:w-14" /></p>
+        <p className="relative mt-1 text-[11px] opacity-80 lg:text-sm">حلول مبتكرة ... لمستقبل أنظف</p>
       </footer>
     </div>
   );
