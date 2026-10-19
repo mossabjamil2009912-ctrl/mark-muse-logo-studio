@@ -1356,9 +1356,6 @@ function TopBar({ isAdmin, clientName = "", onExitAdmin, onSettings, onExit, onT
           </span>
         )}
       </div>
-      <div className="pointer-events-none absolute inset-x-0 hidden place-items-center lg:grid">
-        <TamkeenBrand compact />
-      </div>
       <div className="flex shrink-0 items-center gap-0.5 sm:gap-3 [&_button]:!bg-transparent">
         <div className="hidden items-center gap-2 lg:flex">
           <span className="grid size-9 place-items-center rounded-full bg-navy text-navy-foreground"><UserCircle className="size-5 !text-navy-foreground" /></span>
