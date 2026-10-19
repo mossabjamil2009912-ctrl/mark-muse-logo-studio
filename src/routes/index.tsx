@@ -83,6 +83,9 @@ import {
   PanelRightOpen,
   Tag,
   Folder,
+  Home,
+  Store,
+  Sprout,
 } from "lucide-react";
 import residentialImage from "@/assets/arsh-residential.webp";
 import commercialImage from "@/assets/arsh-commercial.webp";
@@ -1603,19 +1606,23 @@ function Feature({ icon, text }: { icon: ReactNode; text: string }) {
   return <div className="flex items-center gap-3 border-r border-sidebar-foreground/25 pr-3 [&_svg]:size-6 [&_svg]:text-brand">{icon}<span>{text}</span></div>;
 }
 
-function ServiceCard({ image, icon, title, description, action, tone, onClick }: { image: string; icon: ReactNode; title: string; description: string; action: string; tone: "brand" | "energy" | "skyline" | "navy"; onClick: () => void }) {
+function ServiceCard({ image, icon, title, description, action, tone, badge, onClick }: { image: string; icon: ReactNode; title: string; description: string; action: string; tone: "brand" | "energy" | "skyline" | "navy"; badge?: boolean; onClick: () => void }) {
   const circle = tone ? "bg-brand text-brand-foreground" : "";
   const btn = "bg-brand text-brand-foreground";
 
   return (
-    <Button variant="presentation" size="presentation" type="button" onClick={onClick} aria-label={title} className="home-service group flex flex-col overflow-hidden rounded-xl border border-border bg-card text-right shadow-sm transition hover:shadow-md lg:flex-row lg:items-stretch">
+    <Button variant="presentation" size="presentation" type="button" onClick={onClick} aria-label={title} className="home-service group relative flex flex-col overflow-hidden rounded-xl border border-border bg-card text-right shadow-sm transition hover:shadow-md lg:flex-row lg:items-stretch">
+      {badge && <span className="absolute right-3 top-3 z-10 inline-flex items-center gap-1 rounded-full bg-brand px-3 py-1 text-[11px] font-black text-brand-foreground shadow-md">محدد <Check className="size-3.5" /></span>}
       <span data-photo-frame className="home-service-photo block aspect-[16/9] w-full overflow-hidden bg-muted lg:aspect-auto lg:w-[42%] lg:shrink-0"><img data-photo src={image} alt={title} loading="eager" decoding="async" width={1280} height={720} className="size-full object-cover transition duration-500 group-hover:scale-[1.03]" /></span>
       <span className="home-service-body relative flex flex-1 flex-col px-2 pb-2 pt-7 text-center lg:items-start lg:px-4 lg:py-4 lg:text-right">
-        <span className={`absolute -top-5 right-1/2 grid size-10 translate-x-1/2 place-items-center rounded-full border-2 border-card shadow-md lg:static lg:mb-2 lg:size-11 lg:translate-x-0 ${circle} [&_svg]:size-5 lg:[&_svg]:size-6`}>{icon}</span>
+        <span className={`absolute -top-5 right-1/2 grid size-10 translate-x-1/2 place-items-center rounded-full border-2 border-card shadow-md lg:static lg:mb-2 lg:size-12 lg:translate-x-0 ${circle} [&_svg]:size-5 lg:[&_svg]:size-6`}>{icon}</span>
         <span className="home-service-title font-black text-navy lg:text-lg">{title}</span>
         <span className="home-service-description mx-auto line-clamp-2 max-w-xs text-muted-foreground lg:mx-0 lg:max-w-none">{description}</span>
-        <span className={`home-service-cta mx-auto mb-0 mt-auto inline-flex w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold shadow-sm transition group-hover:opacity-90 lg:mx-0 lg:w-auto lg:gap-1.5 lg:px-5 lg:py-2 lg:text-[13px] ${btn}`}>
-          <ArrowLeft className="size-3 lg:size-4" />{action}
+        <span className={`home-service-cta mx-auto mb-0 mt-auto inline-flex w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold shadow-sm transition group-hover:opacity-90 lg:hidden ${btn}`}>
+          <ArrowLeft className="size-3" />{action}
+        </span>
+        <span className={`mt-auto hidden size-9 place-items-center rounded-full shadow-sm transition group-hover:opacity-90 lg:grid ${btn}`}>
+          <ArrowLeft className="size-4" />
         </span>
 
       </span>
