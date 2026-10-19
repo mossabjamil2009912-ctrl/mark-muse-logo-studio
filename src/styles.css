@@ -589,3 +589,4 @@ button:not(:disabled), a { touch-action: manipulation; }
 .report-modern .report-kpi b { font-size:1.35rem; font-weight:900; color:var(--navy); }
 .report-modern h4 { border-radius:.75rem .75rem 0 0 !important; padding:.55rem .9rem !important; font-size:.85rem !important; border-inline-start:4px solid var(--gold); }
 @media (min-width:1024px){ .report-modern { font-size:1.05em; } }
+.report-modern .report-kpi small { font-size:.7rem; color:var(--muted-foreground); font-weight:700; }

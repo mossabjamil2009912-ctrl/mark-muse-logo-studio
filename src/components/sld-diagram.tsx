@@ -2286,7 +2286,7 @@ export default function SldDiagram({ params, number, actions }: Props) {
         <div className="report-kpi"><Network className="size-6 text-gold" /><span>مصفوفة الألواح</span><b dir="ltr">{model.pv ? `${model.pv.kwp.toFixed(2)} kWp` : "—"}</b><small dir="ltr">{model.pv ? `${model.pv.strings} × ${model.pv.perString} modules` : ""}</small></div>
         <div className="report-kpi"><Boxes className="size-6 text-primary" /><span>الإنفرتر</span><b dir="ltr">{model.inverter ? `${model.inverter.qty} × ${model.inverter.kw} kW` : "—"}</b><small>{model.inverter ? (model.inverter.phase3 ? "ثلاثي الفاز 400V" : "أحادي الفاز 230V") : ""}</small></div>
         <div className="report-kpi"><TriangleAlert className="size-6 text-energy" /><span>جهد وتيار السلسلة</span><b dir="ltr">{model.pv?.strVoc ? `Voc ${Math.round(model.pv.strVoc)} V` : "—"}</b><small dir="ltr">{model.pv?.isc ? `Isc ${model.pv.isc} A` : ""}</small></div>
-        <div className="report-kpi"><Ruler className="size-6 text-navy" /><span>الحماية والكابلات</span><b dir="ltr">{model.acBox ? `AC ${model.acBox.breakerA} A` : "—"}</b><small dir="ltr">{mainCable ? mainCable.label ?? "" : ""}</small></div>
+        <div className="report-kpi"><Ruler className="size-6 text-navy" /><span>الحماية والكابلات</span><b dir="ltr">{model.acBox ? `AC ${model.acBox.breakerA} A` : "—"}</b><small dir="ltr">{mainCable?.area ? `${mainCable.tag} — ${mainCable.area} mm²` : ""}</small></div>
       </div>
 
       <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-lg bg-navy/5 p-2">
