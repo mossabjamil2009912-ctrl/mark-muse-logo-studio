@@ -81,6 +81,8 @@ import {
   Factory,
   PanelRightClose,
   PanelRightOpen,
+  Tag,
+  Folder,
 } from "lucide-react";
 import residentialImage from "@/assets/arsh-residential.webp";
 import commercialImage from "@/assets/arsh-commercial.webp";
@@ -238,6 +240,19 @@ const NAV_ITEMS = [
   { label: "صمّم منظومتك", icon: FileText, action: "quote" },
   { label: "الدراسات الهندسية", icon: Grid2X2, action: "energy" },
   { label: "خدماتنا واستشاراتنا", icon: Headphones, action: "support" },
+] as const;
+
+// قائمة سطح المكتب الجانبية — مطابقة للتصميم المعتمد؛ كل عنصر يفتح مساراً قائماً فعلاً.
+// main: العنصر الذي يُضاء عندما يكون مساره هو النشط (تجنّب إضاءة عنصرين بنفس المسار).
+const SIDEBAR_ITEMS = [
+  { label: "الرئيسية", icon: Home, action: "home", main: true },
+  { label: "الدراسات الهندسية", icon: Grid2X2, action: "energy", main: true },
+  { label: "الدراسة الاقتصادية", icon: BadgeDollarSign, action: "energy", main: false },
+  { label: "عروض الأسعار", icon: Tag, action: "quote", main: true },
+  { label: "المنتجات والمنظومات", icon: LayoutGrid, action: "products", main: true },
+  { label: "الأجهزة والمنتجات", icon: Package, action: "products", main: false },
+  { label: "العملاء والطلبات", icon: Users, action: "support", main: true },
+  { label: "المشاريع", icon: Folder, action: "quote", main: false },
 ] as const;
 
 function ActesApp() {
@@ -855,7 +870,7 @@ function ActesApp() {
       <div className="flex h-dvh w-full items-stretch justify-center overflow-hidden bg-background p-0">
        <div className={`flex h-full w-full max-w-full flex-col overflow-hidden border-border bg-background lg:grid lg:grid-rows-[minmax(0,1fr)_auto] ${sidebarCollapsed ? "lg:grid-cols-[minmax(0,1fr)_64px]" : "lg:grid-cols-[minmax(0,1fr)_220px]"}`}>
 
-      <AppSidebar collapsed={sidebarCollapsed} active={catalog ? "products" : isHome ? "home" : step.startsWith("sup_") ? "support" : step.startsWith("eco_") || step.startsWith("pv_") || step === "energy_menu" || step === "sld_custom" ? "energy" : "quote"} onNavigate={navFromMenu} onSettings={() => setSettingsOpen(true)} onExit={leaveApp} />
+      <AppSidebar collapsed={sidebarCollapsed} active={catalog ? "products" : isHome ? "home" : step.startsWith("sup_") ? "support" : step.startsWith("eco_") || step.startsWith("pv_") || step === "energy_menu" || step === "sld_custom" ? "energy" : "quote"} onNavigate={navFromMenu} onProducts={() => { setCatalog({ productId: null }); mainRef.current?.scrollTo({ top: 0 }); }} onSettings={() => setSettingsOpen(true)} onExit={leaveApp} />
       <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden lg:col-start-1 lg:row-start-1">
         <TopBar onToggleSidebar={() => setSidebarCollapsed((v) => !v)} sidebarCollapsed={sidebarCollapsed} isAdmin={isAdmin} clientName={clientName} onExitAdmin={exitAdmin} onSettings={() => setSettingsOpen(true)} onExit={leaveApp} />
          <main ref={mainRef} className="app-main mx-auto flex w-full min-h-0 flex-1 overflow-y-auto px-3 py-3 pb-24 sm:px-6 lg:px-8 lg:pb-4">
@@ -1326,13 +1341,14 @@ function BrandMark({ compact = false, className, white = false }: { inverse?: bo
 
 function TopBar({ isAdmin, clientName = "", onExitAdmin, onSettings, onExit, onToggleSidebar, sidebarCollapsed }: { isAdmin: boolean; clientName?: string; onExitAdmin: () => void; onSettings: () => void; onExit: () => void; onToggleSidebar: () => void; sidebarCollapsed: boolean }) {
   return (
-    <header className="app-topbar relative grid h-[52px] shrink-0 grid-cols-[minmax(0,1fr)_auto] items-center border-b border-border bg-background px-2 text-navy shadow-[var(--shadow-soft)] sm:h-[62px] sm:px-4 [&_button]:!text-navy [&_svg]:!text-navy">
+    <header className="app-topbar relative grid h-[52px] shrink-0 grid-cols-[minmax(0,1fr)_auto] items-center border-b border-border bg-background px-2 text-navy shadow-[var(--shadow-soft)] sm:h-[62px] sm:px-4 lg:h-[76px] [&_button]:!text-navy [&_svg]:!text-navy">
       <span aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-l from-navy via-primary to-navy" />
       <div className="flex min-w-0 items-center gap-2">
         <Button variant="presentation" size="presentation" onClick={onToggleSidebar} aria-label={sidebarCollapsed ? "إظهار القائمة" : "تصغير القائمة"} title={sidebarCollapsed ? "إظهار القائمة" : "تصغير القائمة"} className="hidden size-8 place-items-center rounded-md text-navy lg:grid">
           {sidebarCollapsed ? <PanelRightOpen className="size-5" /> : <PanelRightClose className="size-5" />}
         </Button>
-        <TamkeenBrand compact />
+        <span className="lg:hidden"><TamkeenBrand compact /></span>
+        <p className="hidden border-s-2 border-gold ps-3 text-[13px] font-black leading-5 text-navy lg:block">حلول الطاقة لمستقبل أفضل<br /><span className="text-[11px] font-bold text-muted-foreground">طاقة مستدامة .. لحياة أكثر ازدهاراً</span></p>
         <p className="hidden border-s border-border ps-3 text-xs text-muted-foreground xl:block">مرحباً، {isAdmin ? "الإدارة" : clientName || "عميل"}</p>
         {isAdmin && (
           <span className="ms-2 hidden shrink-0 items-center gap-1 rounded-full bg-brand px-3 py-1 text-[11px] font-black text-brand-foreground sm:inline-flex" dir="ltr">
@@ -1340,7 +1356,14 @@ function TopBar({ isAdmin, clientName = "", onExitAdmin, onSettings, onExit, onT
           </span>
         )}
       </div>
+      <div className="pointer-events-none absolute inset-x-0 hidden place-items-center lg:grid">
+        <TamkeenBrand compact />
+      </div>
       <div className="flex shrink-0 items-center gap-0.5 sm:gap-3 [&_button]:!bg-transparent">
+        <div className="hidden items-center gap-2 lg:flex">
+          <span className="grid size-9 place-items-center rounded-full bg-navy text-navy-foreground"><UserCircle className="size-5 !text-navy-foreground" /></span>
+          <p className="text-[12px] font-black leading-4 text-navy">أهلاً وسهلاً<br /><span className="text-[11px] font-bold text-muted-foreground">{isAdmin ? "الإدارة" : clientName || "مستخدم تجريبي"}</span></p>
+        </div>
         <Button variant="presentation" size="presentation" type="button" onClick={onSettings} aria-label="الإعدادات" title="الإعدادات" className="grid size-8 place-items-center rounded-full transition hover:bg-muted lg:hidden"><Settings className="size-5" /></Button>
         {isAdmin && (
           <Button variant="presentation" size="presentation" type="button" onClick={onExitAdmin} className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-xs font-bold text-foreground transition hover:bg-muted" dir="ltr">
@@ -1404,39 +1427,38 @@ function ReplayVoiceButton() {
 
 
 
-function AppSidebar({ active, onNavigate, onSettings, onExit, collapsed }: { collapsed: boolean; active: string; onNavigate: (action: (typeof NAV_ITEMS)[number]["action"]) => void; onSettings: () => void; onExit: () => void }) {
-  const row = "flex w-full items-center gap-3 border-b border-skyline-foreground/15 px-3 py-3.5 text-right text-[14px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10";
+function AppSidebar({ active, onNavigate, onProducts, onSettings, onExit, collapsed }: { collapsed: boolean; active: string; onNavigate: (action: (typeof NAV_ITEMS)[number]["action"]) => void; onProducts: () => void; onSettings: () => void; onExit: () => void }) {
+  const row = "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-right text-[13.5px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10";
   return (
     <aside data-collapsed={collapsed} className="app-sidebar relative order-2 hidden h-full flex-col overflow-hidden bg-navy text-skyline-foreground lg:flex lg:col-start-2 lg:row-start-1">
-      <div className="pointer-events-none relative z-10 px-4 pb-4 pt-4">
+      <div className="pointer-events-none relative z-10 px-4 pb-3 pt-4">
         <BrandLockup />
       </div>
-      <nav className="relative z-10 px-3" aria-label="التنقل الرئيسي">
-
-
-        {NAV_ITEMS.map((item) => {
+      <nav className="relative z-10 flex-1 space-y-0.5 overflow-y-auto px-3" aria-label="التنقل الرئيسي">
+        {SIDEBAR_ITEMS.map((item) => {
           const Icon = item.icon;
-          const selected = active === item.action;
-          return selected ? (
-            <Button variant="presentation" size="presentation" key={item.action} type="button" onClick={() => onNavigate(item.action)} className="mb-2 flex w-full items-center justify-center gap-2 rounded-lg bg-brand px-3 py-3 text-[15px] font-bold text-brand-foreground shadow-md">
-              <Icon className="size-5 shrink-0" /> <span className="whitespace-nowrap">{item.label}</span>
-            </Button>
-          ) : (
-            <Button variant="presentation" size="presentation" key={item.action} type="button" onClick={() => onNavigate(item.action)} className={row}>
-              <Icon className="size-5 shrink-0" /> <span className="flex-1 whitespace-nowrap">{item.label}</span><ArrowLeft className="size-3.5 shrink-0 opacity-80" />
+          const selected = item.main && active === item.action;
+          return (
+            <Button
+              variant="presentation" size="presentation"
+              key={item.label}
+              type="button"
+              onClick={() => (item.action === "products" ? onProducts() : onNavigate(item.action))}
+              aria-current={selected ? "page" : undefined}
+              className={selected ? "flex w-full items-center gap-3 rounded-lg bg-brand px-3 py-2.5 text-[13.5px] font-bold text-brand-foreground shadow-md" : row}
+            >
+              <Icon className="size-5 shrink-0" /> <span className="flex-1 whitespace-nowrap">{item.label}</span>
             </Button>
           );
         })}
-        <Button variant="presentation" size="presentation" type="button" onClick={onSettings} className={row}><Settings className="size-5" /> <span className="flex-1">الإعدادات</span><ArrowLeft className="size-3.5 opacity-80" /></Button>
-        <Button variant="presentation" size="presentation" type="button" onClick={onExit} className="flex w-full items-center gap-3 px-3 py-3.5 text-[14px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10"><LogOut className="size-5" /> خروج</Button>
+        <Button variant="presentation" size="presentation" type="button" onClick={onSettings} className={row}><Settings className="size-5 shrink-0" /> <span className="flex-1">الإعدادات</span></Button>
       </nav>
-      <svg aria-hidden viewBox="0 0 200 160" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 bottom-10 z-0 h-40 w-full text-skyline">
+      <svg aria-hidden viewBox="0 0 200 160" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-40 w-full text-skyline">
         <path d="M0 110 C60 60 120 20 200 10 L200 160 L0 160 Z" fill="currentColor" opacity="0.55" />
         <path d="M0 140 C70 100 130 70 200 60 L200 160 L0 160 Z" fill="currentColor" opacity="0.35" />
       </svg>
-      <div className="relative mt-auto px-4 pb-5 text-[13px] font-bold text-skyline-foreground">
-        <span className="mb-2 block h-1 w-8 rounded-full bg-brand" />
-        <p className="flex items-center gap-1.5"><Leaf className="size-4" /> معاً نحو طاقة مستدامة</p>
+      <div className="relative z-10 mt-auto px-3 pb-4 pt-2">
+        <Button variant="presentation" size="presentation" type="button" onClick={onExit} className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-[13.5px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10"><LogOut className="size-5 shrink-0" /> تسجيل الخروج</Button>
       </div>
     </aside>
   );
@@ -1508,16 +1530,18 @@ function HomeDashboard({ onService, onProducts }: { onService: (kind: "quote" | 
       <PartnersStrip />
 
 
-      <section className="home-services stagger-in grid shrink-0 grid-cols-2 gap-2 lg:grid-cols-4">
+      <section className="home-services stagger-in grid shrink-0 grid-cols-2 gap-2 lg:grid-cols-2 lg:gap-3">
         <ServiceCard image={refCardQuote} icon={<FileText />} title="صمّم منظومتك" description="احصل على أفضل التصاميم الهندسية لمشاريعك الشمسية." action="دخول التطبيق" tone="brand" onClick={() => onService("quote")} />
         <ServiceCard image={refCardEnergy} icon={<Sun />} title="الدراسات الهندسية" description="التصميم الكامل لمشاريع الطاقة الشمسية بأعلى معايير الجودة والكفاءة." action="دخول التطبيق" tone="energy" onClick={() => onService("energy")} />
         <ServiceCard image={refCardSupport} icon={<Headphones />} title="خدماتنا واستشاراتنا" description="نقدم خدمات متكاملة واستشارات فنية لدعم مشاريعك في كل المراحل." action="تواصل معنا" tone="skyline" onClick={() => onService("support")} />
         <ServiceCard image={refCardProducts} icon={<Package />} title="الأجهزة والمنتجات" description="مجموعة متكاملة من أفضل الأجهزة والمنتجات الطاقة الشمسية المعتمدة عالمياً." action="استكشف المنتجات" tone="navy" onClick={onProducts} />
       </section>
 
-      <footer className="shrink-0 rounded-xl bg-navy px-3 py-2.5 text-center text-navy-foreground lg:hidden">
-        <p className="flex items-center justify-center gap-2 text-base font-black"><span className="h-px w-8 bg-gold" /><span className="grid size-8 place-items-center rounded-full border-2 border-gold"><Leaf className="size-4 text-gold" /></span> معاً نحو طاقة مستدامة<span className="h-px w-8 bg-gold" /></p>
-        <p className="mt-1 text-[11px] opacity-80">حلول مبتكرة ... لمستقبل أنظف</p>
+      <footer className="relative shrink-0 overflow-hidden rounded-xl bg-navy px-3 py-2.5 text-center text-navy-foreground lg:py-4">
+        <img src={agricultureImage} alt="" aria-hidden className="absolute inset-0 size-full object-cover opacity-45" />
+        <span aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--navy)_55%,transparent),color-mix(in_oklab,var(--navy)_75%,transparent))]" />
+        <p className="relative flex items-center justify-center gap-2 text-base font-black lg:text-xl"><span className="h-px w-8 bg-gold lg:w-14" /><span className="grid size-8 place-items-center rounded-full border-2 border-gold lg:size-10"><Leaf className="size-4 text-gold lg:size-5" /></span> معاً نحو طاقة مستدامة<span className="h-px w-8 bg-gold lg:w-14" /></p>
+        <p className="relative mt-1 text-[11px] opacity-80 lg:text-sm">حلول مبتكرة ... لمستقبل أنظف</p>
       </footer>
     </div>
   );
@@ -1569,14 +1593,14 @@ function ServiceCard({ image, icon, title, description, action, tone, onClick }:
   const btn = "bg-brand text-brand-foreground";
 
   return (
-    <Button variant="presentation" size="presentation" type="button" onClick={onClick} aria-label={title} className="home-service group flex flex-col overflow-hidden rounded-xl border border-border bg-card text-right shadow-sm transition hover:shadow-md">
-      <span data-photo-frame className="home-service-photo block aspect-[16/9] w-full overflow-hidden bg-muted"><img data-photo src={image} alt={title} loading="eager" decoding="async" width={1280} height={720} className="size-full object-cover transition duration-500 group-hover:scale-[1.03]" /></span>
-      <span className="home-service-body relative flex flex-1 flex-col px-2 pb-2 pt-7 text-center lg:px-3 lg:pb-2.5 lg:pt-5">
-        <span className={`absolute -top-5 right-1/2 grid size-10 translate-x-1/2 place-items-center rounded-full border-2 border-card shadow-md lg:size-12 ${circle} [&_svg]:size-5 lg:[&_svg]:size-6`}>{icon}</span>
-        <span className="home-service-title font-black text-navy">{title}</span>
-        <span className="home-service-description mx-auto line-clamp-2 max-w-xs text-muted-foreground">{description}</span>
-        <span className={`home-service-cta mx-auto mb-0 mt-auto inline-flex w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold shadow-sm transition group-hover:opacity-90 lg:max-w-44 lg:gap-1.5 lg:px-3 lg:py-1.5 lg:text-[13px] ${btn}`}>
-          <ArrowRight className="size-3 lg:size-4" />{action}
+    <Button variant="presentation" size="presentation" type="button" onClick={onClick} aria-label={title} className="home-service group flex flex-col overflow-hidden rounded-xl border border-border bg-card text-right shadow-sm transition hover:shadow-md lg:flex-row lg:items-stretch">
+      <span data-photo-frame className="home-service-photo block aspect-[16/9] w-full overflow-hidden bg-muted lg:aspect-auto lg:w-[42%] lg:shrink-0"><img data-photo src={image} alt={title} loading="eager" decoding="async" width={1280} height={720} className="size-full object-cover transition duration-500 group-hover:scale-[1.03]" /></span>
+      <span className="home-service-body relative flex flex-1 flex-col px-2 pb-2 pt-7 text-center lg:items-start lg:px-4 lg:py-4 lg:text-right">
+        <span className={`absolute -top-5 right-1/2 grid size-10 translate-x-1/2 place-items-center rounded-full border-2 border-card shadow-md lg:static lg:mb-2 lg:size-11 lg:translate-x-0 ${circle} [&_svg]:size-5 lg:[&_svg]:size-6`}>{icon}</span>
+        <span className="home-service-title font-black text-navy lg:text-lg">{title}</span>
+        <span className="home-service-description mx-auto line-clamp-2 max-w-xs text-muted-foreground lg:mx-0 lg:max-w-none">{description}</span>
+        <span className={`home-service-cta mx-auto mb-0 mt-auto inline-flex w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold shadow-sm transition group-hover:opacity-90 lg:mx-0 lg:w-auto lg:gap-1.5 lg:px-5 lg:py-2 lg:text-[13px] ${btn}`}>
+          <ArrowLeft className="size-3 lg:size-4" />{action}
         </span>
 
       </span>
