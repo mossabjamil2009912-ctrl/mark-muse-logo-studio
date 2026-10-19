@@ -74,13 +74,15 @@ export function downloadEconomicReport(
 
   const cashSvg = `<svg viewBox="0 0 ${W} ${H}" width="100%">
     <rect x="${PAD.l}" y="${PAD.t}" width="${W - PAD.l - PAD.r}" height="${H - PAD.t - PAD.b}" fill="#fff" stroke="#b9c0cf"/>
-    <rect x="${PAD.l}" y="${PAD.t}" width="${W - PAD.l - PAD.r}" height="${Math.max(0, zeroY - PAD.t)}" fill="#ecfdf3"/>
+    <defs><linearGradient id="cfg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#15803d" stop-opacity=".28"/><stop offset="1" stop-color="#15803d" stop-opacity="0"/></linearGradient></defs>
+    <path d="${cashPath} L ${cx(rows.length)} ${zeroY} L ${cx(0)} ${zeroY} Z" fill="url(#cfg)"/>
     ${gridLines((f) => { const v = cMin + (cMax - cMin) * f; return { y: cy(v), label: nf(Math.round(v)) }; })}
     <line x1="${PAD.l}" y1="${zeroY}" x2="${W - PAD.r}" y2="${zeroY}" stroke="#333"/>
     <path d="${cashPath}" fill="none" stroke="#15803d" stroke-width="2.2"/>
-    ${pbX !== null ? `<line x1="${pbX}" y1="${PAD.t}" x2="${pbX}" y2="${H - PAD.b}" stroke="#c0392b" stroke-dasharray="4 3"/>
-      <circle cx="${pbX}" cy="${zeroY}" r="4" fill="#c0392b"/>
-      <text x="${pbX + 5}" y="${PAD.t + 12}" font-size="9.5" fill="#c0392b" font-weight="bold">Breakeven ${nf(eco.paybackYears!, 1)} y</text>` : ""}
+    ${pbX !== null ? `<line x1="${pbX}" y1="${PAD.t}" x2="${pbX}" y2="${H - PAD.b}" stroke="#d4a72c" stroke-width="1.6" stroke-dasharray="5 3"/>
+      <circle cx="${pbX}" cy="${zeroY}" r="5" fill="#c0392b" stroke="#fff" stroke-width="1.5"/>
+      <rect x="${pbX + 6}" y="${PAD.t + 4}" width="150" height="18" rx="9" fill="#c0392b"/>
+      <text x="${pbX + 81}" y="${PAD.t + 16.5}" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold">نقطة كسر التعادل: ${nf(eco.paybackYears!, 1)} سنة</text>` : ""}
     ${xTicks}
   </svg>`;
 
@@ -92,7 +94,7 @@ export function downloadEconomicReport(
     ${xTicks}
   </svg>`;
 
-  const kpi = (t: string, v: string) => `<div class="kpi"><span>${esc(t)}</span><b>${esc(v)}</b></div>`;
+  const kpi = (t: string, v: string, c = "") => `<div class="kpi ${c}"><span>${esc(t)}</span><b>${esc(v)}</b></div>`;
 
   const cashRows = rows
     .map(
@@ -122,15 +124,19 @@ export function downloadEconomicReport(
   body{margin:0;font-family:"Segoe UI",Tahoma,Arial,sans-serif;color:#111;font-size:9.5pt;background:#fff}
   .page{width:190mm;min-height:270mm;padding:0 0 10mm;margin:0 auto;page-break-after:always}
   .page:last-child{page-break-after:auto}
-  .head{display:flex;align-items:center;justify-content:space-between;border-bottom:2pt solid #15803d;padding-bottom:3mm}
-  .head img{width:26mm}
-  .head h1{margin:0;font-size:15pt;color:#15803d}
-  .head p{margin:1mm 0 0;font-size:9pt;color:#555}
-  h2{margin:7mm 0 2mm;font-size:11.5pt;color:#1c3f94;border-right:3pt solid #1c3f94;padding-right:3mm}
-  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5mm}
-  .kpi{border:.6pt solid #b9c0cf;padding:2.5mm;text-align:center}
-  .kpi span{display:block;font-size:7.8pt;color:#555}
-  .kpi b{display:block;margin-top:1mm;font-size:11pt;color:#1c3f94}
+  .head{display:flex;align-items:center;justify-content:space-between;gap:5mm;border-radius:4mm;padding:6mm 7mm;margin-top:3mm;color:#fff;background:linear-gradient(120deg,#0b1f4d,#3a2a5a 70%,#b3262d);border-bottom:1.6mm solid #d4a72c}
+  .head img{width:30mm;background:#fff;border-radius:2mm;padding:1.5mm}
+  .head h1{margin:0;font-size:18pt;color:#fff}
+  .head p{margin:1.5mm 0 0;font-size:9pt;color:#fff;opacity:.9}
+  .head .k{margin:0 0 1mm;color:#d4a72c;font-weight:bold;font-size:9pt;opacity:1}
+  h2{margin:7mm 0 2mm;padding:2mm 4mm;border-radius:2.5mm 2.5mm 0 0;background:#0b1f4d;color:#fff;font-size:11pt;border-right:1.2mm solid #d4a72c}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm}
+  .kpi{border:.5pt solid #d5dae4;border-top:1.2mm solid #c0392b;border-radius:3mm;padding:3.5mm;text-align:center;background:#fff}
+  .kpi span{display:block;font-size:8pt;color:#667;font-weight:bold}
+  .kpi b{display:block;margin-top:1.5mm;font-size:13pt;color:#0b1f4d}
+  .kpi.g{border-top-color:#15803d}.kpi.y{border-top-color:#d4a72c}
+  .hero{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin-top:5mm}
+  .hero .kpi b{font-size:15pt}
   table{width:100%;border-collapse:collapse;font-size:8.2pt}
   th,td{border:.5pt solid #b9c0cf;padding:1.1mm 1.5mm;text-align:center}
   th{background:#dfe4ee;font-size:8pt}
@@ -144,10 +150,21 @@ export function downloadEconomicReport(
 
 <div class="page">
   <div class="head">
-    <div><h1>دراسة الجدوى الاقتصادية والوفر البيئي</h1>
+    <div><p class="k">الملخص التنفيذي — TAMKEEN</p><h1>دراسة الجدوى الاقتصادية والوفر البيئي</h1>
       <p>المرجع: ${esc(study.reference)} — العميل: ${esc(project)} — الموقع: ${esc(study.city || "—")} — التاريخ: ${dstr}</p></div>
     <img src="${logo}" alt="TAMKEEN" />
   </div>
+
+  <div class="hero">
+    ${kpi("فترة الاسترداد", eco.paybackYears ? `${nf(eco.paybackYears, 1)} سنة` : "—", "g")}
+    ${kpi("الوفر السنوي", `${nf(eco.annualSaving)} $`, "y")}
+    ${kpi("تكلفة الكيلوواط LCOE", eco.lcoe ? `${nf(eco.lcoe, 3)} $/kWh` : "—")}
+    ${kpi("العائد ROI", eco.roi !== null ? `${nf(eco.roi)} %` : "—", "g")}
+  </div>
+
+  <h2>منحنى التدفق النقدي التراكمي ونقطة كسر التعادل</h2>
+  ${cashSvg}
+  <div class="legend">المحور الأفقي: السنوات — المحور الرأسي: الرصيد التراكمي بالدولار — تكلفة المنظومة ${nf(eco.capex)} $</div>
 
   <h2>بيانات المنظومة</h2>
   <div class="kpis">
@@ -168,10 +185,6 @@ export function downloadEconomicReport(
     ${kpi("العائد على الاستثمار", eco.roi !== null ? `${nf(eco.roi)} %` : "—")}
     ${kpi("إنتاج العمر التشغيلي", `${nf(eco.lifetimeEnergy)} kWh`)}
   </div>
-
-  <h2>منحنى التدفق النقدي التراكمي ونقطة كسر التعادل</h2>
-  ${cashSvg}
-  <div class="legend">المحور الأفقي: السنوات — المحور الرأسي: الرصيد التراكمي بالدولار</div>
 
   <h2>مقارنة التكلفة المتراكمة</h2>
   ${compSvg}
