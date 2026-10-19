@@ -1,5 +1,5 @@
 import type { PvsystStudyResult } from "./pvsyst-engine";
-import { LIFETIME_YEARS, type EconomicsResult } from "./pvsyst-economics";
+import { LIFETIME_YEARS, cashFlowSchedule, type EconomicsResult } from "./pvsyst-economics";
 import actesLogoPlain from "@/assets/actes-logo-plain.png.asset.json";
 
 /**
@@ -58,7 +58,7 @@ const PV_MARK = `<svg class="pvmark" viewBox="0 0 120 90" xmlns="http://www.w3.o
 export function downloadPvsystReport(study: PvsystStudyResult, eco?: EconomicsResult | null) {
   if (typeof window === "undefined") return;
   const hasEco = Boolean(eco && eco.annualSaving > 0);
-  const totalPages = hasEco ? 6 : 5;
+  const totalPages = hasEco ? 7 : 6;
   const s = study.system;
   const origin = window.location.origin;
   const logo = `${origin}${actesLogoPlain.url}`;
@@ -175,6 +175,62 @@ export function downloadPvsystReport(study: PvsystStudyResult, eco?: EconomicsRe
   <div class="pver"><b>${PVSYST_VERSION}</b><br/>VC1, Simulation date:<br/>${dstr} ${tstr}<br/>with V8.1.2</div>
   <div class="pfoot"><span>${dstr}</span><span>PVsyst Licensed to TAMKEEN</span><span>Page ${n}/${totalPages}</span></div>`;
 
+
+  // ==== الصفحة التنفيذية: مؤشرات + تدفق نقدي ونقطة كسر التعادل ====
+  const avgPr = hasMonths ? months.reduce((a, m) => a + m.pr, 0) / 12 : null;
+  const prPct = avgPr ? (avgPr <= 1 ? avgPr * 100 : avgPr) : null;
+  const pshDay = hasMonths ? months.reduce((a, m, i) => a + m.irradiation / DAYS[i]!, 0) / 12 : null;
+  const kc = (t: string, v: string, c = "") => `<div class="kc ${c}"><span>${esc(t)}</span><b>${esc(v)}</b></div>`;
+  let cashBlock = "";
+  if (hasEco && eco && eco.capex > 0 && study.annualEnergy) {
+    const rows = cashFlowSchedule({ annualEnergy: study.annualEnergy, kwp: s.kwp ?? null, capex: eco.capex, tariff: eco.tariff, dieselPrice: eco.dieselPrice });
+    const W = 700, H = 250, P = { t: 14, r: 14, b: 26, l: 62 };
+    const vals = rows.map((r) => r.cumulative).concat([-eco.capex, 0]);
+    const mx = Math.max(...vals, 1), mn = Math.min(...vals, 0);
+    const cx = (i: number) => P.l + ((W - P.l - P.r) * i) / Math.max(1, rows.length);
+    const cy = (v: number) => P.t + (H - P.t - P.b) * (1 - (v - mn) / Math.max(1, mx - mn));
+    const path = [`M ${cx(0)} ${cy(-eco.capex)}`, ...rows.map((r, i) => `L ${cx(i + 1)} ${cy(r.cumulative)}`)].join(" ");
+    const area = `${path} L ${cx(rows.length)} ${cy(0)} L ${cx(0)} ${cy(0)} Z`;
+    const z = cy(0);
+    const pb = eco.paybackYears ? cx(eco.paybackYears) : null;
+    const grid = [0, 0.25, 0.5, 0.75, 1].map((f) => { const v = mn + (mx - mn) * f; const y = cy(v);
+      return `<line x1="${P.l}" y1="${y}" x2="${W - P.r}" y2="${y}" stroke="#d5dae4" stroke-dasharray="3 3"/><text x="${P.l - 6}" y="${y + 3}" text-anchor="end" font-size="9" fill="#556">${nf(Math.round(v))}</text>`; }).join("");
+    const ticks = rows.filter((r) => r.year % 5 === 0 || r.year === 1).map((r) => `<text x="${cx(r.year)}" y="${H - 8}" text-anchor="middle" font-size="9" fill="#556">${r.year}</text>`).join("");
+    cashBlock = `<div class="sec">Cumulative cash flow &amp; break-even point</div><div class="cfw">
+    <svg viewBox="0 0 ${W} ${H}" width="100%">
+      <defs><linearGradient id="cfg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#15803d" stop-opacity=".28"/><stop offset="1" stop-color="#15803d" stop-opacity="0"/></linearGradient></defs>
+      <rect x="${P.l}" y="${P.t}" width="${W - P.l - P.r}" height="${H - P.t - P.b}" fill="#fff" stroke="#d5dae4"/>
+      ${grid}
+      <path d="${area}" fill="url(#cfg)"/>
+      <line x1="${P.l}" y1="${z}" x2="${W - P.r}" y2="${z}" stroke="#0b1f4d" stroke-width="1.2"/>
+      <path d="${path}" fill="none" stroke="#15803d" stroke-width="2.6"/>
+      ${pb !== null ? `<line x1="${pb}" y1="${P.t}" x2="${pb}" y2="${H - P.b}" stroke="#d4a72c" stroke-width="1.6" stroke-dasharray="5 3"/>
+        <circle cx="${pb}" cy="${z}" r="5" fill="#c0392b" stroke="#fff" stroke-width="1.5"/>
+        <rect x="${pb + 6}" y="${P.t + 4}" width="128" height="18" rx="9" fill="#c0392b"/>
+        <text x="${pb + 70}" y="${P.t + 16.5}" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold">Break-even: ${nf(eco.paybackYears!, 1)} years</text>` : ""}
+      ${ticks}
+    </svg>
+    <div style="text-align:center;font-size:8pt;color:#556">Years (x) — Cumulative balance in USD (y) — CAPEX ${nf(eco.capex)} USD</div></div>
+    <div class="kg">
+      ${kc("Payback period", eco.paybackYears ? `${nf(eco.paybackYears, 1)} years` : "—", "g")}
+      ${kc("Annual saving", `${nf(eco.annualSaving)} USD`, "y")}
+      ${kc("LCOE", eco.lcoe ? `${nf(eco.lcoe, 3)} USD/kWh` : "—")}
+      ${kc("ROI (lifetime)", eco.roi !== null ? `${nf(eco.roi)} %` : "—", "g")}
+    </div>`;
+  }
+  const execPage = `<!-- الصفحة 2: الملخص التنفيذي -->
+<div class="page">
+  <div class="exb"><div><p class="k">${PVSYST_VERSION} — Simulation report</p><h1>Executive summary</h1><p>${esc(project)} — ${esc(study.city || "—")} — ${esc(sysTitle)}</p></div><img src="${logo}" alt="TAMKEEN"/></div>
+  <div class="kg">
+    ${kc("Installed power", s.kwp ? `${nf(s.kwp, 2)} kWp` : "—", "y")}
+    ${kc("Annual production", study.annualEnergy ? `${nf(study.annualEnergy)} kWh` : "—")}
+    ${kc("Performance ratio", prPct ? `${nf(prPct, 1)} %` : "—", "g")}
+    ${kc("Peak sun hours", pshDay ? `${nf(pshDay, 2)} h/day` : "—")}
+  </div>
+  ${cashBlock}
+  <div class="pfoot"><span>${dstr}</span><span>PVsyst Licensed to TAMKEEN</span><span>Page 2/${totalPages}</span></div>
+</div>`;
+
   const html = `<!doctype html><html lang="en"><head><meta charset="utf-8" />
 <title>${esc(`PVsyst Simulation report — ${project}`)}</title>
 <style>
@@ -251,6 +307,19 @@ export function downloadPvsystReport(study: PvsystStudyResult, eco?: EconomicsRe
   .cvmeta{margin-top:9mm;font-size:12.5pt;line-height:2}
   .cvlogo{margin-top:34mm}
   .cvlogo img{width:78mm}
+  /* الملخص التنفيذي بهوية تمكين */
+  .exb{border-radius:4mm;padding:6mm 7mm;color:#fff;background:linear-gradient(120deg,#0b1f4d,#3a2a5a 70%,#b3262d);border-bottom:1.6mm solid #d4a72c;display:flex;justify-content:space-between;align-items:center;gap:5mm;margin-top:5mm}
+  .exb .k{color:#d4a72c;font-weight:bold;font-size:9pt;margin:0}
+  .exb h1{margin:1.5mm 0;font-size:19pt}
+  .exb p{margin:0;font-size:9.5pt;opacity:.9}
+  .exb img{width:30mm;background:#fff;border-radius:2mm;padding:1.5mm}
+  .kg{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin-top:5mm}
+  .kc{border:.5pt solid #d5dae4;border-top:1.2mm solid #c0392b;border-radius:3mm;padding:3.5mm;background:#fff}
+  .kc span{display:block;font-size:8pt;color:#667;font-weight:bold}
+  .kc b{display:block;margin-top:1.5mm;font-size:13.5pt;color:#0b1f4d}
+  .kc.g{border-top-color:#15803d}.kc.y{border-top-color:#d4a72c}
+  .sec{margin:7mm 0 2mm;padding:2mm 4mm;border-radius:2.5mm 2.5mm 0 0;background:#0b1f4d;color:#fff;font-size:11pt;border-left:1.2mm solid #d4a72c}
+  .cfw{border:.5pt solid #d5dae4;border-top:0;padding:3mm;border-radius:0 0 2.5mm 2.5mm}
   @page{size:A4;margin:12mm 10mm}
 </style></head><body>
 
@@ -271,9 +340,11 @@ export function downloadPvsystReport(study: PvsystStudyResult, eco?: EconomicsRe
   <div class="pfoot"><span>${dstr}</span><span>PVsyst Licensed to TAMKEEN</span><span>Page 1/${totalPages}</span></div>
 </div>
 
-<!-- الصفحة 2: ملخص المشروع -->
+${execPage}
+
+<!-- الصفحة 3: ملخص المشروع -->
 <div class="page">
-  ${pageHead(2)}
+  ${pageHead(3)}
   <div class="box"><h2>Project summary</h2>
     <div class="cols">
       <div class="col">
@@ -352,18 +423,19 @@ export function downloadPvsystReport(study: PvsystStudyResult, eco?: EconomicsRe
 
   <div class="box"><h2>Table of contents</h2>
     <div class="toc">
-      <div><span>Project and results summary</span><i></i><span>2</span></div>
-      <div><span>General parameters, PV Array Characteristics, System losses</span><i></i><span>3</span></div>
-      <div><span>Main results</span><i></i><span>4</span></div>
-      <div><span>Loss diagram</span><i></i><span>5</span></div>
-      ${hasEco ? `<div><span>Economic and environmental evaluation</span><i></i><span>6</span></div>` : ""}
+      <div><span>Executive summary — KPIs &amp; cash flow</span><i></i><span>2</span></div>
+      <div><span>Project and results summary</span><i></i><span>3</span></div>
+      <div><span>General parameters, PV Array Characteristics, System losses</span><i></i><span>4</span></div>
+      <div><span>Main results</span><i></i><span>5</span></div>
+      <div><span>Loss diagram</span><i></i><span>6</span></div>
+      ${hasEco ? `<div><span>Economic and environmental evaluation</span><i></i><span>7</span></div>` : ""}
     </div>
   </div>
 </div>
 
 <!-- الصفحة 3: المعاملات العامة -->
 <div class="page">
-  ${pageHead(3)}
+  ${pageHead(4)}
   <div class="box"><h2>General parameters</h2>
     <div class="cols">
       <div class="col"><h3>${esc(sysTitle)}</h3></div>
@@ -447,7 +519,7 @@ export function downloadPvsystReport(study: PvsystStudyResult, eco?: EconomicsRe
 
 <!-- الصفحة 4: النتائج الرئيسية -->
 <div class="page">
-  ${pageHead(4)}
+  ${pageHead(5)}
   <div class="box"><h2>Main results</h2>
     <div class="sub" style="margin-top:0">Simulation step</div>
     <div class="plain">Hourly</div>
@@ -517,7 +589,7 @@ export function downloadPvsystReport(study: PvsystStudyResult, eco?: EconomicsRe
 
 <!-- الصفحة 5: مخطط الفواقد -->
 <div class="page">
-  ${pageHead(5)}
+  ${pageHead(6)}
   <div class="box"><h2>Loss diagram</h2>
     <div class="loss">
       <div class="lbox"><span>${study.annualIrradiation ? `${nf(study.annualIrradiation)} kWh/m²` : "—"}</span><span>Global incident in coll. plane</span></div>
@@ -537,7 +609,7 @@ export function downloadPvsystReport(study: PvsystStudyResult, eco?: EconomicsRe
 
 <!-- الصفحة 6: الدراسة الاقتصادية والبيئية -->
 ${hasEco ? `<div class="page">
-  ${pageHead(6)}
+  ${pageHead(7)}
   <div class="box"><h2>Economic evaluation</h2>
     <div class="cols">
       <div class="col">
