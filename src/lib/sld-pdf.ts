@@ -124,12 +124,28 @@ export function downloadSldSheet(
   .dt .c{text-align:center}
   .dt .b{font-weight:700}
   .notes{margin:2mm 0 0;padding-inline-start:5mm;font-size:7.6pt;line-height:1.6}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .bn{display:flex;align-items:center;justify-content:space-between;gap:4mm;padding:3mm 4mm;border-radius:2mm;color:#fff;background:linear-gradient(120deg,#0b1f45 0%,#13306a 65%,#b4231f 100%);border-bottom:1.2mm solid #c9a24a}
+  .bn small{color:#e7c873;font-weight:700;font-size:7pt;letter-spacing:.5px}
+  .bn h1{margin:.5mm 0 0;font-size:12pt}
+  .bn .r{font-size:7.6pt;text-align:right;line-height:1.5}
+  .kp{display:grid;grid-template-columns:repeat(4,1fr);gap:2.5mm;margin-top:2mm}
+  .kp div{border:.5pt solid #d5dbe6;border-top:.9mm solid #b4231f;border-radius:1.5mm;padding:1.3mm 2.5mm;display:flex;flex-direction:column}
+  .kp span{font-size:6.5pt;color:#55607a;font-weight:700}
+  .kp b{font-size:11pt;color:#0b1f45}
+  .kp i{font-style:normal;font-size:6.5pt;color:#6b7280}
 </style></head><body>
 
 <div class="sheet">
-  <div class="hd">
-    <h1>SINGLE LINE DIAGRAM — ${esc(t.system)}</h1>
-    <div class="r"><b>${esc(t.project)}</b><br/>${esc(t.customer || "")} ${t.city ? "— " + esc(t.city) : ""}<br/>Drawing No. ${esc(ref)}</div>
+  <div class="bn">
+    <div><small>TAMKEEN — Single Line Diagram</small><h1>SINGLE LINE DIAGRAM — ${esc(t.system)}</h1></div>
+    <div class="r"><b>${esc(t.project)}</b><br/>${esc(t.customer || "")} ${t.city ? "— " + esc(t.city) : ""}<br/>Drawing No. ${esc(ref)} — ${esc(t.date)}</div>
+  </div>
+  <div class="kp">
+    <div><span>PV ARRAY</span><b>${m.pv ? `${m.pv.kwp.toFixed(2)} kWp` : "—"}</b><i>${m.pv ? `${m.pv.strings} × ${m.pv.perString} modules` : ""}</i></div>
+    <div><span>INVERTER</span><b>${m.inverter ? `${m.inverter.qty} × ${m.inverter.kw} kW` : "—"}</b><i>${m.inverter ? (m.inverter.phase3 ? "Three phase 400 V" : "Single phase 230 V") : ""}</i></div>
+    <div><span>STRING Voc / Isc</span><b>${m.pv?.strVoc ? `${Math.round(m.pv.strVoc)} V` : "—"}</b><i>${m.pv?.isc ? `Isc ${m.pv.isc} A` : ""}</i></div>
+    <div><span>AC PROTECTION</span><b>${m.acBox ? `${m.acBox.breakerA} A` : "—"}</b><i>${m.battery ? `Battery ${m.battery.totalKwh} kWh` : ""}</i></div>
   </div>
   <div class="draw">${drawing || '<p style="font-size:9pt">Diagram unavailable.</p>'}</div>
   <div class="legend">
