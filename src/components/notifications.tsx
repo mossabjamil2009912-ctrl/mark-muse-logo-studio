@@ -23,7 +23,7 @@ function timeLabel(at: number) {
   return new Date(at).toLocaleString("ar", { hour: "2-digit", minute: "2-digit", day: "2-digit", month: "2-digit" });
 }
 
-export function NotificationsBell({ isAdmin }: { isAdmin: boolean }) {
+export function NotificationsBell({ isAdmin, bare = false }: { isAdmin: boolean; bare?: boolean }) {
   const store = useOrdersStore();
   const [open, setOpen] = useState(false);
   const [orderId, setOrderId] = useState<string | null>(null);
@@ -54,9 +54,9 @@ export function NotificationsBell({ isAdmin }: { isAdmin: boolean }) {
         type="button"
         onClick={() => setOpen((value) => { if (!value) markAllSeen(audience); return !value; })}
         aria-label="الإشعارات"
-        className="relative grid size-9 place-items-center rounded-full text-brand transition hover:bg-muted"
+        className={bare ? "relative size-full rounded-full !bg-transparent" : "relative grid size-9 place-items-center rounded-full text-brand transition hover:bg-muted"}
       >
-        <Bell className="size-5" />
+        {!bare && <Bell className="size-5" />}
         {unread > 0 && (
           <span className="absolute -right-0.5 -top-0.5 grid min-w-4 place-items-center rounded-full bg-brand px-1 text-[10px] font-black text-brand-foreground">{unread}</span>
         )}
