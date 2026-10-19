@@ -39,6 +39,7 @@ import {
   Check,
   ChevronLeft,
   ChevronDown,
+  Menu,
   CircleDollarSign,
   Download,
   FileCheck2,
