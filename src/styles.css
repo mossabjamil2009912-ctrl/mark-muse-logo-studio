@@ -417,7 +417,7 @@ button:not(:disabled), a { touch-action: manipulation; }
 .start-screen-content p:last-child { font-size:11px; }
 .start-screen-sectors { padding-top:6px; }
 .start-screen-sectors span { border-color:var(--gold); border-radius:24px; padding:7px 14px; font-size:14px; }
-.start-screen-cta { border-radius:40px; border:2px solid var(--gold); height:62px; max-width:320px; margin-top:28px; font-size:26px !important; }
+.start-screen-cta { border-radius:40px; border:0; height:62px; max-width:320px; margin-top:28px; font-size:26px !important; }
 .workspace-body { padding:0; border:0; background:transparent; box-shadow:none; }
 .workspace-heading { align-items:center; gap:8px; }
 .project-options { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
