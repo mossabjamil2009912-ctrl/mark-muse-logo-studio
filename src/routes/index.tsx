@@ -1341,13 +1341,14 @@ function BrandMark({ compact = false, className, white = false }: { inverse?: bo
 
 function TopBar({ isAdmin, clientName = "", onExitAdmin, onSettings, onExit, onToggleSidebar, sidebarCollapsed }: { isAdmin: boolean; clientName?: string; onExitAdmin: () => void; onSettings: () => void; onExit: () => void; onToggleSidebar: () => void; sidebarCollapsed: boolean }) {
   return (
-    <header className="app-topbar relative grid h-[52px] shrink-0 grid-cols-[minmax(0,1fr)_auto] items-center border-b border-border bg-background px-2 text-navy shadow-[var(--shadow-soft)] sm:h-[62px] sm:px-4 [&_button]:!text-navy [&_svg]:!text-navy">
+    <header className="app-topbar relative grid h-[52px] shrink-0 grid-cols-[minmax(0,1fr)_auto] items-center border-b border-border bg-background px-2 text-navy shadow-[var(--shadow-soft)] sm:h-[62px] sm:px-4 lg:h-[76px] [&_button]:!text-navy [&_svg]:!text-navy">
       <span aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-l from-navy via-primary to-navy" />
       <div className="flex min-w-0 items-center gap-2">
         <Button variant="presentation" size="presentation" onClick={onToggleSidebar} aria-label={sidebarCollapsed ? "إظهار القائمة" : "تصغير القائمة"} title={sidebarCollapsed ? "إظهار القائمة" : "تصغير القائمة"} className="hidden size-8 place-items-center rounded-md text-navy lg:grid">
           {sidebarCollapsed ? <PanelRightOpen className="size-5" /> : <PanelRightClose className="size-5" />}
         </Button>
-        <TamkeenBrand compact />
+        <span className="lg:hidden"><TamkeenBrand compact /></span>
+        <p className="hidden border-s-2 border-gold ps-3 text-[13px] font-black leading-5 text-navy lg:block">حلول الطاقة لمستقبل أفضل<br /><span className="text-[11px] font-bold text-muted-foreground">طاقة مستدامة .. لحياة أكثر ازدهاراً</span></p>
         <p className="hidden border-s border-border ps-3 text-xs text-muted-foreground xl:block">مرحباً، {isAdmin ? "الإدارة" : clientName || "عميل"}</p>
         {isAdmin && (
           <span className="ms-2 hidden shrink-0 items-center gap-1 rounded-full bg-brand px-3 py-1 text-[11px] font-black text-brand-foreground sm:inline-flex" dir="ltr">
