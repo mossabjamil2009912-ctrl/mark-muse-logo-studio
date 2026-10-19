@@ -1349,7 +1349,7 @@ function TopBar({ banner = false, isAdmin, clientName = "", onExitAdmin, onSetti
           <img src={topbarSolarCity} alt="" width={1200} height={400} className="topbar-banner-photo" />
           <span className="topbar-banner-pill">تمكين ... لنحقق أفضل لمستقبل أخضر</span>
           <div className="topbar-banner-brand"><TamkeenBrand /></div>
-          <div className="topbar-banner-tools [&_svg]:size-5"><NotificationsBell isAdmin={isAdmin} /><OrderCenterButton isAdmin={isAdmin} /><ReplayVoiceButton /><LangSwitch /><Button variant="presentation" size="presentation" onClick={onToggleSidebar} aria-label="القائمة" className="grid size-9 place-items-center rounded-md"><Menu className="size-6" /></Button></div>
+          <div className="topbar-banner-tools [&_svg]:size-5"><NotificationsBell isAdmin={isAdmin} /><OrderCenterButton isAdmin={isAdmin} /><ReplayVoiceButton /><LangSwitch /><Button variant="presentation" size="presentation" onClick={onToggleSidebar} aria-label="القائمة" className="grid size-9 place-items-center rounded-md !bg-transparent"><Menu className="size-6" /></Button></div>
         </div>
       )}
       {/* يمين: المستخدم والإشعارات وهوية تمكين */}
