@@ -1419,39 +1419,38 @@ function ReplayVoiceButton() {
 
 
 
-function AppSidebar({ active, onNavigate, onSettings, onExit, collapsed }: { collapsed: boolean; active: string; onNavigate: (action: (typeof NAV_ITEMS)[number]["action"]) => void; onSettings: () => void; onExit: () => void }) {
-  const row = "flex w-full items-center gap-3 border-b border-skyline-foreground/15 px-3 py-3.5 text-right text-[14px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10";
+function AppSidebar({ active, onNavigate, onProducts, onSettings, onExit, collapsed }: { collapsed: boolean; active: string; onNavigate: (action: (typeof NAV_ITEMS)[number]["action"]) => void; onProducts: () => void; onSettings: () => void; onExit: () => void }) {
+  const row = "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-right text-[13.5px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10";
   return (
     <aside data-collapsed={collapsed} className="app-sidebar relative order-2 hidden h-full flex-col overflow-hidden bg-navy text-skyline-foreground lg:flex lg:col-start-2 lg:row-start-1">
-      <div className="pointer-events-none relative z-10 px-4 pb-4 pt-4">
+      <div className="pointer-events-none relative z-10 px-4 pb-3 pt-4">
         <BrandLockup />
       </div>
-      <nav className="relative z-10 px-3" aria-label="التنقل الرئيسي">
-
-
-        {NAV_ITEMS.map((item) => {
+      <nav className="relative z-10 flex-1 space-y-0.5 overflow-y-auto px-3" aria-label="التنقل الرئيسي">
+        {SIDEBAR_ITEMS.map((item) => {
           const Icon = item.icon;
-          const selected = active === item.action;
-          return selected ? (
-            <Button variant="presentation" size="presentation" key={item.action} type="button" onClick={() => onNavigate(item.action)} className="mb-2 flex w-full items-center justify-center gap-2 rounded-lg bg-brand px-3 py-3 text-[15px] font-bold text-brand-foreground shadow-md">
-              <Icon className="size-5 shrink-0" /> <span className="whitespace-nowrap">{item.label}</span>
-            </Button>
-          ) : (
-            <Button variant="presentation" size="presentation" key={item.action} type="button" onClick={() => onNavigate(item.action)} className={row}>
-              <Icon className="size-5 shrink-0" /> <span className="flex-1 whitespace-nowrap">{item.label}</span><ArrowLeft className="size-3.5 shrink-0 opacity-80" />
+          const selected = item.main && active === item.action;
+          return (
+            <Button
+              variant="presentation" size="presentation"
+              key={item.label}
+              type="button"
+              onClick={() => (item.action === "products" ? onProducts() : onNavigate(item.action))}
+              aria-current={selected ? "page" : undefined}
+              className={selected ? "flex w-full items-center gap-3 rounded-lg bg-brand px-3 py-2.5 text-[13.5px] font-bold text-brand-foreground shadow-md" : row}
+            >
+              <Icon className="size-5 shrink-0" /> <span className="flex-1 whitespace-nowrap">{item.label}</span>
             </Button>
           );
         })}
-        <Button variant="presentation" size="presentation" type="button" onClick={onSettings} className={row}><Settings className="size-5" /> <span className="flex-1">الإعدادات</span><ArrowLeft className="size-3.5 opacity-80" /></Button>
-        <Button variant="presentation" size="presentation" type="button" onClick={onExit} className="flex w-full items-center gap-3 px-3 py-3.5 text-[14px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10"><LogOut className="size-5" /> خروج</Button>
+        <Button variant="presentation" size="presentation" type="button" onClick={onSettings} className={row}><Settings className="size-5 shrink-0" /> <span className="flex-1">الإعدادات</span></Button>
       </nav>
-      <svg aria-hidden viewBox="0 0 200 160" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 bottom-10 z-0 h-40 w-full text-skyline">
+      <svg aria-hidden viewBox="0 0 200 160" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-40 w-full text-skyline">
         <path d="M0 110 C60 60 120 20 200 10 L200 160 L0 160 Z" fill="currentColor" opacity="0.55" />
         <path d="M0 140 C70 100 130 70 200 60 L200 160 L0 160 Z" fill="currentColor" opacity="0.35" />
       </svg>
-      <div className="relative mt-auto px-4 pb-5 text-[13px] font-bold text-skyline-foreground">
-        <span className="mb-2 block h-1 w-8 rounded-full bg-brand" />
-        <p className="flex items-center gap-1.5"><Leaf className="size-4" /> معاً نحو طاقة مستدامة</p>
+      <div className="relative z-10 mt-auto px-3 pb-4 pt-2">
+        <Button variant="presentation" size="presentation" type="button" onClick={onExit} className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-[13.5px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10"><LogOut className="size-5 shrink-0" /> تسجيل الخروج</Button>
       </div>
     </aside>
   );
