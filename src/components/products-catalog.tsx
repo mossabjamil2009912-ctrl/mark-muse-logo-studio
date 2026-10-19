@@ -220,11 +220,12 @@ function AllProductsView({ onOpen, onBack }: { onOpen: (id: string) => void; onB
     `rounded-full border px-3 py-1 text-[11px] font-bold transition lg:text-xs ${active ? "border-navy bg-navy text-navy-foreground" : "border-border bg-card text-navy hover:bg-muted"}`;
   return (
     <div className="catalog-screen screen-enter w-full space-y-4 pb-4">
-      <BackButton onClick={onBack} label="الفئات" />
+      <div className="lg:hidden"><BackButton onClick={onBack} label="الفئات" /></div>
       <header className="catalog-banner">
         <img src={homeHero} alt="" />
-        <div><h1 className="text-xl font-black lg:text-2xl">كل المنتجات</h1>
-        <p className="text-[12px] font-bold opacity-85">{`${shown.length} من ${all.length} موديل`}</p></div>
+        <div><h1 className="text-xl font-black lg:text-3xl">كل المنتجات</h1>
+        <p className="text-[12px] font-bold opacity-85 lg:text-sm">{`${shown.length} من ${all.length} موديل`}</p></div>
+        <span className="absolute left-3 top-1/2 hidden -translate-y-1/2 lg:block"><BackButton onClick={onBack} label="الفئات" /></span>
       </header>
       <div className="relative">
         <Search className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -242,7 +243,7 @@ function AllProductsView({ onOpen, onBack }: { onOpen: (id: string) => void; onB
         ))}
       </div>
       {shown.length ? (
-        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:gap-3 xl:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-2 lg:gap-4">
           {shown.map((p) => <ProductCard key={p.id} product={p} onOpen={() => onOpen(p.id)} />)}
         </div>
       ) : (
