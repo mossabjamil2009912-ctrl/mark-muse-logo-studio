@@ -137,7 +137,7 @@ export function ImageScreen({ kind, onAction, userName, isAdmin = false }: { kin
   const bell = (mobile ? MBELL : BELL)[kind];
   const name = (mobile ? MNAME : NAME)[kind];
   return (
-    <div dir="ltr" className="fixed inset-0 z-40 grid place-items-center overflow-hidden bg-navy" data-image-screen={kind}>
+    <div dir="ltr" className="fixed inset-0 z-[70] grid place-items-center overflow-hidden bg-navy" data-image-screen={kind}>
       <div className="relative" style={{ width: `min(100vw, calc(100dvh * ${W} / ${H}))`, aspectRatio: `${W} / ${H}` }}>
         <img src={(mobile ? MSRC : SRC)[kind]} alt="" draggable={false} className="absolute inset-0 size-full select-none object-contain" />
         {spots.map(([x1, y1, x2, y2, action, label], i) => (
@@ -152,7 +152,7 @@ export function ImageScreen({ kind, onAction, userName, isAdmin = false }: { kin
           />
         ))}
         {bell && (
-          <div className="absolute z-10 grid place-items-center [&_svg]:size-7 [&_svg]:stroke-[2.4]" style={{ ...pos(bell), background: "rgb(254 254 254)" }}>
+          <div className="absolute z-10 grid place-items-center [&_svg]:size-[70%] [&_svg]:stroke-[2.4]" style={{ ...pos(bell), background: "rgb(254 254 254)" }}>
             <NotificationsBell isAdmin={isAdmin} />
           </div>
         )}
