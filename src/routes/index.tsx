@@ -1527,37 +1527,22 @@ function HomeDashboard({ onService, onProducts }: { onService: (kind: "quote" | 
 
 
 
-      <div className="lg:hidden"><PartnersStrip /></div>
+      <PartnersStrip />
 
 
       <section className="home-services stagger-in grid shrink-0 grid-cols-2 gap-2 lg:grid-cols-2 lg:gap-3">
-        <ServiceCard image={refCardQuote} icon={<Home />} title="منظومات المنازل والفلل" description="للمنازل والفلل" action="دخول التطبيق" tone="brand" onClick={() => onService("quote")} />
-        <ServiceCard image={refCardEnergy} icon={<Store />} title="حلول المتاجر والشركات" description="للمتاجر والمكاتب والشركات" action="دخول التطبيق" tone="energy" badge onClick={() => onService("energy")} />
-        <ServiceCard image={refCardSupport} icon={<Sprout />} title="طاقة الآبار والمزارع الزراعي" description="للمزارع وأنظمة الري" action="دخول التطبيق" tone="skyline" onClick={() => onService("support")} />
-        <ServiceCard image={refCardProducts} icon={<Factory />} title="محطات المصانع والمنشآت" description="للمشاريع الصناعية والمنشآت الكبرى" action="دخول التطبيق" tone="navy" onClick={onProducts} />
+        <ServiceCard image={refCardQuote} icon={<FileText />} title="صمّم منظومتك" description="احصل على أفضل التصاميم الهندسية لمشاريعك الشمسية." action="دخول التطبيق" tone="brand" onClick={() => onService("quote")} />
+        <ServiceCard image={refCardEnergy} icon={<Sun />} title="الدراسات الهندسية" description="التصميم الكامل لمشاريع الطاقة الشمسية بأعلى معايير الجودة والكفاءة." action="دخول التطبيق" tone="energy" onClick={() => onService("energy")} />
+        <ServiceCard image={refCardSupport} icon={<Headphones />} title="خدماتنا واستشاراتنا" description="نقدم خدمات متكاملة واستشارات فنية لدعم مشاريعك في كل المراحل." action="تواصل معنا" tone="skyline" onClick={() => onService("support")} />
+        <ServiceCard image={refCardProducts} icon={<Package />} title="الأجهزة والمنتجات" description="مجموعة متكاملة من أفضل الأجهزة والمنتجات الطاقة الشمسية المعتمدة عالمياً." action="استكشف المنتجات" tone="navy" onClick={onProducts} />
       </section>
 
-      <footer className="relative shrink-0 overflow-hidden rounded-xl bg-navy px-3 py-2.5 text-center text-navy-foreground lg:hidden">
+      <footer className="relative shrink-0 overflow-hidden rounded-xl bg-navy px-3 py-2.5 text-center text-navy-foreground lg:py-4">
         <img src={agricultureImage} alt="" aria-hidden className="absolute inset-0 size-full object-cover opacity-45" />
         <span aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--navy)_55%,transparent),color-mix(in_oklab,var(--navy)_75%,transparent))]" />
-        <p className="relative flex items-center justify-center gap-2 text-base font-black"><span className="h-px w-8 bg-gold" /><span className="grid size-8 place-items-center rounded-full border-2 border-gold"><Leaf className="size-4 text-gold" /></span> معاً نحو طاقة مستدامة<span className="h-px w-8 bg-gold" /></p>
-        <p className="relative mt-1 text-[11px] opacity-80">حلول مبتكرة ... لمستقبل أنظف</p>
+        <p className="relative flex items-center justify-center gap-2 text-base font-black lg:text-xl"><span className="h-px w-8 bg-gold lg:w-14" /><span className="grid size-8 place-items-center rounded-full border-2 border-gold lg:size-10"><Leaf className="size-4 text-gold lg:size-5" /></span> معاً نحو طاقة مستدامة<span className="h-px w-8 bg-gold lg:w-14" /></p>
+        <p className="relative mt-1 text-[11px] opacity-80 lg:text-sm">حلول مبتكرة ... لمستقبل أنظف</p>
       </footer>
-
-      <button type="button" onClick={onProducts} className="group relative hidden shrink-0 items-center overflow-hidden rounded-xl border border-border bg-card text-right shadow-sm transition hover:shadow-md lg:flex">
-        <span className="relative block h-24 w-[46%] shrink-0 overflow-hidden bg-navy">
-          <img src={itemRequestImage} alt="" aria-hidden className="size-full object-cover transition duration-500 group-hover:scale-[1.03]" />
-          <span aria-hidden className="absolute inset-y-0 left-0 w-16 bg-gradient-to-l from-card to-transparent" />
-        </span>
-        <span className="relative flex flex-1 items-center gap-3 px-5 py-4">
-          <span className="grid size-12 shrink-0 place-items-center rounded-full bg-brand text-brand-foreground shadow-md"><Package className="size-6" /></span>
-          <span className="flex-1">
-            <span className="block text-lg font-black text-navy">طلب معدات فردية</span>
-            <span className="block text-sm font-bold text-muted-foreground">أنواع : إنفترترات - بطاريات</span>
-          </span>
-          <span className="grid size-9 shrink-0 place-items-center rounded-full border border-border bg-muted text-navy transition group-hover:bg-brand group-hover:text-brand-foreground"><ArrowLeft className="size-4" /></span>
-        </span>
-      </button>
     </div>
   );
 }
