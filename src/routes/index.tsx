@@ -2107,23 +2107,25 @@ function OptionGrid({ options, selected, projectCards = false, energyCards = fal
       return { image: industrialImage, icon: Factory, subtitle: "للمشاريع الصناعية والمنشآت الكبرى" };
     };
     return (
-      <div className="project-options stagger-in grid grid-cols-2 gap-2.5">
+      <div className="project-options stagger-in grid grid-cols-2 gap-2.5 lg:gap-3">
         {options.map((option, index) => {
           const visual = projectVisual(option.title);
           const Icon = visual.icon;
           const inactive = /قريباً/.test(option.title);
+          const isSelected = selected === option.id;
           return (
-            <Button variant="presentation" size="presentation" key={`${option.id}-${index}`} type="button" onClick={() => onSelect(option.id)} data-selected={selected === option.id || undefined} className={`project-option group flex flex-col overflow-hidden rounded-xl border-2 bg-card text-center shadow-sm transition hover:shadow-md ${selected === option.id ? "border-brand" : "border-transparent"}`}>
-              <span data-photo-frame className="project-option-photo relative block aspect-[16/9] w-full shrink-0 overflow-visible bg-muted">
+            <Button variant="presentation" size="presentation" key={`${option.id}-${index}`} type="button" onClick={() => onSelect(option.id)} data-selected={isSelected || undefined} className={`project-option group relative flex flex-col overflow-hidden rounded-xl border-2 bg-card text-center shadow-sm transition hover:shadow-md lg:flex-row lg:items-stretch lg:text-right ${isSelected ? "border-brand" : "border-transparent"}`}>
+              {isSelected && <span className="absolute right-3 top-3 z-10 inline-flex items-center gap-1 rounded-full bg-brand px-3 py-1 text-[11px] font-black text-brand-foreground shadow-md">محدد <Check className="size-3.5" /></span>}
+              <span data-photo-frame className="project-option-photo relative block aspect-[16/9] w-full shrink-0 overflow-visible bg-muted lg:aspect-auto lg:w-[42%] lg:overflow-hidden">
                 <span className="block size-full overflow-hidden"><img data-photo src={visual.image} alt="" loading="eager" decoding="async" fetchPriority="high" className={`size-full object-cover transition duration-500 group-hover:scale-[1.03] ${inactive ? "opacity-65" : ""}`} /></span>
                 {inactive && <span className="absolute right-2 top-2 rounded-full bg-overlay/55 px-2 py-0.5 text-[10px] font-bold text-brand-foreground">قريباً</span>}
-                {selected === option.id && <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-brand px-2 py-0.5 text-[10px] font-bold text-brand-foreground">محدد <Check className="size-3" /></span>}
-                <span className="project-option-icon absolute -bottom-5 right-1/2 grid size-10 translate-x-1/2 place-items-center rounded-full border-2 border-card bg-brand text-brand-foreground shadow-md"><Icon className="size-5" /></span>
+                <span className="project-option-icon absolute -bottom-5 right-1/2 grid size-10 translate-x-1/2 place-items-center rounded-full border-2 border-card bg-brand text-brand-foreground shadow-md lg:hidden"><Icon className="size-5" /></span>
               </span>
-              <span className="project-option-content flex flex-1 flex-col items-center px-2.5 pb-2.5 pt-7">
-                <strong className="text-[15px] font-black leading-6 text-navy">{option.title}</strong>
-                <small className="mt-1 text-[11px] font-semibold text-muted-foreground">{visual.subtitle}</small>
-                <span className={`mt-auto grid h-6 w-10 place-items-center self-end rounded-full pt-0 ${selected === option.id ? "bg-brand text-brand-foreground" : "bg-muted text-navy"}`} style={{ marginTop: 10 }}><ChevronLeft className="size-4" /></span>
+              <span className="project-option-content flex flex-1 flex-col items-center px-2.5 pb-2.5 pt-7 lg:items-start lg:px-5 lg:py-5">
+                <span className="mb-2 hidden size-12 place-items-center rounded-full bg-brand text-brand-foreground shadow-md lg:grid"><Icon className="size-6" /></span>
+                <strong className="text-[15px] font-black leading-6 text-navy lg:text-xl">{option.title}</strong>
+                <small className="mt-1 text-[11px] font-semibold text-muted-foreground lg:text-sm">{visual.subtitle}</small>
+                <span className={`mt-auto grid h-6 w-10 place-items-center self-end rounded-full pt-0 lg:size-10 lg:self-start ${isSelected ? "bg-brand text-brand-foreground" : "bg-muted text-navy"}`} style={{ marginTop: 10 }}><ChevronLeft className="size-4 lg:size-5" /></span>
               </span>
             </Button>
           );
