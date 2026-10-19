@@ -1360,7 +1360,7 @@ function TopBar({ isAdmin, clientName = "", onExitAdmin, onSettings, onExit, onT
         )}
       </div>
       {/* الوسط: شعار تمكين */}
-      <div className="hidden justify-center lg:flex"><TamkeenBrand compact /></div>
+      <div className="app-topbar-center hidden justify-center lg:flex"><TamkeenBrand /></div>
       {/* يسار: الشعار النصي وأدوات الشاشة وزر القائمة */}
       <div className="flex shrink-0 items-center justify-end gap-0.5 sm:gap-3 lg:min-w-0 [&_button]:!bg-transparent">
         <Button variant="presentation" size="presentation" type="button" onClick={onSettings} aria-label="الإعدادات" title="الإعدادات" className="grid size-8 place-items-center rounded-full transition hover:bg-muted lg:hidden"><Settings className="size-5" /></Button>
@@ -1430,7 +1430,7 @@ function ReplayVoiceButton() {
 
 
 function AppSidebar({ active, onNavigate, onProducts, onSettings, onExit, collapsed }: { collapsed: boolean; active: string; onNavigate: (action: (typeof NAV_ITEMS)[number]["action"]) => void; onProducts: () => void; onSettings: () => void; onExit: () => void }) {
-  const row = "flex w-full flex-row-reverse items-center justify-end gap-3 rounded-lg px-4 py-3 text-left text-[16px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10";
+  const row = "flex w-full flex-row-reverse items-center justify-start gap-3 rounded-lg px-4 py-3 text-left text-[16px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10";
   return (
     <aside data-collapsed={collapsed} className="app-sidebar relative order-2 hidden h-full flex-col overflow-hidden bg-navy text-skyline-foreground lg:flex lg:col-start-2 lg:row-start-1">
       <div className="pointer-events-none relative z-10 px-4 pb-3 pt-4">
@@ -1447,7 +1447,7 @@ function AppSidebar({ active, onNavigate, onProducts, onSettings, onExit, collap
               type="button"
               onClick={() => (item.action === "products" ? onProducts() : onNavigate(item.action))}
               aria-current={selected ? "page" : undefined}
-              className={selected ? "flex w-full flex-row-reverse items-center justify-end gap-3 rounded-lg bg-brand px-4 py-3 text-left text-[16px] font-bold text-brand-foreground shadow-md" : row}
+              className={selected ? "flex w-full flex-row-reverse items-center justify-start gap-3 rounded-lg bg-brand px-4 py-3 text-left text-[16px] font-bold text-brand-foreground shadow-md" : row}
             >
               <Icon className="size-6 shrink-0" /> <span className="whitespace-nowrap">{item.label}</span>
             </Button>
@@ -1460,7 +1460,7 @@ function AppSidebar({ active, onNavigate, onProducts, onSettings, onExit, collap
         <path d="M0 140 C70 100 130 70 200 60 L200 160 L0 160 Z" fill="currentColor" opacity="0.35" />
       </svg>
       <div className="relative z-10 mt-auto px-3 pb-4 pt-2">
-        <Button variant="presentation" size="presentation" type="button" onClick={onExit} className="flex w-full flex-row-reverse items-center justify-end gap-3 rounded-lg px-4 py-3 text-[16px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10"><LogOut className="size-6 shrink-0" /> <span>تسجيل الخروج</span></Button>
+        <Button variant="presentation" size="presentation" type="button" onClick={onExit} className="flex w-full flex-row-reverse items-center justify-start gap-3 rounded-lg px-4 py-3 text-[16px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10"><LogOut className="size-6 shrink-0" /> <span>تسجيل الخروج</span></Button>
       </div>
     </aside>
   );
