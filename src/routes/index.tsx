@@ -91,6 +91,7 @@ import industrialImage from "@/assets/arsh-industrial.webp";
 import agricultureImage from "@/assets/arsh-agriculture.webp";
 import itemRequestImage from "@/assets/card-products.webp";
 import homeHeroAr from "@/assets/actes-home-hero.webp";
+import topbarSolarCity from "@/assets/topbar-solar-city.webp";
 import homeHeroEn from "@/assets/actes-home-hero-en.webp";
 import homeHeroZh from "@/assets/actes-home-hero-zh.webp";
 
@@ -873,7 +874,7 @@ function ActesApp() {
 
       <AppSidebar collapsed={sidebarCollapsed} active={catalog ? "products" : isHome ? "home" : step.startsWith("sup_") ? "support" : step.startsWith("eco_") || step.startsWith("pv_") || step === "energy_menu" || step === "sld_custom" ? "energy" : "quote"} onNavigate={navFromMenu} onProducts={() => { setCatalog({ productId: null }); mainRef.current?.scrollTo({ top: 0 }); }} onSettings={() => setSettingsOpen(true)} onExit={leaveApp} />
       <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden lg:col-start-1 lg:row-start-1">
-        <TopBar onToggleSidebar={() => setSidebarCollapsed((v) => !v)} sidebarCollapsed={sidebarCollapsed} isAdmin={isAdmin} clientName={clientName} onExitAdmin={exitAdmin} onSettings={() => setSettingsOpen(true)} onExit={leaveApp} />
+        <TopBar banner={!isHome || !!catalog} onToggleSidebar={() => setSidebarCollapsed((v) => !v)} sidebarCollapsed={sidebarCollapsed} isAdmin={isAdmin} clientName={clientName} onExitAdmin={exitAdmin} onSettings={() => setSettingsOpen(true)} onExit={leaveApp} />
          <main ref={mainRef} className="app-main mx-auto flex w-full min-h-0 flex-1 overflow-y-auto px-3 py-3 pb-24 sm:px-6 lg:px-8 lg:pb-4">
           {busy && (
             // شريط تقدّم رفيع لا يحجب الشاشة ولا يقطع سلاسة الانتقال بين الخطوات
@@ -1339,9 +1340,18 @@ function BrandMark({ compact = false, className, white = false }: { inverse?: bo
 }
 
 
-function TopBar({ isAdmin, clientName = "", onExitAdmin, onSettings, onExit, onToggleSidebar, sidebarCollapsed }: { isAdmin: boolean; clientName?: string; onExitAdmin: () => void; onSettings: () => void; onExit: () => void; onToggleSidebar: () => void; sidebarCollapsed: boolean }) {
+function TopBar({ banner = false, isAdmin, clientName = "", onExitAdmin, onSettings, onExit, onToggleSidebar, sidebarCollapsed }: { isAdmin: boolean; clientName?: string; onExitAdmin: () => void; onSettings: () => void; onExit: () => void; onToggleSidebar: () => void; sidebarCollapsed: boolean; banner?: boolean }) {
   return (
-    <header className="app-topbar relative grid h-[52px] shrink-0 grid-cols-[minmax(0,1fr)_auto] items-center border-b border-border bg-background px-2 text-navy shadow-[var(--shadow-soft)] sm:h-[62px] sm:px-4 lg:h-[84px] lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-4 lg:px-6 [&_button]:!text-navy [&_svg]:!text-navy">
+    <header className={`app-topbar ${banner ? "app-topbar--banner" : ""} relative grid h-[52px] shrink-0 grid-cols-[minmax(0,1fr)_auto] items-center border-b border-border bg-background px-2 text-navy shadow-[var(--shadow-soft)] sm:h-[62px] sm:px-4 lg:h-[84px] lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-4 lg:px-6 [&_button]:!text-navy [&_svg]:!text-navy`}>
+      {banner && (
+        <div className="topbar-banner hidden lg:flex">
+          <div className="topbar-banner-side"><span aria-hidden />للحلول التقنية<br />والهندسية</div>
+          <img src={topbarSolarCity} alt="" width={1200} height={400} className="topbar-banner-photo" />
+          <span className="topbar-banner-pill">تمكين ... لنحقق أفضل لمستقبل أخضر</span>
+          <div className="topbar-banner-brand"><TamkeenBrand /></div>
+          <div className="topbar-banner-tools [&_svg]:size-5"><NotificationsBell isAdmin={isAdmin} /><OrderCenterButton isAdmin={isAdmin} /><ReplayVoiceButton /><LangSwitch /><Button variant="presentation" size="presentation" onClick={onToggleSidebar} aria-label="القائمة" className="grid size-9 place-items-center rounded-md"><Menu className="size-6" /></Button></div>
+        </div>
+      )}
       {/* يمين: المستخدم والإشعارات وهوية تمكين */}
       <div className="flex min-w-0 items-center gap-2 lg:gap-4">
         <span className="lg:hidden"><TamkeenBrand compact /></span>
