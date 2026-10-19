@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { NotificationsBell } from "@/components/notifications";
 import startImg from "@/assets/screens/start.webp";
 import homeImg from "@/assets/screens/home.webp";
 import systemsImg from "@/assets/screens/systems.webp";
@@ -74,7 +75,12 @@ export function useDesktopScreens() {
   return on;
 }
 
-export function ImageScreen({ kind, onAction }: { kind: ImageScreenKind; onAction: (action: string) => void }) {
+type Box = [number, number, number, number];
+const BELL: Partial<Record<ImageScreenKind, Box>> = { home: [1396, 38, 1456, 98], all: [380, 130, 440, 192] };
+const NAME: Partial<Record<ImageScreenKind, Box>> = { home: [1512, 44, 1634, 96] };
+const pos = ([x1, y1, x2, y2]: Box) => ({ left: `${(x1 / W) * 100}%`, top: `${(y1 / H) * 100}%`, width: `${((x2 - x1) / W) * 100}%`, height: `${((y2 - y1) / H) * 100}%` });
+
+export function ImageScreen({ kind, onAction, userName, isAdmin = false }: { kind: ImageScreenKind; onAction: (action: string) => void; userName?: string; isAdmin?: boolean }) {
   return (
     <div dir="ltr" className="fixed inset-0 z-40 grid place-items-center overflow-hidden bg-navy" data-image-screen={kind}>
       <div className="relative" style={{ width: `min(100vw, calc(100dvh * ${W} / ${H}))`, aspectRatio: `${W} / ${H}` }}>
@@ -90,6 +96,17 @@ export function ImageScreen({ kind, onAction }: { kind: ImageScreenKind; onActio
             style={{ left: `${(x1 / W) * 100}%`, top: `${(y1 / H) * 100}%`, width: `${((x2 - x1) / W) * 100}%`, height: `${((y2 - y1) / H) * 100}%` }}
           />
         ))}
+        {BELL[kind] && (
+          <div className="absolute z-10 grid place-items-center bg-card" style={pos(BELL[kind]!)}>
+            <NotificationsBell isAdmin={isAdmin} />
+          </div>
+        )}
+        {NAME[kind] && (
+          <div dir="rtl" className="absolute z-10 flex flex-col justify-center bg-card text-right font-bold leading-tight text-navy" style={{ ...pos(NAME[kind]!), fontSize: "min(0.9vw, 1.6dvh)" }}>
+            <span>أهلاً وسهلاً</span>
+            <span className="truncate">{userName || "مستخدم تجريبي"}</span>
+          </div>
+        )}
       </div>
     </div>
   );
