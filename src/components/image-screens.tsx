@@ -152,8 +152,8 @@ export function ImageScreen({ kind, onAction, userName, isAdmin = false }: { kin
           />
         ))}
         {bell && (
-          <div className="absolute z-10 grid place-items-center [&_svg]:size-[70%] [&_svg]:stroke-[2.4]" style={{ ...pos(bell), background: "rgb(254 254 254)" }}>
-            <NotificationsBell isAdmin={isAdmin} />
+          <div className="absolute z-10" style={pos(bell)}>
+            <NotificationsBell isAdmin={isAdmin} bare />
           </div>
         )}
         {name && (
@@ -163,6 +163,12 @@ export function ImageScreen({ kind, onAction, userName, isAdmin = false }: { kin
           </div>
         )}
       </div>
+      {kind !== "start" && kind !== "home" && (
+        <div dir="rtl" className="fixed bottom-3 left-3 z-[71] flex gap-2">
+          <button type="button" onClick={() => onAction("back")} className="rounded-full border border-gold bg-navy px-4 py-2 text-sm font-bold text-primary-foreground shadow-lg">→ رجوع</button>
+          <button type="button" onClick={() => onAction("home")} className="rounded-full border border-gold bg-brand px-4 py-2 text-sm font-bold text-brand-foreground shadow-lg">الرئيسية</button>
+        </div>
+      )}
     </div>
   );
 }

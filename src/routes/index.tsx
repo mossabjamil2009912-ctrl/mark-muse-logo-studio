@@ -847,6 +847,10 @@ function ActesApp() {
     if (action === "settings") return setSettingsOpen(true);
     if (action === "exit") return leaveApp();
     if (action === "products") return openProducts();
+    if (action === "back") {
+      if (catalog && catalogImg === "all") { setCatalogImg("sections"); return; }
+      return navFromMenu("home");
+    }
     if (action === "all") { setCatalogCat("all"); setCatalogImg("real"); return; }
     if (action === "real-all") { setCatalogCat("all"); setCatalogImg("real"); return; }
     if (action.startsWith("cat:")) { setCatalogCat(action.slice(4) as "panels"); setCatalogImg("real"); return; }
