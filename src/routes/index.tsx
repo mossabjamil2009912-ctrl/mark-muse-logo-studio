@@ -828,6 +828,37 @@ function ActesApp() {
   }, []);
 
 
+  // الشاشات المعتمدة على الكمبيوتر: صور المستخدم نفسها مع مناطق نقر
+  const desktopScreens = useDesktopScreens();
+  const [catalogImg, setCatalogImg] = useState<"sections" | "all" | "real">("sections");
+  const [catalogCat, setCatalogCat] = useState<"panels" | "inverters" | "batteries" | "storage" | "all" | null>(null);
+  const startApp = () => { unlockVoice(); void speakWelcome(); try { window.sessionStorage.setItem("actes.started", "1"); } catch { /* ignore */ } setGate("app"); };
+  const openProducts = () => { setCatalogImg("sections"); setCatalogCat(null); setCatalog({ productId: null }); mainRef.current?.scrollTo({ top: 0 }); };
+  const imageKind: ImageScreenKind | null = !desktopScreens ? null
+    : gate === "boot" ? "start"
+    : gate !== "app" || isAdmin || settingsOpen || loginModal ? null
+    : catalog ? (catalog.productId === null && !catalog.fromQuote && catalogImg !== "real" ? catalogImg : null)
+    : isHome && view ? "home"
+    : step === "menu_sys3" && view ? "systems"
+    : null;
+  const onImageAction = (action: string) => {
+    if (action === "start") return startApp();
+    if (action === "settings") return setSettingsOpen(true);
+    if (action === "exit") return leaveApp();
+    if (action === "products") return openProducts();
+    if (action === "all") return setCatalogImg("all");
+    if (action === "real-all") { setCatalogCat("all"); setCatalogImg("real"); return; }
+    if (action.startsWith("cat:")) { setCatalogCat(action.slice(4) as "panels"); setCatalogImg("real"); return; }
+    if (action.startsWith("sys:")) {
+      const words: Record<string, RegExp> = { res: /منزل|سكني|فلل/, com: /تجار|متاجر|شركات/, agr: /زراع|مزارع|آبار/, ind: /صناع|مصانع/, item: /معدات|فردي|صنف/ };
+      const re = words[action.slice(4)];
+      const opt = view?.options.find((o) => re?.test(o.title));
+      if (opt) send(opt.id);
+      return;
+    }
+    if (action === "home" || action === "quote" || action === "energy" || action === "support") navFromMenu(action as (typeof NAV_ITEMS)[number]["action"]);
+  };
+
   if (gate === "closed") {
     return (
       <div className="grid min-h-screen place-items-center bg-background p-6 text-center">
