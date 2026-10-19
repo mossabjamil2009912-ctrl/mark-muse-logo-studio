@@ -39,6 +39,7 @@ import {
   Check,
   ChevronLeft,
   ChevronDown,
+  Menu,
   CircleDollarSign,
   Download,
   FileCheck2,
@@ -868,7 +869,7 @@ function ActesApp() {
       ) : (
 
       <div className="flex h-dvh w-full items-stretch justify-center overflow-hidden bg-background p-0">
-       <div className={`flex h-full w-full max-w-full flex-col overflow-hidden border-border bg-background lg:grid lg:grid-rows-[minmax(0,1fr)_auto] ${sidebarCollapsed ? "lg:grid-cols-[minmax(0,1fr)_64px]" : "lg:grid-cols-[minmax(0,1fr)_220px]"}`}>
+       <div className={`flex h-full w-full max-w-full flex-col overflow-hidden border-border bg-background lg:grid lg:grid-rows-[minmax(0,1fr)_auto] ${sidebarCollapsed ? "lg:grid-cols-[minmax(0,1fr)_64px]" : "lg:grid-cols-[minmax(0,1fr)_248px]"}`}>
 
       <AppSidebar collapsed={sidebarCollapsed} active={catalog ? "products" : isHome ? "home" : step.startsWith("sup_") ? "support" : step.startsWith("eco_") || step.startsWith("pv_") || step === "energy_menu" || step === "sld_custom" ? "energy" : "quote"} onNavigate={navFromMenu} onProducts={() => { setCatalog({ productId: null }); mainRef.current?.scrollTo({ top: 0 }); }} onSettings={() => setSettingsOpen(true)} onExit={leaveApp} />
       <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden lg:col-start-1 lg:row-start-1">
@@ -1326,7 +1327,7 @@ function CorporateWelcome({ onClient, onAdmin }: { onClient: () => void; onAdmin
 }
 
 function BrandLockup() {
-  return <TamkeenBrand inverse className="flex-col" />;
+  return <TamkeenBrand inverse />;
 }
 
 function BrandMark({ compact = false, className, white = false }: { inverse?: boolean; compact?: boolean; className?: string; white?: boolean }) {
@@ -1340,26 +1341,28 @@ function BrandMark({ compact = false, className, white = false }: { inverse?: bo
 
 function TopBar({ isAdmin, clientName = "", onExitAdmin, onSettings, onExit, onToggleSidebar, sidebarCollapsed }: { isAdmin: boolean; clientName?: string; onExitAdmin: () => void; onSettings: () => void; onExit: () => void; onToggleSidebar: () => void; sidebarCollapsed: boolean }) {
   return (
-    <header className="app-topbar relative grid h-[52px] shrink-0 grid-cols-[minmax(0,1fr)_auto] items-center border-b border-border bg-background px-2 text-navy shadow-[var(--shadow-soft)] sm:h-[62px] sm:px-4 lg:h-[76px] [&_button]:!text-navy [&_svg]:!text-navy">
-      <span aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-l from-navy via-primary to-navy" />
-      <div className="flex min-w-0 items-center gap-2">
-        <Button variant="presentation" size="presentation" onClick={onToggleSidebar} aria-label={sidebarCollapsed ? "إظهار القائمة" : "تصغير القائمة"} title={sidebarCollapsed ? "إظهار القائمة" : "تصغير القائمة"} className="hidden size-8 place-items-center rounded-md text-navy lg:grid">
-          {sidebarCollapsed ? <PanelRightOpen className="size-5" /> : <PanelRightClose className="size-5" />}
-        </Button>
+    <header className="app-topbar relative grid h-[52px] shrink-0 grid-cols-[minmax(0,1fr)_auto] items-center border-b border-border bg-background px-2 text-navy shadow-[var(--shadow-soft)] sm:h-[62px] sm:px-4 lg:h-[84px] lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-4 lg:px-6 [&_button]:!text-navy [&_svg]:!text-navy">
+      {/* يمين: المستخدم والإشعارات وهوية تمكين */}
+      <div className="flex min-w-0 items-center gap-2 lg:gap-4">
         <span className="lg:hidden"><TamkeenBrand compact /></span>
-        <p className="hidden border-s-2 border-gold ps-3 text-[13px] font-black leading-5 text-navy lg:block">حلول الطاقة لمستقبل أفضل<br /><span className="text-[11px] font-bold text-muted-foreground">طاقة مستدامة .. لحياة أكثر ازدهاراً</span></p>
-        <p className="hidden border-s border-border ps-3 text-xs text-muted-foreground xl:block">مرحباً، {isAdmin ? "الإدارة" : clientName || "عميل"}</p>
+        <div className="hidden shrink-0 items-center gap-2 lg:flex">
+          <span className="grid size-11 place-items-center rounded-full bg-navy"><UserCircle className="size-7 !text-navy-foreground" /></span>
+          <p className="text-[13px] font-black leading-5 text-navy">أهلاً وسهلاً<br /><span className="text-[12px] font-bold text-navy">{isAdmin ? "الإدارة" : clientName || "مستخدم تجريبي"}</span></p>
+          <ChevronDown className="size-4" />
+        </div>
+        <span className="hidden shrink-0 lg:inline-flex [&_svg]:size-6"><NotificationsBell isAdmin={isAdmin} /></span>
+        <span aria-hidden className="hidden h-10 w-px bg-border lg:block" />
+        <p className="hidden min-w-0 text-[14px] font-black leading-5 text-navy xl:block">تمكين<br /><span className="text-brand">للحلول التقنية والهندسية</span><br />مرحباً {isAdmin ? "الإدارة" : "عميلنا"}</p>
         {isAdmin && (
           <span className="ms-2 hidden shrink-0 items-center gap-1 rounded-full bg-brand px-3 py-1 text-[11px] font-black text-brand-foreground sm:inline-flex" dir="ltr">
             <ShieldCheck className="size-3.5" /> Admin Mode
           </span>
         )}
       </div>
-      <div className="flex shrink-0 items-center gap-0.5 sm:gap-3 [&_button]:!bg-transparent">
-        <div className="hidden items-center gap-2 lg:flex">
-          <span className="grid size-9 place-items-center rounded-full bg-navy text-navy-foreground"><UserCircle className="size-5 !text-navy-foreground" /></span>
-          <p className="text-[12px] font-black leading-4 text-navy">أهلاً وسهلاً<br /><span className="text-[11px] font-bold text-muted-foreground">{isAdmin ? "الإدارة" : clientName || "مستخدم تجريبي"}</span></p>
-        </div>
+      {/* الوسط: شعار تمكين */}
+      <div className="app-topbar-center hidden justify-center lg:flex"><TamkeenBrand /></div>
+      {/* يسار: الشعار النصي وأدوات الشاشة وزر القائمة */}
+      <div className="flex shrink-0 items-center justify-end gap-0.5 sm:gap-3 lg:min-w-0 [&_button]:!bg-transparent">
         <Button variant="presentation" size="presentation" type="button" onClick={onSettings} aria-label="الإعدادات" title="الإعدادات" className="grid size-8 place-items-center rounded-full transition hover:bg-muted lg:hidden"><Settings className="size-5" /></Button>
         {isAdmin && (
           <Button variant="presentation" size="presentation" type="button" onClick={onExitAdmin} className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-xs font-bold text-foreground transition hover:bg-muted" dir="ltr">
@@ -1367,12 +1370,15 @@ function TopBar({ isAdmin, clientName = "", onExitAdmin, onSettings, onExit, onT
           </Button>
         )}
         <ReplayVoiceButton />
-        <span className="hidden lg:inline-flex"><CorporateToggle /></span>
+        <span className="hidden lg:inline-flex [&_span]:hidden"><CorporateToggle /></span>
         <span className="[&_svg]:size-5"><OrderCenterButton isAdmin={isAdmin} /></span>
-        <span className="[&_svg]:size-5"><NotificationsBell isAdmin={isAdmin} /></span>
+        <span className="lg:hidden [&_svg]:size-5"><NotificationsBell isAdmin={isAdmin} /></span>
         <Button variant="presentation" size="presentation" type="button" onClick={onExit} aria-label="خروج" title="خروج" className="grid size-8 place-items-center rounded-md transition hover:bg-muted lg:hidden"><LogOut className="size-5" /></Button>
         <LangSwitch />
-
+        <p className="hidden shrink-0 border-x-2 border-gold px-4 text-center text-[19px] font-black leading-7 text-navy 2xl:block">حلول الطاقة لمستقبل أفضل<br /><span className="text-[14px] font-bold text-navy/80">طاقة مستدامة .. لحياة أكثر ازدهاراً</span></p>
+        <Button variant="presentation" size="presentation" onClick={onToggleSidebar} aria-label={sidebarCollapsed ? "إظهار القائمة" : "تصغير القائمة"} title={sidebarCollapsed ? "إظهار القائمة" : "تصغير القائمة"} className="hidden size-10 place-items-center rounded-md text-navy lg:grid">
+          <Menu className="size-7" />
+        </Button>
       </div>
     </header>
   );
@@ -1424,7 +1430,7 @@ function ReplayVoiceButton() {
 
 
 function AppSidebar({ active, onNavigate, onProducts, onSettings, onExit, collapsed }: { collapsed: boolean; active: string; onNavigate: (action: (typeof NAV_ITEMS)[number]["action"]) => void; onProducts: () => void; onSettings: () => void; onExit: () => void }) {
-  const row = "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-right text-[13.5px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10";
+  const row = "flex w-full flex-row-reverse items-center justify-start gap-3 rounded-lg px-4 py-3 text-left text-[16px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10";
   return (
     <aside data-collapsed={collapsed} className="app-sidebar relative order-2 hidden h-full flex-col overflow-hidden bg-navy text-skyline-foreground lg:flex lg:col-start-2 lg:row-start-1">
       <div className="pointer-events-none relative z-10 px-4 pb-3 pt-4">
@@ -1441,20 +1447,20 @@ function AppSidebar({ active, onNavigate, onProducts, onSettings, onExit, collap
               type="button"
               onClick={() => (item.action === "products" ? onProducts() : onNavigate(item.action))}
               aria-current={selected ? "page" : undefined}
-              className={selected ? "flex w-full items-center gap-3 rounded-lg bg-brand px-3 py-2.5 text-[13.5px] font-bold text-brand-foreground shadow-md" : row}
+              className={selected ? "flex w-full flex-row-reverse items-center justify-start gap-3 rounded-lg bg-brand px-4 py-3 text-left text-[16px] font-bold text-brand-foreground shadow-md" : row}
             >
-              <Icon className="size-5 shrink-0" /> <span className="flex-1 whitespace-nowrap">{item.label}</span>
+              <Icon className="size-6 shrink-0" /> <span className="whitespace-nowrap">{item.label}</span>
             </Button>
           );
         })}
-        <Button variant="presentation" size="presentation" type="button" onClick={onSettings} className={row}><Settings className="size-5 shrink-0" /> <span className="flex-1">الإعدادات</span></Button>
+        <Button variant="presentation" size="presentation" type="button" onClick={onSettings} className={row}><Settings className="size-6 shrink-0" /> <span>الإعدادات</span></Button>
       </nav>
       <svg aria-hidden viewBox="0 0 200 160" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-40 w-full text-skyline">
         <path d="M0 110 C60 60 120 20 200 10 L200 160 L0 160 Z" fill="currentColor" opacity="0.55" />
         <path d="M0 140 C70 100 130 70 200 60 L200 160 L0 160 Z" fill="currentColor" opacity="0.35" />
       </svg>
       <div className="relative z-10 mt-auto px-3 pb-4 pt-2">
-        <Button variant="presentation" size="presentation" type="button" onClick={onExit} className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-[13.5px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10"><LogOut className="size-5 shrink-0" /> تسجيل الخروج</Button>
+        <Button variant="presentation" size="presentation" type="button" onClick={onExit} className="flex w-full flex-row-reverse items-center justify-start gap-3 rounded-lg px-4 py-3 text-[16px] font-bold text-skyline-foreground transition hover:bg-skyline-foreground/10"><LogOut className="size-6 shrink-0" /> <span>تسجيل الخروج</span></Button>
       </div>
     </aside>
   );
@@ -1489,7 +1495,7 @@ function MobileNav({ active, onNavigate, onSettings, onProducts }: { onProducts:
 
 function AppFooter() {
   return (
-    <footer className="hidden h-8 shrink-0 items-center justify-between bg-navy px-6 text-[11px] font-bold text-skyline-foreground lg:col-span-2 lg:row-start-2 lg:flex">
+    <footer className="hidden h-8 shrink-0 items-center justify-between bg-navy px-6 lg:!hidden text-[11px] font-bold text-skyline-foreground lg:col-span-2 lg:row-start-2 lg:flex">
       <span className="flex items-center gap-2"><Leaf className="size-4 text-energy" /> طاقة نظيفة.. لحياة أفضل</span>
       <span className="flex items-center gap-1.5">
         {[Facebook, Youtube, Linkedin].map((Icon, i) => (
@@ -1519,6 +1525,7 @@ function HomeDashboard({ onService, onProducts }: { onService: (kind: "quote" | 
       </section>
       <section data-photo-section className="home-cover relative shrink-0 overflow-hidden border border-border bg-navy">
         <LangImg ar={homeHeroAr} en={homeHeroEn} zh={homeHeroZh} alt="تمكين للحلول التقنية والهندسية" loading="eager" fetchPriority="high" />
+        <p className="home-cover-tagline absolute right-8 top-1/2 hidden -translate-y-1/2 border-l-4 border-gold pl-4 text-right text-2xl font-black leading-snug text-navy-foreground lg:block">نقدم حلولاً متكاملة<br />للطاقة الشمسية<br />والحلول الهندسية</p>
       </section>
 
 
@@ -1589,13 +1596,13 @@ function ServiceCard({ image, icon, title, description, action, tone, onClick }:
   const btn = "bg-brand text-brand-foreground";
 
   return (
-    <Button variant="presentation" size="presentation" type="button" onClick={onClick} aria-label={title} className="home-service group flex flex-col overflow-hidden rounded-xl border border-border bg-card text-right shadow-sm transition hover:shadow-md lg:flex-row lg:items-stretch">
-      <span data-photo-frame className="home-service-photo block aspect-[16/9] w-full overflow-hidden bg-muted lg:aspect-auto lg:w-[42%] lg:shrink-0"><img data-photo src={image} alt={title} loading="eager" decoding="async" width={1280} height={720} className="size-full object-cover transition duration-500 group-hover:scale-[1.03]" /></span>
-      <span className="home-service-body relative flex flex-1 flex-col px-2 pb-2 pt-7 text-center lg:items-start lg:px-4 lg:py-4 lg:text-right">
-        <span className={`absolute -top-5 right-1/2 grid size-10 translate-x-1/2 place-items-center rounded-full border-2 border-card shadow-md lg:static lg:mb-2 lg:size-11 lg:translate-x-0 ${circle} [&_svg]:size-5 lg:[&_svg]:size-6`}>{icon}</span>
-        <span className="home-service-title font-black text-navy lg:text-lg">{title}</span>
+    <Button variant="presentation" size="presentation" type="button" onClick={onClick} aria-label={title} className="home-service group flex flex-col overflow-hidden rounded-xl border border-border bg-card text-right shadow-sm transition hover:shadow-md lg:flex-row-reverse lg:items-stretch">
+      <span data-photo-frame className="home-service-photo block aspect-[16/9] w-full overflow-hidden bg-muted lg:aspect-auto lg:w-[52%] lg:shrink-0"><img data-photo src={image} alt={title} loading="eager" decoding="async" width={1280} height={720} className="size-full object-cover transition duration-500 group-hover:scale-[1.03]" /></span>
+      <span className="home-service-body relative flex flex-1 flex-col px-2 pb-2 pt-7 text-center lg:items-start lg:py-4 lg:!ps-[80px] lg:!pe-4 lg:text-right">
+        <span className={`absolute -top-5 right-1/2 grid size-10 translate-x-1/2 place-items-center rounded-full border-2 border-card shadow-md lg:right-4 lg:top-4 lg:size-12 lg:translate-x-0 ${circle} [&_svg]:size-5 lg:[&_svg]:size-6`}>{icon}</span>
+        <span className="home-service-title font-black text-navy lg:text-xl">{title}</span>
         <span className="home-service-description mx-auto line-clamp-2 max-w-xs text-muted-foreground lg:mx-0 lg:max-w-none">{description}</span>
-        <span className={`home-service-cta mx-auto mb-0 mt-auto inline-flex w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold shadow-sm transition group-hover:opacity-90 lg:mx-0 lg:w-auto lg:gap-1.5 lg:px-5 lg:py-2 lg:text-[13px] ${btn}`}>
+        <span className={`home-service-cta mx-auto mb-0 mt-auto inline-flex w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold shadow-sm transition group-hover:opacity-90 lg:mx-0 lg:w-full lg:gap-1.5 lg:px-5 lg:py-2 lg:text-[15px] ${btn}`}>
           <ArrowLeft className="size-3 lg:size-4" />{action}
         </span>
 
