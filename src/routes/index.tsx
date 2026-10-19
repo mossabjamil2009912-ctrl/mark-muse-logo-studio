@@ -1648,7 +1648,7 @@ function SupportProgress({ step }: { step: string }) {
 function StepProgress({ step, hasQuote }: { step: string; hasQuote: boolean }) {
   const current = stageIndex(step, hasQuote);
   return (
-    <div className="flex flex-wrap items-center gap-1.5">
+    <div className="wizard-stepper flex flex-wrap items-center gap-1.5">
       {QUOTE_STAGES.map((stage, index) => {
         const done = index < current;
         const active = index === current;
@@ -1657,16 +1657,16 @@ function StepProgress({ step, hasQuote }: { step: string; hasQuote: boolean }) {
             <span
               className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-black transition lg:text-[11px] ${
                 active
-                  ? "bg-brand text-brand-foreground shadow-sm"
+                  ? "bg-brand text-brand-foreground shadow-sm ring-2 ring-gold/60"
                   : done
-                    ? "bg-brand/10 text-brand"
+                    ? "bg-gold/15 text-navy"
                     : "bg-muted text-muted-foreground"
               }`}
             >
               {done ? <Check className="size-3" /> : <span className="grid size-3.5 place-items-center rounded-full bg-current/20 text-[8px]">{index + 1}</span>}
               {stage}
             </span>
-            {index < QUOTE_STAGES.length - 1 && <span className={`h-px w-3 ${done ? "bg-brand/50" : "bg-border"}`} />}
+            {index < QUOTE_STAGES.length - 1 && <span className={`h-0.5 w-4 rounded-full lg:w-8 ${done ? "bg-gold" : "bg-border"}`} />}
           </span>
         );
       })}
@@ -2169,9 +2169,9 @@ function OptionGrid({ options, selected, projectCards = false, energyCards = fal
             key={`${option.id}-${index}`}
             type="button"
             onClick={() => onSelect(option.id)}
-            className={`group flex h-full items-start gap-3 rounded-lg border p-3 text-right transition hover:shadow-md hover:border-brand/60 ${active ? "border-brand bg-brand/5 shadow-md" : "border-border bg-card shadow-sm"}`}
+            className={`wizard-option group flex h-full items-start gap-3 rounded-xl border border-t-[3px] p-3 text-right transition hover:-translate-y-0.5 hover:shadow-lg hover:border-brand/60 lg:p-4 ${active ? "border-brand border-t-brand bg-brand/5 shadow-md" : "border-border border-t-navy bg-card shadow-sm"}`}
           >
-            <span className={`grid size-9 shrink-0 place-items-center rounded-lg transition ${active ? "bg-brand text-brand-foreground" : tone}`}>
+            <span className={`grid size-10 shrink-0 place-items-center rounded-full transition lg:size-12 ${active ? "bg-brand text-brand-foreground" : tone}`}>
               <Icon className="size-4.5" strokeWidth={2.2} />
             </span>
             <span className="flex min-w-0 flex-1 flex-col gap-1">
@@ -2356,8 +2356,8 @@ function entryPresets(step: string, session: BotSession = {}): { label: string; 
 
 function DataEntry({ value, onChange, onSubmit, prompt, presets, onQuick }: { value: string; onChange: (value: string) => void; onSubmit: () => void; prompt: EntryPrompt; presets?: { label: string; value: string }[] | undefined; onQuick?: ((value: string) => void) | undefined }) {
   return (
-    <form onSubmit={(event) => { event.preventDefault(); onSubmit(); }} className="rounded-lg border border-border bg-muted/35 p-5">
-      <label htmlFor="step-value" className="text-sm font-black">{prompt.label}</label>
+    <form onSubmit={(event) => { event.preventDefault(); onSubmit(); }} className="wizard-entry rounded-xl border border-border border-t-[3px] border-t-gold bg-card p-5 shadow-sm lg:p-6">
+      <label htmlFor="step-value" className="text-sm font-black text-navy lg:text-base">{prompt.label}</label>
       <p className="mt-1 text-xs text-muted-foreground">{prompt.hint}</p>
       {presets && presets.length > 0 && (
         <div className="stagger-in mt-3 flex flex-wrap gap-2">
@@ -2382,9 +2382,9 @@ function DataEntry({ value, onChange, onSubmit, prompt, presets, onQuick }: { va
           onChange={(event) => onChange(event.target.value)}
           placeholder={prompt.placeholder}
           inputMode={prompt.numeric ? "numeric" : "text"}
-          className="min-w-0 rounded-md border border-input bg-card px-4 py-3 text-sm outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/10"
+          className="min-w-0 rounded-lg border border-input bg-background px-4 py-3 text-sm outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/25 lg:py-3.5 lg:text-base"
         />
-        <Button variant="presentation" size="presentation" type="submit" className="rounded-md bg-skyline px-6 py-3 text-sm font-bold text-skyline-foreground">{prompt.cta}</Button>
+        <Button variant="presentation" size="presentation" type="submit" className="rounded-lg bg-brand px-6 py-3 text-sm font-black text-brand-foreground shadow-md transition hover:opacity-90">{prompt.cta}</Button>
       </div>
     </form>
   );
@@ -2438,7 +2438,7 @@ function ShiftEntry({ count, offset, onSubmit }: { count: number; offset: number
               onChange={(event) => setValues((prev) => prev.map((old, i) => (i === index ? event.target.value : old)))}
               placeholder={`مثال: ${SHIFT_EXAMPLES[offset + index] ?? "08:00 - 16:00"}`}
               inputMode="text"
-              className="min-w-0 rounded-md border border-input bg-card px-4 py-3 text-sm outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/10"
+              className="min-w-0 rounded-lg border border-input bg-background px-4 py-3 text-sm outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/25 lg:py-3.5 lg:text-base"
             />
           </div>
         ))}
