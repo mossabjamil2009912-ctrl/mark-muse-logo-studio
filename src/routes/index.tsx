@@ -1356,7 +1356,14 @@ function TopBar({ isAdmin, clientName = "", onExitAdmin, onSettings, onExit, onT
           </span>
         )}
       </div>
+      <div className="pointer-events-none absolute inset-x-0 hidden place-items-center lg:grid">
+        <TamkeenBrand compact />
+      </div>
       <div className="flex shrink-0 items-center gap-0.5 sm:gap-3 [&_button]:!bg-transparent">
+        <div className="hidden items-center gap-2 lg:flex">
+          <span className="grid size-9 place-items-center rounded-full bg-navy text-navy-foreground"><UserCircle className="size-5 !text-navy-foreground" /></span>
+          <p className="text-[12px] font-black leading-4 text-navy">أهلاً وسهلاً<br /><span className="text-[11px] font-bold text-muted-foreground">{isAdmin ? "الإدارة" : clientName || "مستخدم تجريبي"}</span></p>
+        </div>
         <Button variant="presentation" size="presentation" type="button" onClick={onSettings} aria-label="الإعدادات" title="الإعدادات" className="grid size-8 place-items-center rounded-full transition hover:bg-muted lg:hidden"><Settings className="size-5" /></Button>
         {isAdmin && (
           <Button variant="presentation" size="presentation" type="button" onClick={onExitAdmin} className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-xs font-bold text-foreground transition hover:bg-muted" dir="ltr">
