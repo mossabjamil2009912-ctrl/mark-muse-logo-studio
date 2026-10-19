@@ -847,7 +847,7 @@ function ActesApp() {
     if (action === "settings") return setSettingsOpen(true);
     if (action === "exit") return leaveApp();
     if (action === "products") return openProducts();
-    if (action === "all") return setCatalogImg("all");
+    if (action === "all") { setCatalogCat("all"); setCatalogImg("real"); return; }
     if (action === "real-all") { setCatalogCat("all"); setCatalogImg("real"); return; }
     if (action.startsWith("cat:")) { setCatalogCat(action.slice(4) as "panels"); setCatalogImg("real"); return; }
     if (action.startsWith("sys:")) {
@@ -875,7 +875,7 @@ function ActesApp() {
   return (
     <div dir="rtl" className="min-h-dvh bg-background text-foreground">
       <ScreenSizeButton />
-      {imageKind && <ImageScreen kind={imageKind} onAction={onImageAction} />}
+      {imageKind && <ImageScreen kind={imageKind} onAction={onImageAction} isAdmin={isAdmin} userName={isAdmin ? "الإدارة" : clientName} />}
       {gate === "loading" ? (
         <div className="grid h-dvh w-full place-items-center bg-sidebar" />
       ) : gate === "choose" ? (
