@@ -1549,7 +1549,7 @@ function HomeDashboard({ onService, onProducts }: { onService: (kind: "quote" | 
 
       <button type="button" onClick={onProducts} className="group relative hidden shrink-0 items-center overflow-hidden rounded-xl border border-border bg-card text-right shadow-sm transition hover:shadow-md lg:flex">
         <span className="relative block h-24 w-[46%] shrink-0 overflow-hidden bg-navy">
-          <img src={cardEquipment} alt="" aria-hidden className="size-full object-cover transition duration-500 group-hover:scale-[1.03]" />
+          <img src={itemRequestImage} alt="" aria-hidden className="size-full object-cover transition duration-500 group-hover:scale-[1.03]" />
           <span aria-hidden className="absolute inset-y-0 left-0 w-16 bg-gradient-to-l from-card to-transparent" />
         </span>
         <span className="relative flex flex-1 items-center gap-3 px-5 py-4">
