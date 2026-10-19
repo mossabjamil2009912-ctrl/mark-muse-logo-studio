@@ -1,3 +1,4 @@
+import { ImageScreen, useDesktopScreens, type ImageScreenKind } from "@/components/image-screens";
 import { Button } from "@/components/ui/button";
 import { TamkeenBrand } from "@/components/tamkeen-brand";
 import { LoadPdfImport } from "@/components/load-pdf-import";
@@ -874,6 +875,7 @@ function ActesApp() {
   return (
     <div dir="rtl" className="min-h-dvh bg-background text-foreground">
       <ScreenSizeButton />
+      {imageKind && <ImageScreen kind={imageKind} onAction={onImageAction} />}
       {gate === "loading" ? (
         <div className="grid h-dvh w-full place-items-center bg-sidebar" />
       ) : gate === "choose" ? (
@@ -903,7 +905,7 @@ function ActesApp() {
       <div className="flex h-dvh w-full items-stretch justify-center overflow-hidden bg-background p-0">
        <div className={`flex h-full w-full max-w-full flex-col overflow-hidden border-border bg-background lg:grid lg:grid-rows-[minmax(0,1fr)_auto] ${sidebarCollapsed ? "lg:grid-cols-[minmax(0,1fr)_64px]" : "lg:grid-cols-[minmax(0,1fr)_248px]"}`}>
 
-      <AppSidebar collapsed={sidebarCollapsed} active={catalog ? "products" : isHome ? "home" : step.startsWith("sup_") ? "support" : step.startsWith("eco_") || step.startsWith("pv_") || step === "energy_menu" || step === "sld_custom" ? "energy" : "quote"} onNavigate={navFromMenu} onProducts={() => { setCatalog({ productId: null }); mainRef.current?.scrollTo({ top: 0 }); }} onSettings={() => setSettingsOpen(true)} onExit={leaveApp} />
+      <AppSidebar collapsed={sidebarCollapsed} active={catalog ? "products" : isHome ? "home" : step.startsWith("sup_") ? "support" : step.startsWith("eco_") || step.startsWith("pv_") || step === "energy_menu" || step === "sld_custom" ? "energy" : "quote"} onNavigate={navFromMenu} onProducts={openProducts} onSettings={() => setSettingsOpen(true)} onExit={leaveApp} />
       <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden lg:col-start-1 lg:row-start-1">
         <TopBar banner={!isHome || !!catalog} onToggleSidebar={() => setSidebarCollapsed((v) => !v)} sidebarCollapsed={sidebarCollapsed} isAdmin={isAdmin} clientName={clientName} onExitAdmin={exitAdmin} onSettings={() => setSettingsOpen(true)} onExit={leaveApp} />
          <main ref={mainRef} className="app-main mx-auto flex w-full min-h-0 flex-1 overflow-y-auto px-3 py-3 pb-24 sm:px-6 lg:px-8 lg:pb-4">
@@ -920,13 +922,15 @@ function ActesApp() {
 
           {catalog ? (
             <ProductsCatalog
+              key={catalogCat ?? "root"}
+              initialCategory={catalogCat}
               productId={catalog.productId}
               onOpen={(id) => { setCatalog({ productId: id, fromQuote: catalog.fromQuote }); mainRef.current?.scrollTo({ top: 0 }); }}
               onBack={() => { setCatalog(null); mainRef.current?.scrollTo({ top: 0 }); }}
               returnTo={catalog.fromQuote ? { label: "العودة", onReturn: () => { setCatalog(null); mainRef.current?.scrollTo({ top: 0 }); } } : null}
             />
           ) : view && isHome ? (
-            <HomeDashboard onService={triggerService} onProducts={() => setCatalog({ productId: null })} />
+            <HomeDashboard onService={triggerService} onProducts={openProducts} />
           ) : view ? (
             <QuoteWorkspace
               key={step}
@@ -949,7 +953,7 @@ function ActesApp() {
         <TeamContact />
       </div>
       <AppFooter />
-      <MobileNav onProducts={() => { setCatalog({ productId: null }); mainRef.current?.scrollTo({ top: 0 }); }} active={catalog ? "products" : isHome ? "home" : step.startsWith("sup_") ? "support" : step.startsWith("eco_") || step.startsWith("pv_") || step === "energy_menu" || step === "sld_custom" ? "energy" : "quote"} onNavigate={navFromMenu} onSettings={() => setSettingsOpen(true)} />
+      <MobileNav onProducts={openProducts} active={catalog ? "products" : isHome ? "home" : step.startsWith("sup_") ? "support" : step.startsWith("eco_") || step.startsWith("pv_") || step === "energy_menu" || step === "sld_custom" ? "energy" : "quote"} onNavigate={navFromMenu} onSettings={() => setSettingsOpen(true)} />
       <SettingsPanel
         open={settingsOpen}
         onClose={() => setSettingsOpen(false)}
