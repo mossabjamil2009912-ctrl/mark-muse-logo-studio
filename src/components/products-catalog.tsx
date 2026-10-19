@@ -3,7 +3,7 @@ import { TamkeenBrand } from "@/components/tamkeen-brand";
 import homeHero from "@/assets/start-bg-desktop.webp";
 import { lazy, Suspense, useEffect, useMemo, useState, type ReactNode } from "react";
 const PdfPages = lazy(() => import("@/components/pdf-pages"));
-import { ArrowRight, Search, BatteryCharging, Check, ChevronDown, Container, Copy, Download, Eye, FileText, Gauge, Info, Layers, Link2, ListChecks, MessageCircle, Share2, Sparkles, Sun, Users, Wrench, X, Zap } from "lucide-react";
+import { ArrowRight, Search, BatteryCharging, Check, ChevronDown, Container, Copy, Download, Eye, FileText, Gauge, Home, Info, Layers, LayoutGrid, Link2, ListChecks, MessageCircle, Share2, Sparkles, Sun, Users, Wrench, X, Zap } from "lucide-react";
 import { createPortal } from "react-dom";
 import { CATEGORIES, findProduct, matchCompatibleProducts, productsByCategory, quickSpecs, standardSpecs, type Product, type ProductCategory, type ProductFile } from "@/lib/products-data";
 import { isVoiceOn, isVoicePlatform, prepareSpeech, silenceNextScreen, speakScreen, speakScreenAfterCurrent, stopSpeaking } from "@/lib/voice-guide";
@@ -25,6 +25,12 @@ const CAT_BIG_ICON: Record<ProductCategory, ReactNode> = {
   inverters: <Zap className="size-10 lg:size-12" />,
   batteries: <BatteryCharging className="size-10 lg:size-12" />,
   storage: <Container className="size-10 lg:size-12" />,
+};
+const CAT_ROUND_ICON: Record<ProductCategory, ReactNode> = {
+  panels: <Sun className="size-6" />,
+  inverters: <Zap className="size-6" />,
+  batteries: <BatteryCharging className="size-6" />,
+  storage: <Container className="size-6" />,
 };
 
 /**
@@ -60,15 +66,15 @@ export default function ProductsCatalog({ productId, onOpen, onBack, returnTo }:
   if (category) {
     return <CategoryView category={category} onOpen={onOpen} onBack={() => setCategory(null)} />;
   }
-  return <CategoriesScreen onPick={setCategory} onBack={onBack} />;
+  return <CategoriesScreen onPick={setCategory} onOpen={onOpen} onBack={onBack} />;
 }
 
 
-function BackButton({ onClick, label }: { onClick: () => void; label: string }) {
+function BackButton({ onClick, label, home = false }: { onClick: () => void; label: string; home?: boolean }) {
   // الرجوع لا يعيد نطق الشاشة السابقة؛ يبقى الصوت صامتاً حتى يضغط المستخدم زر إعادة السماع.
   return (
     <Button variant="presentation" size="presentation" type="button" onClick={() => { silenceNextScreen(); onClick(); }} className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-bold text-navy shadow-sm transition hover:bg-muted lg:text-sm">
-      <ArrowRight className="size-4" /> {label}
+      {home ? <Home className="size-4" /> : <ArrowRight className="size-4" />} {label}
     </Button>
   );
 }
@@ -76,71 +82,102 @@ function BackButton({ onClick, label }: { onClick: () => void; label: string }) 
 /** صور المعاينة المختارة لكل فئة على بطاقات الأقسام (صور المنتجات الحقيقية). */
 const PREVIEW_IDS: Partial<Record<ProductCategory, string[]>> = {};
 
-/** المستوى الأول: ثلاث بطاقات ضخمة للأقسام. */
-function CategoriesScreen({ onPick, onBack }: { onPick: (c: ProductCategory | "all") => void; onBack: () => void }) {
+/** المستوى الأول: «تعرّف على منتجاتنا» — بحث وأزرار الشركات المصنّعة ثم بطاقات الأقسام الأربعة. */
+function CategoriesScreen({ onPick, onOpen, onBack }: { onPick: (c: ProductCategory | "all") => void; onOpen: (id: string) => void; onBack: () => void }) {
   useScreenVoice(
     "catalog-home",
     "قسم منتجات تمكين للحلول التقنية والهندسية. اختر الفئة التي تريد استعراضها: الألواح الشمسية، أو الإنفرترات، أو بطاريات الليثيوم، أو أنظمة التخزين.",
   );
+  const all = useMemo(() => CATEGORIES.flatMap((c) => productsByCategory(c.id)), []);
+  const brands = useMemo(() => Array.from(new Set(all.map(brandOf))), [all]);
+  const [q, setQ] = useState("");
+  const [brand, setBrand] = useState<string | null>(null);
+  const filtering = Boolean(q.trim()) || brand !== null;
+  const terms = q.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  const results = all.filter((p) => {
+    if (brand && brandOf(p) !== brand) return false;
+    const hay = `${p.name} ${p.model} ${p.brand} ${p.power}`.toLowerCase();
+    return terms.every((t) => hay.includes(t));
+  });
+  const chip = (active: boolean) =>
+    `rounded-full border px-4 py-1.5 text-xs font-bold transition lg:text-sm ${active ? "border-navy bg-navy text-navy-foreground" : "border-border bg-card text-navy hover:bg-muted"}`;
   return (
-    <div className="catalog-screen screen-enter w-full space-y-5 pb-4">
-      <header className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <p className="text-[10px] font-black tracking-[0.3em] text-brand" dir="ltr">TAMKEEN PRODUCTS</p>
-          <h1 className="mt-1 text-xl font-black text-navy lg:text-3xl">تعرّف على منتجاتنا</h1>
-          <p className="mt-0.5 text-xs text-muted-foreground lg:text-sm">اختر الفئة لاستعراض الموديلات ومواصفاتها وملفاتها الرسمية.</p>
+    <div className="catalog-screen screen-enter w-full space-y-4 pb-4">
+      <header>
+        <h1 className="text-2xl font-black text-navy lg:text-4xl">تعرّف على منتجاتنا</h1>
+        <div className="mt-1.5 flex flex-wrap items-center justify-between gap-2">
+          <p className="text-xs text-muted-foreground lg:text-sm">اختر الفئة لاستعراض المنتجات ومواصفاتها وملفاتها الرسمية.</p>
+          <BackButton onClick={onBack} label="الرئيسية" home />
         </div>
-        <BackButton onClick={onBack} label="الرئيسية" />
       </header>
 
-      <div className="catalog-categories stagger-in grid grid-cols-2 gap-2.5 lg:grid-cols-4">
-        {CATEGORIES.map((cat) => {
-          const items = productsByCategory(cat.id);
-          const previewIds = PREVIEW_IDS[cat.id];
-          const preview = previewIds
-            ? previewIds.map((id) => items.find((p) => p.id === id)).filter((p): p is Product => Boolean(p))
-            : items.slice(0, 3);
-          return (
-            <Button variant="presentation" size="presentation"
-              key={cat.id}
-              type="button"
-              onClick={() => onPick(cat.id)}
-              className="catalog-category group flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-2.5 text-right shadow-sm transition hover:border-navy/40 hover:shadow-md"
-            >
-              <span className="catalog-category-heading flex items-center gap-2.5 px-1 py-2">
-                <span className={`grid size-9 shrink-0 place-items-center rounded-xl [&_svg]:size-5 ${CAT_TONE[cat.id]}`}>{CAT_BIG_ICON[cat.id]}</span>
-                <span className="min-w-0 flex-1">
-                  <span className="block whitespace-nowrap text-[13.5px] font-black leading-tight text-navy lg:text-lg">{cat.title}</span>
-                  <span className="mt-0.5 block text-[10.5px] font-semibold text-muted-foreground">{`${items.length} موديل`}</span>
-                </span>
-              </span>
-              <span className="mt-1 flex flex-1 items-center justify-center gap-1 rounded-xl bg-muted p-2">
-                {preview.map((p) => (
-                  <span key={p.id} className="min-w-0 flex-1">
-                    <img src={p.image} alt={p.name} loading="lazy" className="aspect-square w-full object-contain mix-blend-multiply" />
-                  </span>
-                ))}
-              </span>
-              <span className="mt-2 flex items-center justify-between rounded-full bg-muted px-4 py-2 text-[13px] font-bold text-navy">
-                استعراض القسم
-                <ArrowRight className="size-4 rotate-180 text-navy" />
-              </span>
-            </Button>
-          );
-        })}
-        <Button variant="presentation" size="presentation"
-          type="button"
-          onClick={() => onPick("all")}
-          className="group order-first col-span-2 flex items-center gap-3 rounded-lg border border-border bg-card px-3.5 py-3 text-right shadow-sm transition hover:border-navy/40 hover:shadow-md md:col-span-4"
-        >
-          <span className="grid size-9 shrink-0 place-items-center rounded-md bg-navy-soft text-navy"><Search className="size-4" /></span>
-          <span className="min-w-0 flex-1">
-            <span className="block text-sm font-black text-navy lg:text-base">كل المنتجات</span>
-            <span className="block text-[11px] font-semibold text-muted-foreground">ابحث في جميع الموديلات وصفّها حسب الشركة المصنّعة</span>
-          </span>
-          <ArrowRight className="size-4 rotate-180 text-muted-foreground transition group-hover:text-navy" />
+      <div className="flex flex-wrap items-center gap-2.5">
+        <div className="relative min-w-0 flex-1 basis-56">
+          <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+          <input
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            aria-label="البحث عن منتج"
+            placeholder="ابحث في جميع المنتجات ومواصفاتها حسب الشركة المصنّعة…"
+            className="w-full rounded-xl border border-border bg-card py-2.5 pl-9 pr-4 text-sm text-foreground shadow-sm outline-none focus:border-navy"
+          />
+        </div>
+        <Button variant="presentation" size="presentation" type="button" onClick={() => onPick("all")} className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-bold text-navy shadow-sm transition hover:bg-muted">
+          <span className="grid size-6 place-items-center rounded-md bg-navy-soft text-navy"><LayoutGrid className="size-4" /></span>
+          كل المنتجات
+          <ChevronDown className="size-4 text-muted-foreground" />
         </Button>
       </div>
+
+      <div className="flex flex-wrap gap-2" dir="ltr">
+        <Button variant="presentation" size="presentation" type="button" onClick={() => setBrand(null)} className={chip(brand === null)}>الكل</Button>
+        {brands.map((b) => (
+          <Button variant="presentation" size="presentation" key={b} type="button" onClick={() => setBrand(b)} className={chip(brand === b)}>{b}</Button>
+        ))}
+      </div>
+
+      {filtering ? (
+        <div className="stagger-in grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:gap-3 xl:grid-cols-4">
+          {results.map((p) => <ProductCard key={p.id} product={p} onOpen={() => onOpen(p.id)} />)}
+        </div>
+      ) : (
+        <div className="catalog-categories stagger-in grid gap-4 sm:grid-cols-2">
+          {CATEGORIES.map((cat) => {
+            const items = productsByCategory(cat.id);
+            const previewIds = PREVIEW_IDS[cat.id];
+            const preview = previewIds
+              ? previewIds.map((id) => items.find((p) => p.id === id)).filter((p): p is Product => Boolean(p))
+              : items.slice(0, 3);
+            return (
+              <Button variant="presentation" size="presentation"
+                key={cat.id}
+                type="button"
+                onClick={() => onPick(cat.id)}
+                className="catalog-category group flex flex-col gap-3 overflow-hidden rounded-2xl border border-border bg-card p-4 text-right shadow-sm transition hover:border-navy/40 hover:shadow-md sm:flex-row sm:items-stretch sm:gap-4"
+              >
+                <span className="flex min-w-0 flex-1 flex-col items-stretch">
+                  <span className="flex items-center gap-3">
+                    <span className={`grid size-11 shrink-0 place-items-center rounded-xl ${CAT_TONE[cat.id]}`}>{CAT_ROUND_ICON[cat.id]}</span>
+                    <span className="min-w-0 flex-1 text-lg font-black leading-tight text-navy lg:text-2xl">{cat.title}</span>
+                  </span>
+                  <span className="mt-2 inline-flex items-center gap-1.5 text-[13px] font-semibold text-muted-foreground lg:text-sm">
+                    <FileText className="size-4 text-brand" /> {`${items.length} موديل`}
+                  </span>
+                  <span className="mt-auto flex items-center justify-between gap-2 rounded-full bg-skyline/15 px-5 py-2.5 text-sm font-bold text-skyline lg:text-base">
+                    <span>استعراض القسم</span>
+                    <ArrowRight className="size-4 rotate-180 text-skyline" />
+                  </span>
+                </span>
+                <span className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-muted/40 p-2 sm:w-[45%] sm:flex-none">
+                  {preview.map((p) => (
+                    <img key={p.id} src={p.image} alt={p.name} loading="lazy" className="max-h-36 w-auto max-w-[30%] object-contain mix-blend-multiply lg:max-h-44" />
+                  ))}
+                </span>
+              </Button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
