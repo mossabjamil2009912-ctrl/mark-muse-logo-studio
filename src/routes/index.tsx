@@ -81,6 +81,8 @@ import {
   Factory,
   PanelRightClose,
   PanelRightOpen,
+  Tag,
+  Folder,
 } from "lucide-react";
 import residentialImage from "@/assets/arsh-residential.webp";
 import commercialImage from "@/assets/arsh-commercial.webp";
@@ -238,6 +240,19 @@ const NAV_ITEMS = [
   { label: "صمّم منظومتك", icon: FileText, action: "quote" },
   { label: "الدراسات الهندسية", icon: Grid2X2, action: "energy" },
   { label: "خدماتنا واستشاراتنا", icon: Headphones, action: "support" },
+] as const;
+
+// قائمة سطح المكتب الجانبية — مطابقة للتصميم المعتمد؛ كل عنصر يفتح مساراً قائماً فعلاً.
+// main: العنصر الذي يُضاء عندما يكون مساره هو النشط (تجنّب إضاءة عنصرين بنفس المسار).
+const SIDEBAR_ITEMS = [
+  { label: "الرئيسية", icon: Home, action: "home", main: true },
+  { label: "الدراسات الهندسية", icon: Grid2X2, action: "energy", main: true },
+  { label: "الدراسة الاقتصادية", icon: BadgeDollarSign, action: "energy", main: false },
+  { label: "عروض الأسعار", icon: Tag, action: "quote", main: true },
+  { label: "المنتجات والمنظومات", icon: LayoutGrid, action: "products", main: true },
+  { label: "الأجهزة والمنتجات", icon: Package, action: "products", main: false },
+  { label: "العملاء والطلبات", icon: Users, action: "support", main: true },
+  { label: "المشاريع", icon: Folder, action: "quote", main: false },
 ] as const;
 
 function ActesApp() {
